@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <style>
+/* General body styling */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e3f2fd; /* Light blue background */
+    font-family: 'Arial', sans-serif;
+}
+
+/* Wrapper div to center form */
+.center-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+/* Form container styling */
+.my-form-class {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%; /* Ensures responsiveness */
+    margin: auto; /* Centers the form horizontally */
+}
+
+/* Heading styling */
+h1 {
+    text-align: center;
+    color: #0d47a1; /* Dark blue */
+    margin-bottom: 20px;
+}
+
+/* Label styling */
+label {
+    display: block;
+    font-weight: bold;
+    color: #1976d2; /* Blue */
+    margin-bottom: 8px;
+}
+
+/* Input fields */
+input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #bbdefb; /* Light blue border */
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+/* Button styling */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #2196f3; /* Blue */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #1976d2; /* Darker blue */
+}
+
+/* Error message styling */
+p[style="color:red"] {
+    text-align: center;
+    color: #d32f2f; /* Red for error messages */
+    margin-bottom: 15px;
+}
+
+/* Redirect link */
+p {
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+}
+
+a {
+    color: #0d47a1; /* Blue for the signup link */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+    </style>
+
+</head>
+<body>
+    <!-- Wrapper div to center the form -->
+    <div class="center-div">
+        <form class="my-form-class" method="POST">
+            {% csrf_token %}
+
+            <h1>Login</h1>
+            {% if error %}
+                <p style="color:red;">{{ error }}</p>
+            {% endif %}
+            <label for="username">Username:</label>
+            <input type="text" name="username" id="username" required>
+            <br><br>
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" required>
+            <br><br>
+            <button type="submit">Login</button>
+            <br>
+            <p>Dont have an account <a href="{% url 'signup' %}">Signup</a></p>
+        </form>
+    </div>
+
+</body>
+</html>

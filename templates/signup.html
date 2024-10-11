@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e3f2fd; 
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        form {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            max-height: 1000px;
+            }
+        
+        h2 {
+            text-align: center;
+            color: #0d47a1; 
+            margin-bottom: 20px;
+            margin-left: 20px;
+        }
+        
+        /* Label styling */
+        label {
+            display: block;
+            font-weight: bold;
+            color: #1976d2; /* Blue */
+            margin-bottom: 5px;
+        }
+        
+        /* Input fields */
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #bbdefb; /* Light blue border */
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        
+        /* Button styling */
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #2196f3; /* Blue */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: #1976d2; /* Darker blue */
+        }
+        
+        /* Redirect link */
+        p {
+            text-align: center;
+            font-size: 14px;
+            color: #555;
+        }
+        
+        a {
+            color: #0d47a1; /* Blue for the login link */
+            text-decoration: none;
+            display: inline-block;
+            justify-content: center;
+            align-items: center;
+
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        </style>
+
+</head>
+<body>
+    <form method="post">
+
+        <h2>Sign Up</h2><br> <br>
+        {% csrf_token %}
+        <label for="username">Username:</label>
+        <input type="text" name="username" required><br>
+        
+        <label for="email">Email:</label>
+        <input type="email" name="email" required><br>
+        
+        <label for="password">Password:</label>
+        <input type="password" name="password" required><br> <br> 
+        
+        <button type="submit">Sign Up</button> <br> <br>
+        <a href="{% url 'login' %}">Already have an account?</a>
+    </form>
+    
+</body>
+</html>
+
+
+
