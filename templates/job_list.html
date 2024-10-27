@@ -3,235 +3,640 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>Job List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+
     <style>
-    body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    /* background-color: #ddd; */
-    background-color: #f4f4f4;
-    /* font-size: 16px; */
-}
+        body {
+            margin: 0;
+            background-color: #f4f4f4; 
+        }
+            
+        .container {
+            display: flex;
+        }
+                
+        .sidebar {
+            width: 270px; 
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            z-index: 1; 
+            background-color: #264653;
+        }
+        
+        .sidebar a {
+            padding: 10px;
+        }
+        
+        .sidebar h2 { 
+            color: #fff8f8;
+            text-align: center;
+            margin-bottom: 40px;
+            margin-top: 40px;
+        }
+        
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            color: #fff;
+            padding: 10px;
+            margin: 10px 0;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        
+        .sidebar a:hover {
+            background-color:  #00C2D1; 
+            margin-right: 30px!important;
+        }
+        
+        .main-content {
+            margin-left: 270px;
+            padding: 20px;
+            margin-right: 80px!important;
+            flex-grow: 1;
+        }
 
-.container {
-    display: flex;
-}
+        h1 {
+            width: 105%;
+            text-align: center;
+            color: #000000;
+            margin-top: 0px;
+            margin: 10px 10px 40px;
+            text-decoration: underline;
+        }
+        
+        .btn {
+            border: none;
+            border-radius: 5px;
+            font-size: 22px;
+            cursor: pointer;
+            margin: 5px; 
+            display: inline;
+        }
+        
+        .job-card {
+            border: 1px solid #f4f9fc;
+            padding: 20px;
+            margin-bottom: 30px;
+            margin-left: 0px;
+            
+            background-color: #f4f4f4; 
+            border-radius: 15px; 
+            box-shadow: 0 4px 8px #f4f9fc; 
+            transition: box-shadow 0.3s ease-in-out;
+        }
+        .job-card label{
+            color: #f4f9fc;
+        }
+        .job-card .job-item span {
+            display: block;
+            background-color: #f4f4f4; 
+            color: #F4f9fc;  
+        }
+        .job-card .btn{
+            display: none;
+        }
+        .job-card a{
+            color: #f4f4f4 !important;
+        }
+        table {
+            margin-right: 10px; 
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 25px;
+            overflow: hidden; /* Ensures the corners stay rounded */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: white;
+        }
+        
+        
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 2px solid #ddd;
+            /* border: 1px solid #264653; */
+            font-size: 15px;
+        }
+        
+        td {
+            padding: 3px;
+        }
 
-    .sidebar {
-        background-color: #004F53;
-        width: 200px;
-        height: 100vh;
-        padding: 20px;
-        position: fixed;
-        color: white;
-    }
-    
-    .sidebar h2 {
-        color: #fff8f8;
-        text-align: center;
-        margin-bottom: 40px;
-    }
-    
-    .sidebar a {
-        display: flex;
-        align-items: center;
-        color: #fff;
-        padding: 10px;
-        margin: 10px 0;
-        text-decoration: none;
-        border-radius: 5px;
-    }
-    
-    .sidebar a:hover {
-        background-color: #00C2D1;
-    }
-    
-    .sidebar i {
-        margin-right: 10px;
-    }
-    
-    .main-content {
-        margin-left: 220px; /* Space between sidebar and main content */
-        padding: 40px; /* Padding for main content */
-        flex-grow: 1;
-    }
-    
-    .header {
-        background-color: #00C2D1;
-        padding: 20px;
-        color: white;
-        text-align: center;
-        margin: 0;
-    }
-    
-    .header h1 {
-        margin: 0; 
-    }
-    
-    .btn {
-        padding: 10px 10px;
-        /* background-color: #F9E900; */
-        /* background-color: #21f900; */
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        margin: 5px; /* Spacing for the button */
-    }
-    
-    table {
-        width: 100%; /* Full width of the main content */
-        margin-top: 20px; /* Space above the table */
-        border-collapse: collapse;
-    }
-    
-    th, td {
-        padding: 10px;
-        text-align: left;
-        border: 1px solid #ddd;
-        font-size: 15px;
-        text-align: center;
-    }
-    
-    th {
-        background-color: #00C2D1;
-        color: white;
-        font-size: 15px;
-    }
+        th {
+            background-color: #00C2D1;
+            color: white;
+            /* padding: 7px; */
+        }
+        
+        td a {
+            display: inline-block;
+            word-wrap: break-word;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #001cd1;
+        }
+        
+        .hamburger {
+            display: none;  
+            cursor: pointer;
+        }
+        #JobCards {
+            display: none;
+            margin-bottom: 100px;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); 
+            display: none; 
+            z-index: 999; 
+        }
+        @media (max-width: 768px) {
+            #jobCards {
+                flex-direction: column;  
+                margin-top: 0px !important;
+            }
+            .job-card {
+                flex: 1 1 100%; 
+                margin-bottom: 20px;
+            }
+            .job-card .btn{
+                display: block;
+            }
 
-    h1 {
-        text-align: center;
-        color: #000000;
-        text-decoration: underline;
-        margin-top: 0px;
-        margin: 10px 10px 40px;
-    }
+            .job-card span{
+                background-color: #f4f9fc;
+            }
+            
+            .hamburger {
+                display: block;
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                font-size: 24px;
+            }
+            
+            h1 {
+                text-align: center;
+                color: #000000;
+                text-decoration: underline;
+                margin-top: 0;
+                margin-bottom: 30px;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+    
+            table {
+                display: none;
+            }
+            
+            .main-content {
+                margin-right: 15px !important;
+            }    
+            .job-card .job-item a, span, label{
+                font-size: 14px;
+            }
+        }
+        
+        @media (max-width: 1024px) {
+            h1 {
+                text-align: center;
+                color: #000000;
+                text-decoration: underline;
+                margin-top: 0px;
+                margin-bottom: 30px;
+            }
+            
+            .sidebar {
+                display: none; 
+                width: 60%; 
+                top: 0; 
+                left: 0;
+                position: fixed; 
+                height: 100vh; 
+                z-index: 1000; 
+                overflow-y: auto;
+            }
+            .sidebar a {
+                margin-right: 20px;
+                padding: 10px;
+                padding-right: 20px;
+                font-size: 15px;
+            }
+            
+            .hamburger {
+                display: block; 
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                font-size: 24px; 
+            }
+            
+            table {
+                display: none;
+            }
+            
+            .job-card {
+                border: 1px solid #ddd;
+                padding: 20px;
+                margin-bottom: 30px;
+                margin-left: 0px;
+                /* background-color: white;  */
+                background-color: #f4f9fc; 
+                border-radius: 15px; 
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+                transition: box-shadow 0.3s ease-in-out;
+            }
 
-    .form-container {
-        margin-left: 220px; /* Align form with sidebar */
-        padding: 40px; /* Padding for form area */
-    }
+            .job-card:hover {
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            }
+            
+            .job-card .job-item {
+                margin-bottom: 15px;
+            }
+            
+            .job-card .job-item label {
+                text-decoration: 2px underline #333;
+                font-weight: bold;
+                display: block;
+                color: #333;
+                margin-bottom: 5px;
+            }
+            
+            .job-card .job-item span {
+                display: block;
+                color: #001cd1 !important;
+                /* color: #004F53;   */
+            }
+            .job-card .job-item span{
+                background-color: #f4f9fc;
+            } 
+            .job-card .job-item a{
+                color: #001cd1 !important;
+                display: inline-block;
+                width: 350px;
+                overflow: hidden; 
+                white-space: nowrap; 
+                text-overflow: ellipsis; 
+                color: blue; /*text-decoration: none;*/
+            }
+            .job-card .job-item a, span, label{
+                font-size: 15px;
+            }
 
-    .form-group {
-        margin-bottom: 20px; /* Space between form fields */
-    }
+            .actions {
+                margin-top: 10px;
+                display: flex;
+                justify-content: space-between;
+            }
+            
+            .btn {
+                color: white;
+                padding: 8px 15px;
+            }
 
-    label {
-        display: block; /* Make labels block elements */
-        margin-bottom: 5px; /* Space below labels */
-        color: #004F53; /* Color of labels */
-    }
+            .btn-edit {
+                /* background-color: #2a9d8f;   */
+                background-color: #00C2D1;  
+            }
+            
+            .btn-delete {
+                background-color: red;  
+            }
 
-    input[type="text"],
-    input[type="url"],
-    input[type="date"],
-    select {
-        width: calc(100% - 20px); /* Full width minus padding */
-        padding: 0px; /* Padding inside inputs */
-        border: 1px solid #ddd;
-        border-radius: 5px;
-    }
+            .btn:hover {
+                opacity: 0.8;
+            }
+            .main-content {
+                margin: 10px;
+            }
+        }
+        .no-jobs-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 5px;
+            border-radius: 5px;
+            margin-top: 20px;
+            margin-left: 40px;
+            margin-right: 0px !important;
+            text-align: center;
+        }
+        .no-jobs-message-other {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 5px;
+            border-radius: 5px;
+            margin-top: 20px;
+            /* margin-left: 40px; */
+            text-align: center;
+        }
+    </style>
+</head>
+<body> 
+    
+<div class="hamburger" onclick="toggleSidebar()">
+        <i class="fa fa-bars"></i>
+    </div>
+    <div class="sidebar" id="sidebar" style="padding-left: 20px; margin-right: 15px !important; ">
+        <h2>Dashboard</h2>
+        <a href="{% url 'job_list' %}"> <i class="fas fa-clipboard-list" style="padding-right: 10px;"></i> Job Tracker</a>
+        <a href="{% url 'job_create' %}"> <i class="fas fa-plus-square" style="padding-right: 10px;"></i> Add Application</a>
+        <a href="{% url 'feedback' %}"> <i class="fas fa-comment" style="padding-right: 10px;"></i>Your Thoughts</a>
+        <a href="{% url 'simple_analytics' %}"> <i class="fas fa-chart-bar" style="padding-right: 10px;"></i>Application Stats</a>
+        <a href="{% url 'logout' %}"> <i class="fas fa-power-off" style="padding-right: 10px;"></i> Logout</a>
+        
+        
+        <!-- <a href="{% url 'simple_analytics' %}"> <i class="fas fa-chart-line" style="padding-right: 10px;"></i>Application Stats</a> -->
+        <!-- <a href="{% url 'simple_analytics' %}"> <i class="fas fa-chart-pie" style="padding-right: 10px;"></i>Application Stats</a> -->
+<!-- <a href=""> <i class="fas fa-sign-out-alt" style="padding-right: 10px;"></i>
+<i class="fas fa-door-open" style="padding-right: 10px;"></i>
+<i class="fas fa-power-off" style="padding-right: 10px;"></i>
+<i class="fas fa-arrow-right-from-bracket"></i> </a> -->
 
-    input[type="submit"] {
-        background-color: #F9E900; /* Button color for submit */
-        color: #004F53; /* Text color for submit button */
-        border: none;
-        cursor: pointer;
-        padding: 10px 15px; /* Padding for submit button */
-        border-radius: 5px;
-    }
+<!-- <i class="fas fa-chart-line"></i> -->
+<!-- <i class="fas fa-chart-bar"></i>
+<i class="fas fa-chart-pie"></i>
+<i class="fas fa-chart-area"></i> -->
+    </div>
+    
+    <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+    <div class="main-content">
+        <h1>Job Application List</h1> 
+        
+        <style>
+        .search-container {
+            position: relative;
+            display: inline-block;
+            text-align: center;
+            width: 100%;
 
-    input[type="submit"]:hover {
-        background-color: #007A88; /* Darker shade on hover */
-    }
-    a {
-        text-decoration: none;
-    }
+            /* margin-left: 40px; */
+        }
+        
+        form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* margin-left: 100px; */
+        }
+        
+        input[type="search"] {
+            width: 100%;
+            max-width: 400px;
+            padding: 10px 45px 10px 15px;
+            font-size: 16px;
+            /* border: 3px solid #f4f4f4; */
+            /* border: 3px solid #264653; */
+            border: 3px solid white;
+            border-radius: 15px;
+            transition: border-color 0.3s ease;
+            outline: none;
+            min-width: 295px;
+            margin-left: 0px;
+            margin-right: 0px;
+        }
+        
+        input[type="search"]:focus {
+            border-color: cyan;
+        }
 
-    td a {
-        display: inline-block;
-        width: 100%;
-        word-wrap: break-word; /* Break long links */
-        white-space: nowrap;   /* Prevent text from wrapping */
-        overflow: hidden;      /* Hide overflow content */
-        text-overflow: ellipsis; /* Add "..." if the content is too long */
+        .search-icon {
+            position: absolute;
+            right: 20px;  
+            top: 50%;  
+            transform: translateY(-50%);  
+            color: #aaa;  
+            pointer-events: none; 
+        }
+        
+        input[type="search"]:focus + .search-icon {
+            color: #00C2D1;
+        }
+
+        .search-container{
+            margin-bottom: 20px;
+        }
+
+        @media (min-width: 768px) {
+            .form{
+                margin-left: 0px !important;
+                /* margin-right: 20px !important; */
+            }
+            .search-icon {
+                display: none;  
+            }
+            
+            .search-container{
+                margin-bottom: 30px;
+            }
+        }
+        </style>    
+
+
+<!-- Only Update dashboard is not working on mobile devices -->
+<div class="search-container">
+    <form method="GET" action="/jobs/">
+        <input name="job_category" id="search" type="search" placeholder="Start typing to filter..." autocomplete="off">
+        <i class="fas fa-search search-icon"></i> 
+    </form>
+</div>
+
+<style>
+    @media only screen and (max-width: 768px) {
+      .no-jobs-message {
+          display: none;
+      }
     }
     </style>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-
-</head>
-
-<body>
-    <div class="sidebar">
-        <h2>Dashboard</h2>
-        <a href="{% url 'job_list' %}">Job List</a>
-        <a href="{% url 'job_create' %}">Add Job</a>
-
-        <a href="#">Email Template</a>
-        <a href="#">Send Email </a>
-    </div>
-
     
-    <div class="main-content">
-        <h1>Job List</h1>
-        <p class="btn" style="font-size: 18px; color: #004F53; display: inline-block; margin-right: 20px; background-color: #F9E900;">
-            Jobs Count: {{ jobs.count }}
-        </p>
-        
-        <a href="{% url 'job_create' %}" class="btn" style="padding: 10px 20px; background-color: #F9E900; color: #004F53; border-radius: 5px; text-decoration: none; margin-left: 10px;">
-            Add Job
-        </a>  
-        
-        <div class="logout-container">
-            <a href="{% url 'logout' %}" class="btn" style="margin-top: 50px; padding: 10px 20px; background-color: #F9E900; color: #004F53; border-radius: 5px; text-decoration: none; margin-left: 10px;">
-                Logout
-            </a>
-        </div>
-
-        <table>
+        <table id="jobTable" style="margin-top: 0px !important; border-radius: 10px; margin-left: 30px;">
+            {% if jobs|length == 0 %}
+            <div class="no-jobs-message">
+                <p>No application is added.</p>
+            </div>
+            {% else %}
             <tr>
                 <th>Job Category</th>
                 <th>Job Level</th>
                 <th>Company Name</th>
-                <th style="width: 240px;">Reference Link</th>
-                <th >Employment Type</th>
-                <th style="width: 120px;">Application Status</th>
+                <!-- <th>Company Email</th>  -->
+                {% if not all_emails_empty %}
+                    <th>Company Email</th> <!-- Conditionally show the Company Email column -->
+                {% endif %}
+                <th>Reference Link</th>
+                <th>Employment Type</th>
+                <th>Application Status</th>
                 <th>Interview Date</th>
                 <th>Actions</th>
             </tr>
-            {% if jobs %}
             {% for job in jobs %}
             <tr>
                 <td>{{ job.job_category }}</td>
                 <td>{{ job.job_level }}</td>
                 <td>{{ job.company_name }}</td>
-                <td><a href="{{ job.reference_link }}" target="_blank" style="width: 240px;">{{ job.reference_link }}</a></td>
-                <td>{{ job.application_status }}</td>
+                {% if not all_emails_empty %}
+                    <td>    
+                        {% if job.company_email %}
+                            {{ job.company_email }}
+                        {% endif %}
+                    </td>
+                {% endif %}
+                <td><a href="{{ job.reference_link }}" style="width: 190px;">{{ job.reference_link }}</a></td>
                 <td>{{ job.employment_type }}</td>
-                <!-- <td></td> -->
-                <td>{{ job.interview_date | date:"Y-m-d" }}</td> 
+                <td>{{ job.application_status }}</td>
                 <td>
-                    <a href="{% url 'job_update' job.id %}" title="Edit" class="btn" style="display:inline; font-size: 16px;">
-                        <i class="fa fa-edit"></i>
+                    {% if job.interview_date %}
+                        {{ job.interview_date }}
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'job_update' job.id %}" title="Edit" class="btn" style="display:inline; color: rgb(43, 170, 21); width: 40px !important;">
+                        <!-- <i class="fa fa-edit"></i> -->
+                        <i class="fa fa-pencil-square"></i>
                     </a>
-                    
                     <form action="{% url 'job_delete' job.id %}" method="POST" style="display:inline;">
                         {% csrf_token %}
-                        <button type="submit" class="btn" title="Delete" style="border:none; background:none; margin:0px; font-size: 16px;">
+                        <button type="submit" title="Delete" class="btn btn-delete" style=" padding: 0px !important; color: red!important ; width: 40px !important; background-color: #fff;">
                             <i class="fa fa-trash"></i>
                         </button>
                     </form>
                 </td>
-
             </tr>
-
             {% endfor %}
-        {% else %}
-            <p>No jobs available.</p>
-        {% endif %}
+            {% endif %}
         </table>
+        
+        
+        <div id="jobCards" style="display: flex; flex-direction: row; flex-wrap: wrap;">
+            {% if jobs|length == 0 %}
+            <div class="no-jobs-message-other">
+                <p>No application is added.</p>
+            </div>
+            {% else %}
+            {% for job in jobs %}
+            <div class="job-card">
+                <div class="job-item">
+                    <label>Job Category:</label>
+                    <span>{{ job.job_category }}</span>
+                </div>
+                <div class="job-item">
+                    <label>Job Level:</label>
+                    <span>{{ job.job_level }}</span>
+                </div>
+                <div class="job-item">
+                    <label>Company Name:</label>
+                    <span>{{ job.company_name }}</span>
+                </div>
+                
+                {% if not all_emails_empty %}
+                    <!-- Only display this block if there are some emails in the job list -->
+                    {% if job.company_email %}
+                        <div class="job-item">
+                            <label>Company Email:</label>
+                            <span>{{ job.company_email }}</span>
+                        </div>
+                    {% endif %}
+                {% endif %}
+                
+
+                <div class="job-item">
+                    <label>Reference Link:</label>
+                    <span><a href="{{ job.reference_link }}" style="display: inline-block; width: 250px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: blue;">{{ job.reference_link }}</a></span>
+                </div>
+                <div class="job-item">
+                    <label>Employment Type:</label>
+                    <span>{{ job.employment_type }}</span>
+                </div>
+                <div class="job-item">
+                    <label>Application Status:</label>
+                    <span>{{ job.application_status }}</span>
+                </div>
+                
+                {% if job.interview_date %}
+                <div class="job-item">
+                    <label>Interview Date:</label>
+                    <span>{{ job.interview_date | date:"Y-m-d" }}</span>
+                </div>
+                {% endif %}
+                
+                <div class="actions">
+                    <a href="{% url 'job_update' job.id %}" class="btn btn-edit" style="text-decoration: underline;">✏️</a>
+                    <form action="{% url 'job_delete' job.id %}" method="POST">
+                        {% csrf_token %}
+                        <!-- <button type="submit" class="btn btn-delete" style="background-color: red;"> 🗑️ </button> -->
+                        <!-- <button type="submit" class="btn btn-delete" style="background-color: red;"> 🗑 </button> -->
+                        <button type="submit" class="btn btn-delete" style="background-color: red;"> <i class="fa fa-trash-o" style="font-size:22px"></i> </button>  
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
     </div>
+    
+    <script>
+        
+        // JavaScript logic to detect screen width and toggle display
+        function checkScreenWidth() {
+            const width = window.innerWidth; // Get the screen width
+            const jobTable = document.getElementById('jobTable');
+            const jobCards = document.getElementById('jobCards');
+
+            if (width > 768) {
+                jobTable.style.display = 'table';  // Show table for larger screens
+                jobCards.style.display = 'none';   // Hide cards on larger screens
+            } else {
+                jobTable.style.display = 'none';   // Hide table on smaller screens
+                jobCards.style.display = 'block';  // Show cards for smaller screens
+            }
+        }
+
+        // Run checkScreenWidth on load and when window is resized
+        window.onload = checkScreenWidth;
+        window.onresize = checkScreenWidth;
+        // function toggleSidebar() {
+        //     const sidebar = document.getElementById('sidebar');
+        //     if (sidebar.style.display === 'block') {
+        //         sidebar.style.display = 'none';
+        //     } else {
+        //         sidebar.style.display = 'block';
+        //     }
+        // }
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+
+            if (sidebar.style.display === 'block') {
+                sidebar.style.display = 'none';
+                overlay.style.display = 'none'; // Hide overlay
+
+            } else {
+                sidebar.style.display = 'block';
+                overlay.style.display = 'block'; // Show overlay
+            }
+        }
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+
+            sidebar.style.display = 'none'; // Hide sidebar
+            overlay.style.display = 'none'; // Hide overlay
+        }
+    </script>
 </body>
 </html>
+

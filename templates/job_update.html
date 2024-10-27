@@ -1,55 +1,87 @@
 {% load static %}
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Update Job: {{ job.company_name }}</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}  
-        <button type="submit">Update Job</button>
-    </form>
-    <a href="{% url 'job_list' %}">Cancel</a> 
-
-</body>
-</html> -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Job</title>
-    <style>
-        /* Same styles as before */
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- Reuse the same styles from the Add Job page -->
+        <style>
+
+            h1 {
+            text-align: center;
+            color: #000000;
+            text-decoration: underline;
+            margin: 10px 10px 40px;
         }
 
-                
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        input[type="text"], input[type="url"], input[type="date"], select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 18px;
+            box-sizing: border-box;
+        }
+        
+        .btn {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            background-color: #00C2D1;
+            color: white;
+            font-size: 18px;
+            min-width: 120px;
+        }
+        
+        .btn:hover {
+            opacity: 0.8;
+        }
+        
+        body {
+            margin: 0;
+            font-family: Helvetica, Roboto;
+            background-color: #f4f4f4; 
+        }
+            
         .container {
             display: flex;
         }
-
+        
         .sidebar {
-            background-color: #004F53;
-            width: 200px;
+            width: 270px; 
             height: 100vh;
-            padding: 20px;
             position: fixed;
-            color: white;
+            left: 0;
+            z-index: 1; 
+            background-color: #264653;  
         }
-
-        .sidebar h2 {
-            color: #00C2D1;
+        
+        .sidebar a {
+            margin-left: 20px;
+            padding: 10px;
+        }
+        
+        .sidebar h2 { 
+            color: #fff8f8;
             text-align: center;
             margin-bottom: 40px;
+            margin-top: 40px;
         }
 
         .sidebar a {
@@ -60,118 +92,310 @@
             margin: 10px 0;
             text-decoration: none;
             border-radius: 5px;
+            font-size: 18px;
         }
-
+        
         .sidebar a:hover {
-            background-color: #00C2D1;
+            background-color:  #00C2D1; 
+            margin-right: 30px!important;
         }
-
-        .sidebar i {
-            margin-right: 10px;
-        }
-
-
+        
         .main-content {
-            margin-left: 220px;
-            padding: 40px;
+            margin-left: 270px;
+            padding: 20px;
             flex-grow: 1;
         }
 
         h1 {
             text-align: center;
-            color: #00C2D1;
-            margin: 0 0 20px;
+            color: #000000;
+            text-decoration: underline;
+            margin-top: 0px;
+            margin: 10px 10px 40px;
         }
 
+        .hamburger {
+            display: none;
+        }
+        
         .form-container {
-            margin-top: 40px;
-            text-align: center;
-            background-color: #ffffff;
+            margin: 0 300px;
             padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
+            /* margin-right: 10px; */
+            background-color: #f4f9fc;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
-
-        .btn {
-            padding: 10px 20px; /* Adjust padding for buttons */
-            background-color: transparent; /* Change background to transparent */
-            color: black; /* Text color */
-            border: none; /* Remove border */
-            cursor: pointer; /* Change cursor to pointer */
-            margin: 5px;
-            text-decoration: none; /* Remove underline */
-            transition: background-color 0.3s; /* Smooth background transition */
-        }
-
-        .btn:hover {
-            background-color: #007A88; /* Change background on hover */
-        }
-
-        input[type="text"],
-        input[type="url"],
-        input[type="date"],
-        select {
-            width: calc(100% - 20px);
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+        .form-group {
             margin-bottom: 20px;
-            transition: border-color 0.3s;
         }
-
-        label {
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); 
+            display: none; 
+            z-index: 999; 
+        }
+        @media (max-width: 768px) {
+            input[type="text"], input[type="url"], input[type="date"], select {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-size: 14px;
+                box-sizing: border-box;
+                padding: 5px !important;
+            }
+            label {
             display: block;
-            text-align: left;
-            margin-bottom: 5px;
-            color: #004F53;
-        }
-
-        input[type="text"]:focus,
-        input[type="url"]:focus,
-        input[type="date"]:focus,
-        select:focus {
-            border-color: #00C2D1;
-            outline: none;
-        }
-
-        input[type="submit"] {
-            background-color: #F9E900;
-            /* color: #004F53; */
+            margin: 15px 0 5px;
             font-weight: bold;
-            border: none;
-            cursor: pointer;
-            padding: 10px 15px;
-            border-radius: 5px;
-            margin-top: 20px;
-            margin-bottom: 10px;
-            /* transition: background-color 0.3s; */
+            font-size: 14px;
+        }
+            .form-container {
+                margin: 20px;
+                margin-left: 40px;
+                padding: 20px;
+                background-color: #f4f9fc;
+                border-radius: 10px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                margin-left:  0px !important;
+            }
+
+            input[type="text"],
+            input[type="url"],
+            input[type="date"],
+            select {
+                font-size: 14px; 
+                padding: 0px;
+                
+            
+            }
+            
+            .btn {
+                font-size: 14px;
+                justify-content: center;
+                text-align: center;
+                background-color: #00C2D1;
+            }
+            
+            .hamburger {
+                display: block;
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                font-size: 24px;
+            }
+            
+            h1 {
+                text-align: center;
+                color: #000000;
+                text-decoration: underline;
+                margin-top: 0;
+                margin-bottom: 30px;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .main-content {
+                margin-right:  0px !important;
+            }    
+        }
+            
+        @media (max-width: 1024px) {
+            h1 {
+                text-align: center;
+                color: #000000;
+                text-decoration: underline;
+                margin-top: 0px;
+                margin-bottom: 30px;
+            }
+            
+            .sidebar {
+                display: none; 
+                width: 60%; 
+                top: 0; 
+                left: 0;
+                position: fixed; 
+                height: 100vh; 
+                z-index: 1000; 
+                overflow-y: auto;
+            }
+            .sidebar a {
+                margin-left: 20px;
+                margin-right: 20px;
+                padding: 10px;
+                padding-right: 20px;
+                font-size: 15px;
+            }
+
+            .hamburger {
+                display: block; 
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                font-size: 24px; 
+            }
+            
+            .actions {
+                margin-top: 10px;
+                display: flex;
+                justify-content: space-between;
+            }
+            
+            .btn {
+                color: white;
+                padding: 8px 15px;
+            }
+            
+            .btn-edit {
+                background-color: #2a9d8f;
+            }
+            
+            .btn-delete {
+                background-color: red;  
+            }
+
+            .btn:hover {
+                opacity: 0.8;
+            }
+            .main-content {
+                margin: 10px;
+            }
+            
+            label {
+            display: block;
+            margin: 15px 0 5px;
+            font-weight: bold;
+            font-size: 14px;
         }
 
-    </style>
+        }
+        .form-buttons {
+            align-items: center;
+            justify-content: center; 
+        }
+
+        </style>
 </head>
 <body>
-    <div class="sidebar">
-        <h2>Job Manager</h2>
-        <a href="{% url 'job_list' %}">Job List</a>
-        <a href="{% url 'job_create' %}">Add Job</a>
 
-        <a href="#">Email Template</a>
-        <a href="#">Send Email</a>
+    <div class="hamburger" onclick="toggleSidebar()">
+        <i class="fa fa-bars"></i>
     </div>
+    <div class="sidebar" id="sidebar" style="padding-left: 20px; margin-right: 15px;">
+        <h2>Dashboard</h2>
+        
+        <!-- <a href="{% url 'job_list' %}">Job Tracker</a>
+        <a href="{% url 'job_create' %}">Add Application</a>
+        <a href="{% url 'feedback' %}">Your Thoughts</a>
+        <a href="{% url 'simple_analytics' %}">Application Stats</a>
+        <a href="{% url 'logout' %}">Logout</a> -->
+
+        <a href="{% url 'job_list' %}"> <i class="fas fa-clipboard-list" style="padding-right: 10px;"></i> Job Tracker</a>
+        <a href="{% url 'job_create' %}"> <i class="fas fa-plus-square" style="padding-right: 10px;"></i> Add Application</a>
+        <a href="{% url 'feedback' %}"> <i class="fas fa-comment" style="padding-right: 10px;"></i>Your Thoughts</a>
+        <a href="{% url 'simple_analytics' %}"> <i class="fas fa-chart-bar" style="padding-right: 10px;"></i>Application Stats</a>
+        <a href="{% url 'logout' %}"> <i class="fas fa-power-off" style="padding-right: 10px;"></i> Logout</a>
+       
+    </div>
+
+    <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
     <div class="main-content">
-        <h1>Update Job: {{ job.company_name }}</h1>
-        <div class="form-container">
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}  <!-- Renders the form fields -->
-                <input  type="submit" value="Update Job">
-            </form>
-            <a class="btn" href="{% url 'job_list' %}">Cancel</a> 
-        </div>
+        <h1>Edit Application</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-container" >
+                
+                <div class="form-group">
+                    <label for="job_category">Job Category:</label>
+                    {{ form.job_category }}
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 5px;">
+                    <label for="job_level">Job Level:</label>
+                    {{ form.job_level }}
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 5px;">
+                    <label for="company_name" id="company_name">Company Name:</label>
+                    {{ form.company_name }}
+                </div>
+                <!-- Display the error message if the field is empty -->
+                <div class="form-group" style="margin-bottom: 5px;">
+                    <label for="company_email">Company Email:</label>
+                    {{ form.company_email }}
+                </div>
+               <!--  -->
+
+                <div class="form-group" style="margin-bottom: 5px;">
+                    <label for="reference_link">Reference Link:</label>
+                    {{ form.reference_link }}
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 5px;">
+                    <label for="employment_type">Employment Type:</label>
+                    {{ form.employment_type }}
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 5px;">
+                    <label for="application_status">Application Status:</label>
+                    {{ form.application_status }}
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 5px;">
+                    <label for="interview_date">Interview Date:</label>
+                    {{ form.interview_date }}
+                </div>
+
+
+                <div class="form-buttons" style="margin-top: 30px; display: flex; flex-direction: column; align-items: center;">
+                    <input type="submit" value="Update" class="btn" style="background-color: #00C2D1;  margin-bottom: 15px; padding: 5px 10px; font-size: 15px; color: #fff;"> 
+                    <a href="{% url 'job_list' %}" class="btn_back-btn" style="text-decoration: none;  font-weight: bold !important;">Back to Job List</a>
+                </div>
+            </div>
+        </form>
     </div>
+
+    <script>
+        // function toggleSidebar() {
+        //     const sidebar = document.getElementById('sidebar');
+        //     const mainContent = document.querySelector('.main-content');
+        //     if (sidebar.style.display === 'block') {
+        //         sidebar.style.display = 'none';
+        //         mainContent.classList.add('sidebar-collapsed');
+        //     } else {
+        //         sidebar.style.display = 'block';
+        //         mainContent.classList.remove('sidebar-collapsed');
+        //     }
+        // }
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+
+            if (sidebar.style.display === 'block') {
+                sidebar.style.display = 'none';
+                overlay.style.display = 'none'; // Hide overlay
+            } else {
+                sidebar.style.display = 'block';
+                overlay.style.display = 'block'; // Show overlay
+            }
+        }
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+
+            sidebar.style.display = 'none'; // Hide sidebar
+            overlay.style.display = 'none'; // Hide overlay
+        }
+    </script>
+
 </body>
 </html>

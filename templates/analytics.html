@@ -1,0 +1,1021 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard with Analytics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <style>
+        body {
+            margin: 0;
+            font-family: Helvetica, Roboto;
+            background-color: #f4f4f4; 
+            }
+            
+            .container {
+            display: flex;
+        }
+        
+        .sidebar {
+            width: 270px; 
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1; 
+            background-color: #264653;  
+        }
+        
+        .sidebar a {
+            margin-left: 20px;
+            padding: 10px;
+        }
+        
+        .sidebar h2 { 
+            color: #fff8f8;
+            text-align: center;
+            margin-bottom: 40px;
+            margin-top: 40px;
+        }
+        
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            color: #fff;
+            padding: 10px;
+            margin: 10px 0;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+
+        .sidebar a:hover {
+            background-color:  #00C2D1; 
+            margin-right: 30px!important;
+        }
+
+        .main-content {
+            margin-left: 270px;
+            padding: 20px;
+            /* margin-right: 80px!important; */
+            margin-right: 20px!important;
+            flex-grow: 1;
+        }
+
+        h1 {
+            text-align: center;
+            color: #000000;
+            text-decoration: underline;
+            margin-top: 0px;
+            margin: 10px 10px 40px;
+        }
+        
+        /* Overlay styles */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); 
+            display: none; 
+            z-index: 999; 
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                font-size: 24px;
+            }
+            
+            h1 {
+                text-align: center;
+                color: #000000;
+                text-decoration: underline;
+                margin-top: 0;
+                margin-bottom: 30px;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+    
+            .main-content {
+                /* margin-right: 15px !important; */
+                margin: 15px !important;
+                margin-left: 20px!important;
+                padding: 0px !important;
+            }    
+   
+        }
+        
+        @media (max-width: 1024px) {
+            .sidebar {
+                display: none; 
+                width: 75%; 
+                top: 0; 
+                left: 0;
+                position: fixed; 
+                height: 100vh; 
+                z-index: 1000; 
+                overflow-y: auto;
+            }
+            .main-content{
+              margin-left: 0px !important;
+            }
+        
+            h1 {
+                text-align: center;
+                color: #000000;
+                text-decoration: underline;
+                margin-top: 0px;
+                margin-bottom: 30px;
+                }
+            
+            .sidebar {
+                display: none; 
+                width: 75%; 
+                top: 0; 
+                left: 0;
+                position: fixed; 
+                height: 100vh; 
+                z-index: 1000; 
+                overflow-y: auto;
+            }
+            .sidebar a {
+                margin-left: 20px;
+                margin-right: 20px;
+                padding: 10px;
+                padding-right: 20px;
+                font-size: 15px;
+            }
+
+            .hamburger {
+                display: block; 
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                font-size: 24px; 
+            }
+        
+        }
+</style>
+
+</head>
+<body> 
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <div class="hamburger" onclick="toggleSidebar()">
+        <i class="fa fa-bars"></i>
+    </div>
+    <div class="sidebar" id="sidebar" style="padding-left: 20px; margin-right: 15px;">
+        <h2>Dashboard</h2>
+        
+        <a href="{% url 'job_list' %}">Job Tracker</a>
+        <a href="{% url 'job_create' %}">Add Application</a>
+        <a href="{% url 'feedback' %}">Your Thoughts</a>
+        <a href="{% url 'simple_analytics' %}">Application Stats</a> 
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+
+    <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+    <div class="main-content">
+        
+        <h1>Analytics</h1>
+
+<h2>Total Applications: {{ total_applications }}</h2>
+
+<h3>Applications by Status</h3>
+<ul>
+  {% for status, count in applications_by_status.items %}
+    <li>{{ status }}: {{ count }}</li>
+  {% endfor %}
+</ul>
+
+<h3>Job Categories</h3>
+<ul>
+  {% for category, count in job_categories.items %}
+    <li>{{ category }}: {{ count }}</li>
+  {% endfor %}
+</ul>
+
+<h3>Upcoming Interviews</h3>
+<ul>
+    {% for interview in upcoming_interviews %}
+    <li>Company: {{ interview.company_name }} | Date: {{ interview.interview_date }}</li>
+  {% endfor %}
+</ul>
+
+    </div> 
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+
+            if (sidebar.style.display === 'block') {
+                sidebar.style.display = 'none';
+                overlay.style.display = 'none'; // Hide overlay
+            } else {
+                sidebar.style.display = 'block';
+                overlay.style.display = 'block'; // Show overlay
+            }
+        }
+
+    
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            
+            sidebar.style.display = 'none'; 
+            overlay.style.display = 'none'; 
+        }
+    </script>
+
+
+</body>
+</html> -->
+
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard with Sidebar and Analytics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        .sidebar {
+            width: 270px; 
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1; 
+            background-color: #264653;  
+        }
+        
+        .sidebar a {
+            margin-left: 20px;
+            font-family: 'Times New Roman';
+            padding: 10px;
+        }
+        
+        .sidebar h2 { 
+            color: #fff8f8;
+            text-align: center;
+            margin-bottom: 40px;
+            margin-top: 40px;
+        }
+        
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            color: #fff;
+            padding: 10px;
+            margin: 10px 0;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+
+        .sidebar a:hover {
+            background-color:  #00C2D1; 
+            margin-right: 30px!important;
+        }
+
+        .main-content {
+            margin-left: 270px;
+            padding: 20px;
+            margin-right: 20px!important;
+            flex-grow: 1;
+        }
+
+        h1, h2, h3 {
+            text-align: center;
+            color: #333;
+        }
+        
+        h1 {
+            font-size: 34px;
+            margin-bottom: 20px !important;
+            margin: 0 25px;
+        }
+
+        h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+        
+        h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none; 
+                width: 75%; 
+                top: 0; 
+                left: 0;
+                position: fixed; 
+                height: 100vh; 
+                z-index: 1000; 
+                overflow-y: auto;
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 10px;
+                width: 100%;
+            }
+            .hamburger {
+                display: block;
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                font-size: 24px;
+            }
+            .sidebar a {
+                margin-left: 20px;
+                margin-right: 20px;
+                padding: 10px;
+                padding-right: 20px;
+                font-size: 15px;
+            }
+            .sidebar h2{
+                font-size: 24px;
+            }
+        }
+
+        .total-applications {
+            background-color: #00C2D1;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            font-size: 28px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-left: 40px;
+            margin-right: 40px;
+            font-weight: bold;
+        }
+    
+        .upcoming-interviews {
+            background-color: #00C2D1;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-left: 40px;
+            margin-right: 40px;
+        }
+    
+        .upcoming-interviews ul {
+            list-style-type: none;
+        }
+    
+        .upcoming-interviews li {
+            background-color: #f4f9fc;
+            padding: 15px;
+            margin: 10px 10px;
+            margin-right: 30px;
+            padding-left: 10px;
+            padding-inline-end: 30px;
+            border-radius: 10px;
+            color: #333;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        }
+        .upcoming-interviews h3{
+            color: #f4f9fc;
+        }
+    
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+            border-radius: 8px;
+            margin-left: 40px;
+            margin-right: 40px;
+            background-color: blue;
+        }
+    
+        canvas {
+            max-width: 600px;
+            max-height: 300px;
+            width: 100%;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); 
+            display: none; 
+            z-index: 999; 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hamburger" onclick="toggleSidebar()">
+        <i class="fa fa-bars"></i>
+    </div>
+    
+    <div class="sidebar" id="sidebar" style="padding-left: 20px; margin-right: 15px;">
+        <h2 style="color: #fff8f8 !important;
+        text-align: center !important;
+        margin-bottom: 40px !important;
+        margin-top: 40px !important;">Dashboard</h2>
+        <a href="{% url 'job_list' %}">Job Tracker</a>
+        <a href="{% url 'job_create' %}">Add Application</a>
+        <a href="{% url 'feedback' %}">Your Thoughts</a>
+        <a href="{% url 'simple_analytics' %}">Application Stats</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+    
+    <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+    
+    <div class="main-content">
+        <h1>Analytics</h1>
+
+        <div class="total-applications">
+            Total Applications: {{ total_applications }}
+        </div>
+
+        {% if applicationsByStatus %}
+        <div class="chart-container">
+            <div>
+                <h3>Applications by Status</h3>
+                <canvas id="statusChart"></canvas>
+            </div>
+        </div>
+        {% else %}
+        <h4 style="text-align: center; font-size: large;">No data is added so the Analytics Page is blank</h4>
+        {% endif %}
+
+        {% if jobCategories %}
+        <div class="chart-container">
+            <div>
+                <h3>Most Applied Job Categories</h3>
+                <canvas id="categoryDoughnutChart"></canvas>
+            </div>
+        </div>
+        
+        {% endif %}
+        
+    {% if upcoming_interviews %}
+    <div class="upcoming-interviews">
+        <h3>Upcoming Interviews</h3>
+        <ul>
+            {% for interview in upcoming_interviews %}
+                <li>Company: {{ interview.company_name }} | Date: {{ interview.interview_date }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const applicationsByStatus = {{ applications_by_status | safe }};
+        const jobCategories = {{ job_categories | safe }};
+
+        const statusCtx = document.getElementById('statusChart').getContext('2d');
+        const statusChart = new Chart(statusCtx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(applicationsByStatus),
+                datasets: [{
+                    label: 'Applications by Status',
+                    data: Object.values(applicationsByStatus),
+                    backgroundColor: 'rgba(54, 162, 235, 0.8)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+        const categoryCtx = document.getElementById('categoryDoughnutChart').getContext('2d');
+        const categoryDoughnutChart = new Chart(categoryCtx, {
+            type: 'doughnut',
+            data: {
+                labels: Object.keys(jobCategories),
+                datasets: [{
+                    label: 'Job Categories',
+                    data: Object.values(jobCategories),
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#F7464A']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+        function toggleSidebar() {
+            var sidebar = document.getElementById('sidebar');
+            var overlay = document.getElementById('overlay');
+            sidebar.style.display = sidebar.style.display === 'block' ? 'none' : 'block';
+            overlay.style.display = overlay.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function closeSidebar() {
+            document.getElementById('sidebar').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+    </script>
+</body>
+</html> -->
+
+<!-- This the brand new code and css is not working but chart is displaying :  -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard with Analytics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    .sidebar {
+    width: 270px !important; 
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1; 
+    background-color: #264653;  
+}
+
+.sidebar a {
+    /* margin-left: 20px; */
+    font-family: 'Times New Roman';
+    padding: 10px;
+}
+
+.sidebar h2 { 
+    color: #fff8f8;
+    text-decoration: none;
+    text-align: center;
+    margin-bottom: 40px;
+    margin-top: 40px;
+}
+
+.sidebar a {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    padding: 10px;
+    margin: 10px 0;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+.sidebar a:hover {
+    background-color:  #00C2D1; 
+    margin-right: 30px!important;
+}
+
+.main-content {
+    margin-left: 270px;
+    padding: 20px;
+    flex-grow: 1;
+}
+
+h1, h2, h3 {
+    text-align: center;
+    color: #333;
+    text-decoration: underline;
+}
+
+h1 {
+    font-size: 34px;
+    margin-bottom: 20px !important;
+    margin: 0 25px;
+}
+
+h2 {
+    margin-bottom: 15px;
+}
+
+h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.hamburger {
+    display: none;  
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        display: none; 
+        width: 60% !important; 
+        top: 0; 
+        left: 0;
+        position: fixed; 
+        height: 100vh; 
+        z-index: 1000; 
+        overflow-y: auto;
+    }
+    .main-content {
+        margin-left: 0;
+        padding: 10px;
+        width: 100%;
+    }
+    
+    .hamburger {
+        display: block;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        font-size: 24px;
+    }
+
+    .sidebar a {
+        /* margin-left: 20px; */
+        margin-right: 20px;
+        padding: 10px;
+        padding-right: 20px;
+        font-size: 15px;
+    }
+    .sidebar h2 {
+        font-size: 24px;
+    }
+    .total-applications {
+        font-size: 26px;
+        margin-right: 0px;
+        padding-left: 30px !important;
+        padding-right: 30px !important;
+    }
+    .hamburger {
+        display: block;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        font-size: 24px;
+    }
+    .upcoming-interviews ul {
+        font-size: small;
+    }
+    .upcoming-interviews li {
+        font-size: 14px;
+    }
+}
+
+.total-applications {
+    background-color: #00C2D1;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    font-size: 28px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-left: 40px;
+    margin-right: 40px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.upcoming-interviews {
+    background-color: #00C2D1;
+    padding: 20px;
+    padding-inline-start: 0px !important;
+    margin: 20px 0;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+.upcoming-interviews ul {
+    list-style-type: none;
+}
+
+.upcoming-interviews li {
+    background-color: #f4f9fc;
+    padding: 15px;
+    margin: 10px 10px;
+    margin-right: 30px;
+    padding-left: 10px;
+    padding-inline-end: 30px;
+    border-radius: 10px;
+    color: #333;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.upcoming-interviews h3 {
+    color: #f4f9fc;
+}
+
+.chart-container {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0;
+    border-radius: 8px;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
+canvas {
+    max-width: 600px;
+    max-height: 300px;
+    width: 100%;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    display: none; 
+    z-index: 999; 
+}
+
+    </style>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    
+    <div class="hamburger" onclick="toggleSidebar()">
+        <i class="fa fa-bars"></i>
+    </div>
+    
+    <!-- Overlay for sidebar -->
+    <div id="overlay" class="overlay" onclick="closeSidebar()"></div>
+     
+
+    <div id="sidebar" class="sidebar" style="margin-right: 20px; padding-left: 20px;">
+        <h2>Dashboard</h2>
+        <!-- <a href="{% url 'job_list' %}">Job Tracker</a>
+        <a href="{% url 'job_create' %}">Add Application</a>
+        <a href="{% url 'feedback' %}">Your Thoughts</a>
+        <a href="{% url 'simple_analytics' %}">Application Stats</a>
+        <a href="{% url 'logout' %}">Logout</a> -->
+        <a href="{% url 'job_list' %}"> <i class="fas fa-clipboard-list" style="padding-right: 10px;"></i> Job Tracker</a>
+        <a href="{% url 'job_create' %}"> <i class="fas fa-plus-square" style="padding-right: 10px;"></i> Add Application</a>
+        <a href="{% url 'feedback' %}"> <i class="fas fa-comment" style="padding-right: 10px;"></i>Your Thoughts</a>
+        <a href="{% url 'simple_analytics' %}"> <i class="fas fa-chart-bar" style="padding-right: 10px;"></i>Application Stats</a>
+        <a href="{% url 'logout' %}"> <i class="fas fa-power-off" style="padding-right: 10px;"></i> Logout</a>
+       
+    </div>
+    
+    <style>
+        p{
+            font-size: 18px;
+        }
+    </style>
+
+    <div class="main-content">
+        <h1>Analytics</h1>
+        <h2 class="total-applications">Total Applications: {{ total_applications }}</h2>
+
+        <div class="chart-container">
+                {% if applications_by_status %}
+                <div class="chart-box">
+                    <h3>Applications by Status</h3>
+                    <canvas id="statusChart"></canvas>
+                </div>
+                {% else %}
+                    <p>No application status data available.</p>
+                {% endif %}
+        </div>
+        
+        
+        <div class="chart-container">
+            {% if job_categories %}
+            <div class="chart-box" style="max-width: 300px !important; height: 400px !important; ">
+                <h3>Job Categories</h3>
+                <canvas id="categoryChart"  style="width: 500px; height: auto;"></canvas>
+            </div>
+            {% else %}
+                <p>No job category data available.</p>
+            {% endif %}
+        </div>
+
+    
+    <div class="upcoming-interviews">
+        <h3>Upcoming Interviews</h3>
+        <ul>
+            {% if upcoming_interviews %}
+            {% for interview in upcoming_interviews %}
+                    <li>Company: {{ interview.company_name }} | Date: {{ interview.interview_date }}</li>
+                    {% endfor %}
+                    {% else %}
+                        <li>No upcoming interviews.</li>
+                    {% endif %}
+                </ul>
+        </div>
+        
+    </div>
+    
+    <script>
+        {% if applications_by_status %}
+        const statusCtx = document.getElementById('statusChart').getContext('2d');
+        const statusChart = new Chart(statusCtx, {
+            type: 'pie',
+            data: {
+                labels: [{% for status in applications_by_status.keys %} `{{ status }}`, {% endfor %}],
+                datasets: [{
+                    label: 'Applications by Status',
+                    data: [{% for count in applications_by_status.values %} `{{ count }}`, {% endfor %}],
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+                    }]
+                    }
+                    });
+        {% endif %}
+        
+        
+        // Doughnut Chart: Job Categories
+        {% if job_categories %}
+        const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+        const categoryChart = new Chart(categoryCtx, {
+            type: 'doughnut',
+            data: {
+                labels: [{% for category in job_categories.keys %} `{{ category }}`, {% endfor %}],
+                datasets: [{
+                    label: 'Job Categories',
+                    data: [{% for count in job_categories.values %} `{{ count }}`, {% endfor %}],
+                    backgroundColor: ['#FF9F40', '#FF6384', '#4BC0C0', '#FFCE56', '#9966FF']
+                    }]
+                    }
+                    });
+        {% endif %}
+
+        function checkScreenWidth() {
+            const width = window.innerWidth; // Get the screen width
+            const jobTable = document.getElementById('jobTable');
+            const jobCards = document.getElementById('jobCards');
+
+            if (width > 768) {
+                jobTable.style.display = 'table';  // Show table for larger screens
+                jobCards.style.display = 'none';   // Hide cards on larger screens
+                } else {
+                jobTable.style.display = 'none';   // Hide table on smaller screens
+                jobCards.style.display = 'block';  // Show cards for smaller screens
+                }
+        }
+
+        // Run checkScreenWidth on load and when window is resized
+        window.onload = checkScreenWidth;
+        window.onresize = checkScreenWidth;
+        
+        
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+
+            if (sidebar.style.display === 'block') {
+                sidebar.style.display = 'none';
+                overlay.style.display = 'none'; // Hide overlay
+
+            } else {
+                sidebar.style.display = 'block';
+                overlay.style.display = 'block'; // Show overlay
+            }
+        }
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+
+            sidebar.style.display = 'none'; // Hide sidebar
+            overlay.style.display = 'none'; // Hide overlay
+        }
+    </script>
+    <!-- <div class="chart-container">
+        {% if applications_by_status %}
+            <div class="chart-box">
+                <h3>Applications by Status</h3>
+                <canvas id="statusChart"></canvas>
+            </div>
+        {% else %}
+            <p>No application status data available.</p>
+        {% endif %}
+    </div>
+    
+    <div class="chart-container">
+        {% if job_categories %}
+            <div class="chart-box" style="max-width: 300px !important; height: 400px !important;">
+                <h3>Job Categories</h3>
+                <canvas id="categoryChart" style="width: 500px; height: auto;"></canvas>
+            </div>
+        {% else %}
+            <p>No job category data available.</p>
+        {% endif %}
+    </div>
+    
+    <div class="upcoming-interviews">
+        <h3>Upcoming Interviews</h3>
+        <ul>
+            {% if upcoming_interviews %}
+                {% for interview in upcoming_interviews %}
+                    <li>Company: {{ interview.company_name }} | Date: {{ interview.interview_date }}</li>
+                {% endfor %}
+            {% else %}
+            <li>No upcoming interviews.</li>
+            {% endif %}
+        </ul>
+    </div>
+    
+    <script>
+        // Check if there is data for applications by status
+        {% if applications_by_status %}
+        const statusCtx = document.getElementById('statusChart').getContext('2d');
+        const statusChart = new Chart(statusCtx, {
+            type: 'pie',
+            data: {
+                labels: [{% for status in applications_by_status.keys %} `{{ status }}`, {% endfor %}],
+                datasets: [{
+                    label: 'Applications by Status',
+                    data: [{% for count in applications_by_status.values %} `{{ count }}`, {% endfor %}],
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
+                }]
+            }
+        });
+        {% endif %}
+    
+        
+        // Check if there is data for job categories
+        {% if job_categories %}
+        const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+        const categoryChart = new Chart(categoryCtx, {
+            type: 'doughnut',
+            data: {
+                labels: [{% for category in job_categories.keys %} `{{ category }}`, {% endfor %}],
+                datasets: [{
+                    label: 'Job Categories',
+                    data: [{% for count in job_categories.values %} `{{ count }}`, {% endfor %}],
+                    backgroundColor: ['#FF9F40', '#FF6384', '#4BC0C0', '#FFCE56', '#9966FF']
+                }]
+            }
+        });
+        {% endif %}
+    
+        function checkScreenWidth() {
+            const width = window.innerWidth; // Get the screen width
+            const jobTable = document.getElementById('jobTable');
+            const jobCards = document.getElementById('jobCards');
+    
+            if (width > 768) {
+                jobTable.style.display = 'table';  // Show table for larger screens
+                jobCards.style.display = 'none';   // Hide cards on larger screens
+            } else {
+                jobTable.style.display = 'none';   // Hide table on smaller screens
+                jobCards.style.display = 'block';  // Show cards for smaller screens
+            }
+        }
+    
+        // Run checkScreenWidth on load and when window is resized
+        window.onload = checkScreenWidth;
+        window.onresize = checkScreenWidth;
+    
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+    
+            if (sidebar.style.display === 'block') {
+                sidebar.style.display = 'none';
+                overlay.style.display = 'none'; // Hide overlay
+            } else {
+                sidebar.style.display = 'block';
+                overlay.style.display = 'block'; // Show overlay
+            }
+        }
+    
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+    
+            sidebar.style.display = 'none'; // Hide sidebar
+            overlay.style.display = 'none'; // Hide overlay
+        }
+    </script>
+    
+</body>
+</html> -->

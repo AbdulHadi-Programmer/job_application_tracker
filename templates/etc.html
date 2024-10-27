@@ -1,0 +1,338 @@
+<!-- Job List Page Code:  -->
+<!-- {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job List</title>
+    <style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+    }
+
+    .container {
+        display: flex;
+    }
+
+    .sidebar {
+        background-color: #004F53;
+        width: 200px;
+        height: 100vh;
+        padding: 20px;
+        position: fixed;
+        color: white;
+    }
+    
+    .sidebar h2 {
+        color: #fff8f8;
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    
+    .sidebar a {
+        display: flex;
+        align-items: center;
+        color: #fff;
+        padding: 10px;
+        margin: 10px 0;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+    
+    .sidebar a:hover {
+        background-color: #00C2D1;
+    }
+    
+    .sidebar i {
+        margin-right: 10px;
+    }
+    
+    .main-content {
+        margin-left: 220px;
+        padding: 40px;
+        flex-grow: 1;
+    }
+    
+    .header {
+        background-color: #00C2D1;
+        padding: 20px;
+        color: white;
+        text-align: center;
+        margin: 0;
+    }
+    
+    .header h1 {
+        margin: 0; 
+    }
+    
+    .btn {
+        padding: 10px 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 5px; 
+        }
+    
+    table {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: collapse;
+    }
+    
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border: 1px solid #ddd;
+        font-size: 15px;
+        text-align: center;
+    }
+    
+    th {
+        background-color: #00C2D1;
+        color: white;
+        font-size: 15px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #000000;
+        text-decoration: underline;
+        margin-top: 0px;
+        margin: 10px 10px 40px;
+    }
+
+    .form-container {
+        margin-left: 220px; 
+        padding: 40px; 
+    }
+
+    .form-group {
+        margin-bottom: 20px; 
+    }
+
+    label {
+        display: block; 
+        margin-bottom: 5px; 
+        color: #004F53; 
+    }
+
+    input[type="text"],
+    input[type="url"],
+    input[type="date"],
+    select {
+        width: calc(100% - 20px); 
+        padding: 0px; 
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    input[type="submit"] {
+        background-color: #F9E900; 
+        color: #004F53; 
+        border: none;
+        cursor: pointer;
+        padding: 10px 15px; 
+        border-radius: 5px;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #007A88; 
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    td a {
+        display: inline-block;
+        width: 100%;
+        word-wrap: break-word;
+        white-space: nowrap;   
+        overflow: hidden;      
+        text-overflow: ellipsis;
+    }
+
+    .user-name {
+        font-size: 24px;   
+        font-weight: bold;  
+        color: #009688;     
+        text-align: center; 
+        margin: 20px 0;     
+        padding: 10px;       
+        border: 2px solid #009688;  
+        border-radius: 5px;  
+        background-color: #f0f8ff;  
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  
+    }
+    /* New Media Query:  */
+    /* Responsive Design */
+@media (max-width: 1024px) {
+    table {
+        width: 100%;
+    }
+    th, td {
+        font-size: 13px;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 768px) {
+    th:nth-child(4), td:nth-child(4),  
+    th:nth-child(5), td:nth-child(5),  
+    th:nth-child(7), td:nth-child(7)  /* Hide Interview Date */ {
+        display: none;
+    }
+
+    th, td {
+        font-size: 12px;
+        padding: 5px;
+    }
+}
+
+@media (max-width: 576px) {
+    table {
+        display: none; 
+    }
+    
+    .job-card {
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin-bottom: 10px;
+        background-color: #fff;
+    }
+
+    .job-card .job-item {
+        margin-bottom: 8px;
+    }
+
+    .job-card .job-item label {
+        font-weight: bold;
+        display: block;
+    }
+
+    .job-card .job-item span {
+        display: block;
+        color: #004F53;
+    }
+}
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body> 
+
+    <div class="sidebar">
+        <h2>Dashboard</h2> 
+        <a href="{% url 'job_list' %}">Job List</a>
+        <a href="{% url 'job_create' %}">Add Job</a>
+        <a href="">Analytics</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+
+    
+    <div class="main-content">
+        <h1>Job List</h1>
+        <p class="btn" style="font-size: 18px; color: #004F53; display: inline-block; margin-right: 20px; background-color: #F9E900;">
+            Jobs Count: {{ jobs.count }}
+        </p>
+
+        <h3 class="user-name">{{ user | title | upper }}</h3>
+        <table>
+            <tr>
+                <th>Job Category</th>
+                <th>Job Level</th>
+                <th>Company Name</th>
+                <th style="width: 240px;">Reference Link</th>
+                <th>Employment Type</th>
+                <th style="width: 120px;">Application Status</th>
+                <th>Interview Date</th>
+                <th>Actions</th>
+            </tr>
+            {% if jobs %}
+            {% for job in jobs %}
+            <tr>
+                <td>{{ job.job_category }}</td>
+                <td>{{ job.job_level }}</td>
+                <td>{{ job.company_name }}</td>
+                <td><a href="{{ job.reference_link }}" target="_blank" style="width: 240px; color:#457f85">{{ job.reference_link }}</a></td>
+                <td>{{ job.employment_type }}</td>
+                <td>{{ job.application_status }}</td>
+                <td>{{ job.interview_date | date:"Y-m-d" }}</td> 
+                <td>
+                    <a href="{% url 'job_update' job.id %}" title="Edit" class="btn" style="display:inline; font-size: 16px; color: rgb(75, 255, 47);">
+                        <i class="fa fa-edit"></i>
+                    </a>
+                    <form action="{% url 'job_delete' job.id %}" method="POST" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn" title="Delete" style="border:none; background:none; margin:0px; font-size: 16px; color: red;">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="8" style="text-align: center; font-size: 15px;">No Jobs Application Available.</td>
+            </tr>
+            {% endif %}
+        </table>
+        
+
+    </div>
+</body>
+</html> -->
+ 
+
+<!-- Extra Code of original tag: -->
+                <!-- 
+                    <table>
+                        <tr>
+                        <th>Job Category</th>
+                        <th>Job Level</th>
+                        <th>Company Name</th>
+                        <th style="width: 240px;">Reference Link</th>
+                        <th >Employment Type</th>
+                        <th style="width: 120px;">Application Status</th>
+                        <th>Interview Date</th>
+                        <th>Actions</th>
+                    </tr>
+                    {% if jobs %}
+                    {% for job in jobs %}
+                    <tr>
+                        <td>{{ job.job_category }}</td>
+                        <td>{{ job.job_level }}</td>
+                        <td>{{ job.company_name }}</td>
+                        <td><a href="{{ job.reference_link }}" target="_blank" style="width: 240px; color:#457f85">{{ job.reference_link }}</a></td>
+                        <td>{{ job.application_status }}</td>
+                        <td>{{ job.employment_type }}</td>
+                        <td>{{ job.interview_date | date:"Y-m-d" }}</td> 
+                        <td>
+                            <a href="{% url 'job_update' job.id %}" title="Edit" class="btn" style="display:inline; font-size: 16px; color: #0000EE">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            
+                            <form action="{% url 'job_delete' job.id %}" method="POST" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn" title="Delete" style="border:none; background:none; margin:0px; font-size: 16px; color: red;">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+        
+                    </tr>
+        
+                    {% endfor %}
+                    {% else %}
+                    <p>No jobs available.</p>
+                    {% endif %}
+                </table> -->
+                <!-- ---------------------------- -->
+                
+                <!-- <a href="{% url 'job_create' %}" class="btn" style="padding: 10px 20px; background-color: #F9E900; color: #004F53; border-radius: 5px; text-decoration: none; margin-left: 10px;">
+                    Add Job
+                </a>   -->
+                

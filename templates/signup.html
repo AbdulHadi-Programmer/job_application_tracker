@@ -1,4 +1,4 @@
-{% load static %}
+<!-- {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,29 +35,27 @@
             margin-left: 20px;
         }
         
-        /* Label styling */
+        
         label {
             display: block;
             font-weight: bold;
-            color: #1976d2; /* Blue */
+            color: #1976d2; 
             margin-bottom: 5px;
         }
         
-        /* Input fields */
         input {
             width: 100%;
             padding: 10px;
             margin-bottom: 15px;
-            border: 1px solid #bbdefb; /* Light blue border */
+            border: 1px solid #bbdefb;
             border-radius: 5px;
             box-sizing: border-box;
         }
-        
-        /* Button styling */
+
         button {
             width: 100%;
             padding: 10px;
-            background-color: #2196f3; /* Blue */
+            background-color: #2196f3;
             color: white;
             border: none;
             border-radius: 5px;
@@ -67,10 +65,9 @@
         }
         
         button:hover {
-            background-color: #1976d2; /* Darker blue */
+            background-color: #1976d2; 
         }
         
-        /* Redirect link */
         p {
             text-align: center;
             font-size: 14px;
@@ -78,7 +75,7 @@
         }
         
         a {
-            color: #0d47a1; /* Blue for the login link */
+            color: #0d47a1; 
             text-decoration: none;
             display: inline-block;
             justify-content: center;
@@ -107,9 +104,180 @@
         <input type="password" name="password" required><br> <br> 
         
         <button type="submit">Sign Up</button> <br> <br>
-        <a href="{% url 'login' %}">Already have an account?</a>
     </form>
     
+</body>
+</html> -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    
+    <style>
+        /* Applying the previously provided CSS styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e3f2fd; /* Light blue background */
+            margin: 0;
+            padding: 0;
+            
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Form container styling */
+        form {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        /* Heading styling */
+        h2 {
+            text-align: center;
+            color: #0d47a1; /* Dark blue */
+            margin-bottom: 20px;
+            margin-top: 50px;
+        }
+
+        /* Label styling */
+        label {
+            display: block;
+            font-weight: bold;
+            color: #1976d2; /* Blue */
+            margin-bottom: 5px;
+        }
+
+        /* Input fields */
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #bbdefb; /* Light blue border */
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        /* Button styling */
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #2196f3; /* Blue */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #1976d2; /* Darker blue */
+        }
+
+        /* Redirect link */
+        p {
+            text-align: center;
+            font-size: 14px;
+            color: #555;
+        }
+
+        a {
+            color: #0d47a1; /* Blue for the signup link */
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 768){
+            .form{
+                margin-left: 30px;
+                margin-right: 30px;
+            }
+            .body{
+                margin-left: 30px;
+                margin-right: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container signup-container">
+    <form method="post">
+        <h2>Signup</h2>
+        {% csrf_token %}
+        
+        {% if error_json %}
+            <div class="alert alert-danger">
+                <h4>Please fix the following errors:</h4>
+                <ul>
+                    {% for field, errors in error_json.items %}
+                        {% for error in errors %}
+                            <li>{{ error.message }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+    
+        <div class="form-group">
+            <label for="full_name">Full Name</label>
+            <input type="text" id="full_name" name="full_name" required>
+        </div>
+    
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+    
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+    
+        <div class="form-group">
+            <label for="confirm_password">Confirm Password</label>
+            <input type="password" id="confirm_password" name="confirm_password" required>
+        </div>
+    
+        <div class="form-group">
+            <label for="job_title">Job Title</label>
+            <input type="text" id="job_title" name="job_title">
+        </div>
+    
+        <div class="form-group">
+            <label for="company_name">Company Name</label>
+            <input type="text" id="company_name" name="company_name">
+        </div>
+    
+        <div class="form-group">
+            <label for="country">Country</label>
+            <input type="text" id="country" name="country">
+        </div>
+    
+        <button type="submit">Signup</button>
+    </form>
+
+</div>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
 

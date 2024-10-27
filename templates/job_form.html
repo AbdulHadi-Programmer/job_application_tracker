@@ -5,205 +5,410 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Job</title>
-        <style>
-            /* Same styles as before */
-            body {
-                margin: 0;
-                font-family: Arial, sans-serif;
-                background-color: #f4f4f4;
-            }
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        h1 {
+            text-align: center;
+            color: #000000;
+            text-decoration: underline;
+            margin: 10px 10px 40px;
+        }
 
-            .container {
-                display: flex;
-            }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        input[type="text"], input[type="url"], input[type="date"], select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 18px;
+            box-sizing: border-box;
+        }
 
-            .sidebar {
-                background-color: #004F53;
-                width: 200px;
-                height: 100vh;
-                padding: 20px;
-                position: fixed;
-                color: white;
-            }
+        .btn {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            background-color: #00C2D1;
+            color: white;
+            font-size: 18px;
+            min-width: 120px;
+        }
+        
+        .btn:hover {
+            opacity: 0.8;
+        }
+        
+        body {
+            margin: 0;
+            /* font-family: Helvetica, Roboto; */
+            background-color: #f4f4f4; 
+        }
+            
+        .container {
+            display: flex;
+        }
+                
+        .sidebar {
+            width: 270px; 
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            z-index: 1; 
+            background-color: #264653;  
+        }
+        
+        .sidebar a {
+            margin-left: 20px;
+            padding: 10px;
+        }
+        
+        .sidebar h2 { 
+            color: #fff8f8;
+            text-align: center;
+            margin-bottom: 40px;
+            margin-top: 40px;
+        }
 
-            .sidebar h2 {
-                color: #00C2D1;
-                text-align: center;
-                margin-bottom: 40px;
-            }
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            color: #fff;
+            padding: 10px;
+            margin: 10px 0;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+        }
 
-            .sidebar a {
-                display: block;
-                color: #fff;
-                padding: 10px;
-                margin: 10px 0;
-                text-decoration: none;
-                border-radius: 5px;
-                transition: background-color 0.3s;
-            }
+        .sidebar a:hover {
+            background-color:  #00C2D1; 
+            margin-right: 30px!important;
+        }
 
-            .sidebar a:hover {
-                background-color: #00C2D1;
-            }
+        .main-content {
+            margin-left: 270px;
+            padding: 20px;
+            flex-grow: 1;
+        }
 
-            .main-content {
-                margin-left: 220px;
-                padding: 40px;
-                flex-grow: 1;
-            }
+        h1 {
+            text-align: center;
+            color: #000000;
+            text-decoration: underline;
+            margin-top: 0px;
+            margin: 10px 10px 40px;
+        }
+        
+        .hamburger {
+            display: none;
+        }
+        
+        .form-container {
+            margin: 0 300px;
+            padding: 20px;
+            background-color: #f4f9fc;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            font-family: 'Times New Roman';
+        }
 
-            h1 {
-                text-align: center;
-                /* color: #00C2D1; */
-                color: #000000;
-                text-decoration: underline;
-                margin: 0 0 20px;
-            }
+        .input['text']{
+            font-family: 'Times New Roman';
+        }
 
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); 
+            display: none; 
+            z-index: 999; 
+        }
+        @media (max-width: 768px) {
+            label {
+                font-size: 14px;
+            }
             .form-container {
-                margin-top: 40px;
-                text-align: center;
-                background-color: #ffffff;
+                margin: 20px;
+                margin-left: 40px;
                 padding: 20px;
-                border-radius: 5px;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-                max-width: 500px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-
-            .btn {
-                padding: 10px 20px; /* Adjust padding for buttons */
-                background-color: transparent; /* Change background to transparent */
-                color: black; /* Text color */
-                border: none; /* Remove border */
-                cursor: pointer; /* Change cursor to pointer */
-                margin: 5px;
-                text-decoration: none; /* Remove underline */
-                transition: background-color 0.3s; /* Smooth background transition */
-            }
-
-            .btn:hover {
-                background-color: #007A88; /* Change background on hover */
+                background-color: #f4f9fc;
+                border-radius: 10px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                margin-left:  0px !important;
             }
 
             input[type="text"],
             input[type="url"],
             input[type="date"],
             select {
-                width: calc(100% - 20px);
-                padding: 10px;
-                border: 1px solid #ddd;
-                border-radius: 5px;
-                margin-bottom: 20px;
-                transition: border-color 0.3s;
+                font-size: 14px; 
+                padding: 5px;
+                font-family: 'Times New Roman', Times, serif !important;
+                
             }
-
-            label {
+            
+            .btn {
+                font-size: 14px;
+                justify-content: center;
+                text-align: center;
+                background-color: #00C2D1;
+            }
+            
+            .hamburger {
                 display: block;
-                text-align: left;
-                margin-bottom: 5px;
-                color: #004F53;
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                font-size: 24px;
+            }
+            
+            h1 {
+                text-align: center;
+                color: #000000;
+                text-decoration: underline;
+                margin-top: 0;
+                margin-bottom: 30px;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .main-content {
+                margin-right:  0px !important;
+            }    
+        }
+            
+        @media (max-width: 1024px) {
+            h1 {
+                text-align: center;
+                color: #000000;
+                text-decoration: underline;
+                margin-top: 0px;
+                margin-bottom: 30px;
+            }
+            
+            .sidebar {
+                display: none; 
+                width: 60%; 
+                top: 0; 
+                left: 0;
+                position: fixed; 
+                height: 100vh; 
+                z-index: 1000; 
+                overflow-y: auto;
+            }
+            .sidebar a {
+                margin-left: 20px;
+                margin-right: 20px;
+                padding: 10px;
+                padding-right: 20px;
+                font-size: 15px;
             }
 
-            input[type="text"]:focus,
-            input[type="url"]:focus,
-            input[type="date"]:focus,
-            select:focus {
-                border-color: #00C2D1;
-                outline: none;
+            .hamburger {
+                display: block; 
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                font-size: 24px; 
+            }
+            
+            .actions {
+                margin-top: 10px;
+                display: flex;
+                justify-content: space-between;
+            }
+            
+            .btn {
+                color: white;
+                padding: 8px 15px;
+            }
+            
+            .btn-edit {
+                background-color: #2a9d8f;
+            }
+            
+            .btn-delete {
+                background-color: red;  
             }
 
-            input[type="submit"] {
-                background-color: #F9E900;
-                color: #004F53;
-                border: none;
-                cursor: pointer;
-                padding: 10px 15px;
-                border-radius: 5px;
-                margin-top: 20px;
-                transition: background-color 0.3s;
+            .btn:hover {
+                opacity: 0.8;
             }
+            .main-content {
+                margin: 10px;
+            }
+            
+        }
+        .form-buttons {
+            align-items: center;
+            justify-content: center; 
+        }
+        
 
-            input[type="submit"]:hover {
-                background-color: #007A88;
-            }
-        </style>
+    </style>
 </head>
-<body>
+<body> 
 
-    <div class="sidebar">
-        <h2>Dashboard</h2>
-        <a href="{% url 'job_list' %}">Job List</a>
-        <a href="{% url 'job_create' %}">Add Job</a>
-
-        <a href="#">Email Template</a>
-        <a href="#">Send Email </a>
+    <div class="hamburger" onclick="toggleSidebar()">
+        <i class="fa fa-bars"></i>
     </div>
-
-<div class="main-content">
-    <h1>Add Job</h1>
-    <div class="form-container">
+    
+    <div class="sidebar" id="sidebar" style="padding-left: 20px; margin-right: 15px; z-index: 3;">
+        <h2>Dashboard</h2>
+        
+        <!-- <a href="{% url 'job_list' %}">Job Tracker</a>
+        <a href="{% url 'job_create' %}">Add Application</a>
+        <a href="{% url 'feedback' %}">Your Thoughts</a>
+        <a href="{% url 'simple_analytics' %}">Application Stats</a>
+        <a href="{% url 'logout' %}">Logout</a> -->
+        
+        <a href="{% url 'job_list' %}"> <i class="fas fa-clipboard-list" style="padding-right: 10px;"></i> Job Tracker</a>
+        <a href="{% url 'job_create' %}"> <i class="fas fa-plus-square" style="padding-right: 10px;"></i> Add Application</a>
+        <a href="{% url 'feedback' %}"> <i class="fas fa-comment" style="padding-right: 10px;"></i>Your Thoughts</a>
+        <a href="{% url 'simple_analytics' %}"> <i class="fas fa-chart-bar" style="padding-right: 10px;"></i>Application Stats</a>
+        <a href="{% url 'logout' %}"> <i class="fas fa-power-off" style="padding-right: 10px;"></i> Logout</a>
+       
+    </div>
+    
+    <div class="overlay" id="overlay" onclick="closeSidebar()" style="display: none;"></div>
+    
+    <div class="main-content">
+        <h1 style="text-decoration: none;">Add Application</h1>
         <form method="POST">
             {% csrf_token %}
-            
-            <!-- Form fields updated according to the model -->
-            <label for="job_category">Job Category:</label>
-            <input type="text" id="job_category" name="job_category" required>
-
-            <label for="job_level">Job Level:</label>
-            <select id="job_level" name="job_level" required>
-                <option value="">Select Job Level</option>
-                <option value="intern">Intern</option>
-                <option value="junior">Junior</option>
-                <option value="mid">Mid-Level</option>
-                <option value="senior">Senior</option>
-                <option value="lead">Lead</option>
-                <option value="manager">Manager</option>
-                <option value="director">Director</option>
-                <option value="vp">Vice President</option>
-                <option value="c_level">C-Level</option>
-            </select>
-
-            <label for="company_name">Company Name:</label>
-            <input type="text" id="company_name" name="company_name" required>
-
-            <label for="reference_link">Reference Link:</label>
-            <input type="url" id="reference_link" name="reference_link" required>
-
-            <label for="employment_type">Employment Type:</label>
-            <select id="employment_type" name="employment_type" required>
-                <option value="">Select Employment Type</option>
-                <option value="full_time">Full-Time</option>
-                <option value="part_time">Part-Time</option>
-                <option value="contract">Contract</option>
-                <option value="temporary">Temporary</option>
-                <option value="internship">Internship</option>
-                <option value="freelance">Freelance</option>
-                <option value="remote">Remote</option>
-                <option value="hybrid">Hybrid</option>
-                <option value="apprenticeship">Apprenticeship</option>
-            </select>
-
-            <label for="application_status">Application Status:</label>
-            <select id="application_status" name="application_status" required>
-                <option value="pending">Pending</option>
-                <option value="applied">Applied</option>
-                <option value="interview">Interview Scheduled</option>
-                <option value="selected">Selected</option>
-                <option value="rejected">Rejected</option>
-                <option value="offer_accepted">Offer Accepted</option>
-                <option value="offer_declined">Offer Declined</option>
-            </select>
-
-            <label for="interview_date">Interview Date:</label>
-            <input type="date" id="interview_date" name="interview_date">
-
-            <input type="submit" value="Save" class="btn">
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="job_category">Job Category:</label>
+                    <input type="text" id="job_category" name="job_category" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="job_level">Job Level:</label>
+                    <select id="job_level" name="job_level" required>
+                        <option value="">Select Job Level</option>
+                        <option value="intern">Intern</option>
+                        <option value="junior">Junior</option>
+                        <option value="mid">Mid-Level</option>
+                        <option value="senior">Senior</option>
+                        <option value="lead">Lead</option>
+                        <option value="manager">Manager</option>
+                        <option value="director">Director</option>
+                        <option value="vp">Vice President</option>
+                        <option value="c_level">C-Level</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="company_name">Company Name:</label>
+                    <input type="text" id="company_name" name="company_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="company_email">Company Email:</label>
+                    <input type="text" id="company_email" name="company_email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="reference_link">Reference Link:</label>
+                    <input type="url" id="reference_link" name="reference_link" required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="employment_type">Employment Type:</label>
+                    <select id="employment_type" name="employment_type" required>
+                        <option value="">Select Employment Type</option>
+                        <option value="full_time">Full-Time</option>
+                        <option value="part_time">Part-Time</option>
+                        <option value="contract">Contract</option>
+                        <option value="temporary">Temporary</option>
+                        <option value="internship">Internship</option>
+                        <option value="freelance">Freelance</option>
+                        <option value="remote">Remote</option>
+                        <option value="hybrid">Hybrid</option>
+                        <option value="apprenticeship">Apprenticeship</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="application_status">Application Status:</label>
+                    <select id="application_status" name="application_status" required>
+                        <option value="pending">Pending</option>
+                        <option value="applied">Applied</option>
+                        <option value="interview">Interview Scheduled</option>
+                        <option value="selected">Selected</option>
+                        <option value="rejected">Rejected</option>
+                        <option value="offer_accepted">Offer Accepted</option>
+                        <option value="offer_declined">Offer Declined</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="interview_date">Interview Date:</label>
+                    <input type="date" id="interview_date" name="interview_date">
+                </div>
+                
+                <div class="form-buttons" style="text-align: center;">
+                    <input type="submit" value="Save" class="btn" style="margin: 5px; padding: 5px 10px; font-size: 15px;" > <br> <br>
+                    <a href="{% url 'job_list' %}" class="btn_back-btn" style="text-decoration: none;  font-weight: bold !important;">Back to Job List</a>
+                </div>
+            </div>
         </form>
-        <a href="{% url 'job_list' %}" class="btn">Back to Job List</a>
     </div>
-</div>
+    
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
 
+            if (sidebar.style.display === 'block') {
+                sidebar.style.display = 'none';
+                overlay.style.display = 'none'; // Hide overlay
+            } else {
+                sidebar.style.display = 'block';
+                overlay.style.display = 'block'; // Show overlay
+            }
+        }
+
+    
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+    
+            sidebar.style.display = 'none'; // Hide sidebar
+            overlay.style.display = 'none'; // Hide overlay
+        }
+    </script>
+    
+    <style>
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2; /* Adjust as needed */
+            display: none; /* Hide by default */
+        }
+    
+    </style>
+    
 </body>
 </html>

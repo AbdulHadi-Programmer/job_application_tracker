@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <style>
+        
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+    }
+
+    .container {
+        display: flex;
+    }
+    .sidebar {
+        background-color: #004F53;
+        width: 200px;
+        height: 100vh;
+        padding: 20px;
+        position: fixed;
+        color: white;
+    }
+    
+    .sidebar h2 {
+        color: #fff8f8;
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    
+    .sidebar a {
+        display: flex;
+        align-items: center;
+        color: #fff;
+        padding: 10px;
+        margin: 10px 0;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+    .sidebar a:hover {
+        background-color: #00C2D1;
+    }
+    
+    .sidebar i {
+        margin-right: 10px;
+    }
+
+    .main-content {
+        margin-left: 220px;
+        padding: 40px;
+        flex-grow: 1;
+    }
+    
+    .user-name {
+        font-size: 24px;  /* Adjust the font size */
+        font-weight: bold; /* Make the text bold */
+        color: #009688;    /* Teal color for the text */
+        text-align: center; /* Center align the text */
+        margin: 20px 0;    /* Add margin above and below the heading */
+        padding: 10px;      /* Add padding for better spacing */
+        border: 2px solid #009688; /* Teal border */
+        border-radius: 5px; /* Rounded corners */
+        background-color: #f0f8ff; /* Light background color */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    }
+    /* -------------------------- */
+
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Dashboard</h2> 
+        <!-- <a href="{% url 'profile' %}">Profile </a> -->
+        <a href="{% url 'job_list' %}">Job List</a>
+        <a href="{% url 'job_create' %}">Add Job</a>
+        <a href="">Analytics</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+    
+    <div class="main-content">
+        <h3 class="user-name">{{ user | title | upper }}</h3>
+    </div>
+
+</body>
+</html>
