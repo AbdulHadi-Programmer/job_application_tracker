@@ -58,9 +58,6 @@ class Add_Job(models.Model):
         return f"{self.job_category} at {self.company_name} - Status: {self.application_status}"
 
 
-class Add_Email_Template(models.Model):
-    title = models.CharField(max_length=255, null=True, blank=True)
-    body = models.TextField(max_length=5000)
 
 class Feedback(models.Model):
     name = models.CharField(max_length=150, null=True, blank=True)
@@ -77,4 +74,60 @@ class Feedback(models.Model):
 
     def __str__(self):
         return self.name if self.name else "Anonymous Feedback"
+
+# from django.db import models
+# from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+# from django.core.validators import RegexValidator
+# from django.contrib.auth.models import User
+
+# # Create your models here.
+# class OTP(models.Model):
+#     user = models.OneToOneField(User, on_delete=models.CASCADE)
+#     otp_code = models.CharField(max_length=6)
+#     created_at = models.DateTimeField(auto_now_add=True)
+
+# class UserManager(BaseUserManager):
+#     def create_user(self, username, full_name, email, password=None, **extra_fields):
+#         if not email:
+#             raise ValueError("The Email field is required")
+#         if not username:
+#             raise ValueError("The Username field is required")
+
+#         email = self.normalize_email(email)
+#         user = self.model(username=username, full_name=full_name, email=email, **extra_fields)
+#         user.set_password(password)
+#         user.save(using=self._db)
+#         return user
+
+#     def create_superuser(self, username, full_name, email, password=None, **extra_fields):
+#         extra_fields.setdefault('is_staff', True)
+#         extra_fields.setdefault('is_superuser', True)
+
+#         return self.create_user(username, full_name, email, password, **extra_fields)
+
+
+# class User(AbstractBaseUser):
+#     username = models.CharField(
+#         max_length=30,
+#         unique=True,
+#         validators=[RegexValidator(
+#             regex=r'^[a-zA-Z0-9]+$',
+#             message="Username must contain only letters and numbers, with no spaces or special characters."
+#         )]
+#     )
+#     full_name = models.CharField(max_length=100)
+#     email = models.EmailField(unique=True)
+#     job_title = models.CharField(max_length=100, blank=True, null=True)  # Optional
+#     company_name = models.CharField(max_length=100, blank=True, null=True)  # Optional
+#     country = models.CharField(max_length=50)
+#     is_active = models.BooleanField(default=True)
+#     is_staff = models.BooleanField(default=False)
+
+#     objects = UserManager()
+
+#     USERNAME_FIELD = 'username'
+#     REQUIRED_FIELDS = ['full_name', 'email', 'country']
+
+#     def __str__(self):
+#         return self.username
 

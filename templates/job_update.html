@@ -13,7 +13,6 @@
             h1 {
             text-align: center;
             color: #000000;
-            text-decoration: underline;
             margin: 10px 10px 40px;
         }
 
@@ -55,8 +54,8 @@
         
         body {
             margin: 0;
-            font-family: Helvetica, Roboto;
-            background-color: #f4f4f4; 
+            font-family: 'Poppins', sans-serif;
+            background-color: #ffffff; 
         }
             
         .container {
@@ -69,7 +68,7 @@
             position: fixed;
             left: 0;
             z-index: 1; 
-            background-color: #264653;  
+            background-color: #4e9b5f ;  
         }
         
         .sidebar a {
@@ -96,7 +95,7 @@
         }
         
         .sidebar a:hover {
-            background-color:  #00C2D1; 
+            background-color:  #ffcc00; 
             margin-right: 30px!important;
         }
         
@@ -116,16 +115,16 @@
 
         .hamburger {
             display: none;
-        }
+        } 
         
         .form-container {
             margin: 0 300px;
             padding: 20px;
-            /* margin-right: 10px; */
-            background-color: #f4f9fc;
+            background-color: #e3fced;
             border-radius: 10px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
+        
         .form-group {
             margin-bottom: 20px;
         }
@@ -150,30 +149,31 @@
                 box-sizing: border-box;
                 padding: 5px !important;
             }
+
             label {
-            display: block;
-            margin: 15px 0 5px;
-            font-weight: bold;
-            font-size: 14px;
-        }
+                display: block;
+                margin: 15px 0 5px;
+                font-weight: bold;
+                font-size: 14px;
+            }
+        
             .form-container {
                 margin: 20px;
                 margin-left: 40px;
                 padding: 20px;
-                background-color: #f4f9fc;
+                background-color: #e3fced;
                 border-radius: 10px;
                 box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
                 margin-left:  0px !important;
             }
-
+            
             input[type="text"],
             input[type="url"],
             input[type="date"],
             select {
                 font-size: 14px; 
                 padding: 0px;
-                
-            
+                font-family: 'Poppins', sans-serif; 
             }
             
             .btn {
@@ -194,7 +194,7 @@
             h1 {
                 text-align: center;
                 color: #000000;
-                text-decoration: underline;
+                /* text-decoration: underline; */
                 margin-top: 0;
                 margin-bottom: 30px;
             }
@@ -207,12 +207,26 @@
                 margin-right:  0px !important;
             }    
         }
-            
+        
         @media (max-width: 1024px) {
+            .hamburger {
+                display: block;
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                font-size: 24px;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            .form-container {
+                margin: 0px !important;
+            }
             h1 {
                 text-align: center;
                 color: #000000;
-                text-decoration: underline;
+                /* text-decoration: underline; */
                 margin-top: 0px;
                 margin-bottom: 30px;
             }
@@ -255,7 +269,7 @@
             }
             
             .btn-edit {
-                background-color: #2a9d8f;
+                background-color:  #ffcc00 !important;
             }
             
             .btn-delete {
@@ -269,7 +283,7 @@
                 margin: 10px;
             }
             
-            label {
+        label {
             display: block;
             margin: 15px 0 5px;
             font-weight: bold;
@@ -292,12 +306,6 @@
     <div class="sidebar" id="sidebar" style="padding-left: 20px; margin-right: 15px;">
         <h2>Dashboard</h2>
         
-        <!-- <a href="{% url 'job_list' %}">Job Tracker</a>
-        <a href="{% url 'job_create' %}">Add Application</a>
-        <a href="{% url 'feedback' %}">Your Thoughts</a>
-        <a href="{% url 'simple_analytics' %}">Application Stats</a>
-        <a href="{% url 'logout' %}">Logout</a> -->
-
         <a href="{% url 'job_list' %}"> <i class="fas fa-clipboard-list" style="padding-right: 10px;"></i> Job Tracker</a>
         <a href="{% url 'job_create' %}"> <i class="fas fa-plus-square" style="padding-right: 10px;"></i> Add Application</a>
         <a href="{% url 'feedback' %}"> <i class="fas fa-comment" style="padding-right: 10px;"></i>Your Thoughts</a>
@@ -309,10 +317,10 @@
     <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
     <div class="main-content">
-        <h1>Edit Application</h1>
         <form method="POST">
             {% csrf_token %}
             <div class="form-container" >
+                <h1 style="text-decoration: none;">Edit Application</h1>
                 
                 <div class="form-group">
                     <label for="job_category">Job Category:</label>
@@ -357,8 +365,8 @@
 
 
                 <div class="form-buttons" style="margin-top: 30px; display: flex; flex-direction: column; align-items: center;">
-                    <input type="submit" value="Update" class="btn" style="background-color: #00C2D1;  margin-bottom: 15px; padding: 5px 10px; font-size: 15px; color: #fff;"> 
-                    <a href="{% url 'job_list' %}" class="btn_back-btn" style="text-decoration: none;  font-weight: bold !important;">Back to Job List</a>
+                    <input type="submit" value="Update" class="btn" style="min-width: 120px; background-color: #ffcc00;  margin: 15px !important; padding: 5px 10px; font-size: 15px; color: #fff; font-weight: bold;"> 
+                    <a href="{% url 'job_list' %}" class="btn_back-btn" style="text-decoration: none;  font-weight: bold !important; color: black;">Back to Job List</a>
                 </div>
             </div>
         </form>

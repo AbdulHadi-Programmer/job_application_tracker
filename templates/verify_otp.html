@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        form {
+            background-color: #ffffff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        h1 {
+            color: #333333;
+            margin-bottom: 10px;
+        }
+        .error, .info {
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .error {
+            background-color: #d9534f;
+        }
+        .info {
+            background-color: #5bc0de;
+        }
+        .otp-container {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+        .otp-input {
+            width: 40px;
+            height: 40px;
+            font-size: 18px;
+            text-align: center;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .timer {
+            font-size: 16px;
+            color: #555555;
+        }
+    </style>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        <h1>OTP Verification</h1>
+        <p>Please check your email for the OTP and enter it below.</p>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+        {% if info %}
+            <p class="info">{{ info }}</p>
+        {% endif %}
+
+        <div class="otp-container">
+            <input type="text" name="otp1" class="otp-input" maxlength="1" id="otp1" {% if remaining_time > 0 %} required {% endif %} oninput="moveToNext(this, 'otp2')">
+            <input type="text" name="otp2" class="otp-input" maxlength="1" id="otp2" {% if remaining_time > 0 %} required {% endif %} oninput="moveToNext(this, 'otp3')">
+            <input type="text" name="otp3" class="otp-input" maxlength="1" id="otp3" {% if remaining_time > 0 %} required {% endif %} oninput="moveToNext(this, 'otp4')">
+            <input type="text" name="otp4" class="otp-input" maxlength="1" id="otp4" {% if remaining_time > 0 %} required {% endif %} oninput="moveToNext(this, 'otp5')">
+            <input type="text" name="otp5" class="otp-input" maxlength="1" id="otp5" {% if remaining_time > 0 %} required {% endif %} oninput="moveToNext(this, 'otp6')">
+            <input type="text" name="otp6" class="otp-input" maxlength="1" id="otp6" {% if remaining_time > 0 %} required {% endif %}>
+        </div>
+
+        {% if remaining_time > 0 %}
+            <p class="timer">Time remaining: <span id="timer">{{ remaining_time }}</span> seconds</p>
+            <button type="submit">Verify OTP</button>
+        {% else %}
+            <button type="submit" name="resend_otp">Resend OTP</button>
+        {% endif %}
+    </form>
+
+    <script>
+        function moveToNext(current, nextFieldId) {
+            if (current.value.length >= 1) {
+                document.getElementsByName(nextFieldId)[0].focus();
+            }
+        }
+
+        let timerElement = document.getElementById('timer');
+        if (timerElement) {
+            let remainingTime = parseInt(timerElement.textContent, 10);
+            let interval = setInterval(() => {
+                if (remainingTime <= 1) {
+                    clearInterval(interval);
+                    location.reload();
+                } else {
+                    remainingTime--;
+                    timerElement.textContent = remainingTime;
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

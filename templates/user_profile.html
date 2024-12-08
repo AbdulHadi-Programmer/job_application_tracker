@@ -4,55 +4,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">   
     <style>
         
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-    }
+body {
+    margin: 0;
+    background-color: #e3fced; /* Soft Beige for overall background */
+    font-family: 'Poppins', sans-serif;
+}
 
-    .container {
-        display: flex;
-    }
-    .sidebar {
-        background-color: #004F53;
-        width: 200px;
-        height: 100vh;
-        padding: 20px;
-        position: fixed;
-        color: white;
-    }
-    
-    .sidebar h2 {
-        color: #fff8f8;
-        text-align: center;
-        margin-bottom: 40px;
-    }
-    
-    .sidebar a {
-        display: flex;
-        align-items: center;
-        color: #fff;
-        padding: 10px;
-        margin: 10px 0;
-        text-decoration: none;
-        border-radius: 5px;
-    }
-    .sidebar a:hover {
-        background-color: #00C2D1;
-    }
-    
-    .sidebar i {
-        margin-right: 10px;
-    }
+.container {
+    display: flex;
+}
 
-    .main-content {
-        margin-left: 220px;
-        padding: 40px;
-        flex-grow: 1;
-    }
+.sidebar {
+    width: 270px; 
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    z-index: 1; 
+    background-color: #4e9b5f ; 
+    font-weight: bold;
+}
+
+.sidebar h2 { 
+    /* color: #f0f2f5; */ /* Soft White */
+    color: white; /* Soft White */
+    text-align: center;
+    margin-bottom: 40px;
+    margin-top: 40px;
+    /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+}
+
+.sidebar a {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    padding: 10px;
+    margin: 10px 0;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.sidebar a:hover {
+    /* background-color: #ffb400; Bright Yellow for hover effect */
+    background-color: #ffcc00;
+    margin-right: 30px!important;
+}
+
+/* Main Content */
+.main-content {
+    margin-left: 270px !important;
+    padding: 20px;
+    margin-right: 80px!important;
+    flex-grow: 1;
+}
+
+/* Heading */
+h1 {
+    /* width: 105%; */
+    text-align: center;
+    color: #000000; /* Charcoal Gray */
+    margin-top: 0px;
+    margin: 10px 10px 40px;
+    text-decoration: underline;
+}
+
     
     .user-name {
         font-size: 24px;  /* Adjust the font size */
@@ -66,23 +86,130 @@
         background-color: #f0f8ff; /* Light background color */
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
     }
+    .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    display: none; 
+    z-index: 999; 
+}
+
+@media (max-width: 768px) {
+    body{
+        background-color: #ffffff;
+    }
+
+    
+    .hamburger {
+        display: block;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        font-size: 24px;
+    }
+
+    h1 {
+        text-align: center;     
+        color: #000000;       
+        margin-top: 0;           
+        margin-bottom: 30px;    
+    }
+    
+    .main-content {
+        margin-right: 15px !important;
+    }
+    .sidebar {
+        display: none;
+    }
+}
+
+    @media (max-width: 1024px) {
+    h1 {
+        text-align: center;
+        color: #000000;
+        margin-top: 0px;
+        margin-bottom: 30px;
+    }
+
+    .sidebar {
+        display: none; 
+        width: 60%; 
+        top: 0; 
+        left: 0;
+        position: fixed; 
+        height: 100vh; 
+        z-index: 1000; 
+        overflow-y: auto;
+    }
+
+    .sidebar a {
+        margin-right: 20px;
+        padding: 10px;
+        padding-right: 20px;
+        font-size: 15px;
+    }
+
+    .hamburger {
+        display: block; 
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        font-size: 24px; 
+    }
+}
     /* -------------------------- */
 
     </style>
 </head>
 <body>
-    <div class="sidebar">
-        <h2>Dashboard</h2> 
-        <!-- <a href="{% url 'profile' %}">Profile </a> -->
-        <a href="{% url 'job_list' %}">Job List</a>
-        <a href="{% url 'job_create' %}">Add Job</a>
-        <a href="">Analytics</a>
-        <a href="{% url 'logout' %}">Logout</a>
-    </div>
     
+<div class="hamburger" onclick="toggleSidebar()">
+    <i class="fa fa-bars"></i>
+    <!-- ☰ -->
+</div>
+<div class="sidebar" id="sidebar" style="padding-left: 20px; margin-right: 15px !important; ">
+    <h2>Dashboard</h2>
+    <a href="{% url 'job_list' %}"> <i class="fas fa-clipboard-list" style="padding-right: 10px;"></i> Job Tracker</a>
+    <a href="{% url 'job_create' %}"> <i class="fas fa-plus-square" style="padding-right: 10px;"></i> Add Application</a>
+    <a href="{% url 'feedback' %}"> <i class="fas fa-comment" style="padding-right: 10px;"></i>Your Thoughts</a>
+    <a href="{% url 'simple_analytics' %}"> <i class="fas fa-chart-bar" style="padding-right: 10px;"></i>Application Stats</a>
+    <a href="{% url 'logout' %}"> <i class="fas fa-power-off" style="padding-right: 10px;"></i> Logout</a>
+    <a href="{% url 'cards' %}"> <i class="fas fa-door-open" style="padding-right: 10px;"></i> Pricing Package</a>
+    <a href="{% url 'profile' %}"> <i class="fas fa-chess" style="padding-right: 10px;"></i> Profile</a>
+</div>
+
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
     <div class="main-content">
         <h3 class="user-name">{{ user | title | upper }}</h3>
     </div>
 
+    <script>
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+
+            if (sidebar.style.display === 'block') {
+                sidebar.style.display = 'none';
+                overlay.style.display = 'none'; // Hide overlay
+
+            } else {
+                sidebar.style.display = 'block';
+                overlay.style.display = 'block'; // Show overlay
+            }
+        }
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+
+            sidebar.style.display = 'none'; // Hide sidebar
+            overlay.style.display = 'none'; // Hide overlay
+        }
+
+    </script>
 </body>
 </html>

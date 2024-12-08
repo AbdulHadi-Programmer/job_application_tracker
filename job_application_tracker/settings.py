@@ -16,12 +16,17 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-LOGIN_URL = 'login'
+# LOGIN_URL = 'login'
+
+LOGIN_URL = '/auth/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/auth/login/'
+
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Default session engine
 SESSION_COOKIE_AGE = 1209600  # Two weeks (in seconds)
 
 # AUTH_USER_MODEL = 'tracker.User'  # Adjust according to your app name and model name
-
+# AUTH_USER_MODEL = 'tracker.CustomUser'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -32,17 +37,26 @@ SECRET_KEY = 'django-insecure-*zy$9ahx^-q$fp9fb#m-_%g0fozpv(f(r1u!#n-9h7j-*=b-wa
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['192.168.2.108', 'localhost', '127.0.0.1'] # home
+ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['*']
+
+# CSRF_TRUSTED_ORIGINS = ['192.168.2.104']
+# ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.2.104']
+# ALLOWED_HOSTS = ['192.168.2.104', 'localhost', '127.0.0.1'] # home
+# ALLOWED_HOSTS = ['192.168.2.108', '127.0.0.1', 'localhost']  
+# ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '0.0.0.0']   
+
 # ALLOWED_HOSTS = ['192.168.100.176', 'localhost', '127.0.0.1'] # library
 # ALLOWED_HOSTS = ['192.168.23.148', 'localhost', '127.0.0.1']  # Redmi 12 C phone
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 # Application definition
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",     
-    "http://192.168.100.176",  # Adjust this to match your IP/domain
+    # "http://192.168.100.176",  # Adjust this to match your IP/domain
+    "http://192.168.2.104",  # Adjust this to match your IP/domain
 ]
 X_FRAME_OPTIONS = 'ALLOWALL'
 
@@ -56,6 +70,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'tracker',
     'corsheaders',
+    'authentication',
 ]
 
 MIDDLEWARE = [
@@ -67,7 +82,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',   
-    'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',    
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -134,17 +149,46 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Karachi'
 
 USE_I18N = True
 
 USE_TZ = True
 
+# settings.py
+
+# import logging
+
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'console': {
+#             'class': 'logging.StreamHandler',
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['console'],
+#             'level': 'DEBUG',
+#         },
+#     },
+# }
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = 'staticfiles/'
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'staticfiles'),
+# ]
+# STATICFILES_DIRS = [
+#     BASE_DIR / "static",  # Directory where your static files live (other than the app's static directories)
+# ]
+
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -154,6 +198,20 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ## Email: 
 # Email settings (use your email provider's details)
 
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+# DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+
+# python decouple library is perfectly working and it is used to get and store .env var so we can keep our api aur secret key even more secure
+# from decouple import config
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -161,9 +219,50 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+
+# print("EMAIL_HOST_USER:", os.getenv('EMAIL_HOST_USER'))
+# print("EMAIL_HOST_PASSWORD:", os.getenv('EMAIL_HOST_PASSWORD'))
+
+# EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+# DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+# DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
+
+import os
+
+if os.path.exists('.env'):
+    print("The .env file was found.")
+else:
+    print("The .env file was NOT found.")
+
+# print("EMAIL_HOST_USER:", config('EMAIL_HOST_USER', default='Variable not set'))
+# print("EMAIL_HOST_PASSWORD:", config('EMAIL_HOST_PASSWORD', default='Variable not set'))
+# print("DEFAULT_FROM_EMAIL:", config('DEFAULT_FROM_EMAIL', default='Variable not set'))
+
+# # Debugging output
+# print("DEBUGGING OUTPUT:")
+# print("EMAIL_HOST_USER:", config('EMAIL_HOST_USER', default='Variable not set'))
+# print("EMAIL_HOST_PASSWORD:", config('EMAIL_HOST_PASSWORD', default='Variable not set'))
+# print("DEFAULT_FROM_EMAIL:", config('DEFAULT_FROM_EMAIL', default='Variable not set'))
+
+
+# print("EMAIL_HOST_USER:", os.getenv('EMAIL_HOST_USER'))
+# print("EMAIL_HOST_PASSWORD:", os.getenv('EMAIL_HOST_PASSWORD'))
+# print("DEFAULT_FROM_EMAIL:", os.getenv('DEFAULT_FROM_EMAIL'))
+# print("EMAIL_HOST_USER:", os.environ.get('EMAIL_HOST_USER'))
+# print("EMAIL_HOST_PASSWORD:", os.environ.get('EMAIL_HOST_PASSWORD'))
+# print("DEFAULT_FROM_EMAIL:", os.environ.get('DEFAULT_FROM_EMAIL'))
 
 # This is how to get and save env 
 # save the imp var in .env file 
 # and os.getenv('variable') is used to get the specific var from .env
 
+# import python decouple library and import decouple 
+# and then use config(env_varName)

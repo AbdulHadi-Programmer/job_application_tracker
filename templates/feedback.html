@@ -13,8 +13,8 @@
     <style>
         body {
             margin: 0;
-            /* font-family: Helvetica, Roboto; */
-            background-color: #f4f4f4; 
+            background-color: #ffffff; 
+            font-family: 'Poppins', sans-serif;;
         }
             
         .container {
@@ -27,11 +27,10 @@
             position: fixed;
             left: 0;
             z-index: 1; 
-            background-color: #264653; 
+            background-color: #4e9b5f !important; 
         }
         
         .sidebar a {
-            /* margin-left: 20px; */
             padding: 10px; 
         }
         
@@ -54,28 +53,27 @@
         }
 
         .sidebar a:hover {
-            background-color:  #00C2D1;  
+            background-color:  #ffcc00;  
             margin-right: 30px!important;
         }
 
         .main-content {
             margin-left: 270px !important;
             padding: 20px;
-            margin-right: 80px!important;
+            margin-right: 80px !important;
             flex-grow: 1;
         }
 
         h1 {
             text-align: center;
             color: #000000;
-            /* text-decoration: ; */
             margin-top: 0px;
             margin: 10px 10px 40px;
             margin-left: 60px;
         }
 
         .feedback-form { 
-            background-color: #f4f9fc;
+            background-color: #e3fced;
             padding: 15px;
             margin: 20px 0;
             border-radius: 8px;
@@ -90,7 +88,8 @@
             padding: 10px;
             margin-bottom: 15px;
             border-radius: 4px; 
-            border: 1px solid #264653;
+            border: 1px solid #e3fced;
+            font-family: 'Poppins', sans-serif;
         }
 
         .feedback-form button {
@@ -126,9 +125,7 @@
         }
         
         @media (max-width: 768px) {
-            .main-content {
-                /* margin: 20px; */
-            }
+            
             h1 {
                 text-align: center;
                 color: #000000;
@@ -167,7 +164,7 @@
                 text-align: center;
                 color: #000000;
                 text-decoration: underline; 
-                margin: 10px 10px 40px 40px;
+                margin: 10px 10px 40px 10px;
             }
             
             .sidebar {
@@ -181,7 +178,6 @@
                 overflow-y: auto;
             }
             .sidebar a {
-                /* margin-left: 20px; */
                 margin-right: 20px;
                 padding: 10px;
                 padding-right: 20px;
@@ -200,8 +196,6 @@
                 display: none;
             }
             .main-content{
-                /* min-width: 750px; */
-                /* margin: 20px; */
                 padding: 0px !important;
                 margin-left: 0px !important;
                 margin-right: 0px !important;
@@ -243,14 +237,15 @@
     </div>
 
     <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
-    <!-- <div class="hamburger" onclick="toggleSidebar()">☰</div> -->
-    <div class="hamburger" onclick="toggleSidebar()"><i class="fa fa-bars"></i></div>
+    <div class="hamburger" onclick="toggleSidebar()">☰</div>
+    <!-- <div class="hamburger" onclick="toggleSidebar()"><i class="fa fa-bars"></i></div> -->
     
     <div class="main-content">
-        <h1>Website Feedback Form</h1>
- 
-<div class="feedback-form">
-    <h2 style="text-align: center;">We value your feedback!</h2>
+        
+        <div class="feedback-form">
+            <h1 >Website Feedback Form</h1>
+            <!-- style="color: #4e9b5f;" -->
+            <h2 style="text-align: center;">We value your feedback!</h2>
     <form method="POST">
         {% csrf_token %}
         
@@ -301,21 +296,14 @@
             </div>
         {% endif %}
 
-        <button type="submit" style="align-items: center;">Submit Feedback</button>
+        <button type="submit" style="align-items: center; background-color: #ffcc00; font-weight: bold;">Submit Feedback</button>
     </form>
 </div>
 
     </div>
 
     <script>
-        // function toggleSidebar() {
-        //     const sidebar = document.querySelector('.sidebar');
-        //     if (sidebar.style.display === 'none') {
-        //         sidebar.style.display = 'block';
-        //     } else {
-        //         sidebar.style.display = 'none';
-        //     }
-        // }
+
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('overlay');

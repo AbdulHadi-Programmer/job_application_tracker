@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing Plans</title>
+        <!-- Bootstrap Icons CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        /* Reset and Basic Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Pricing Container Styling */
+        .pricing-container {
+            text-align: center;
+            padding: 20px;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .pricing-container h2 {
+            font-size: 28px;
+            color: #264653;
+            margin-bottom: 16px;
+        }
+
+        .pricing-container p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: #555;
+        }
+
+        /* Pricing Plans */
+        .plans {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .plan {
+            /* background-color: #f4f9fc; */
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+            color: #333;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            /* height: 400px; */
+            height: auto;
+        }
+
+        .plan h3 {
+            font-size: 22px;
+            color: #264653;
+        }
+        
+        .plan h4 {
+            font-size: 36px;
+            color: #00C2D1;
+            margin: 12px 0;
+        }
+
+        .plan h4 span {
+            font-size: 18px;
+            color: #666;
+        }
+
+        .plan ul {
+            list-style: none;
+            padding: 0;
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .plan ul li {
+            margin: 6px 0;
+            text-align: left;
+        }
+
+        /* Call-to-action button styling */
+        .cta-button {
+            background-color: #00C2D1;
+            color: #FFFFFF;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            margin-top: auto;
+        }
+
+        .cta-button:hover {
+            background-color: #00A5B3;
+        }
+
+        /* Responsive Design */
+        @media (min-width: 768px) {
+            .plan {
+                max-width: 300px;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .plan {
+                max-width: 350px;
+            }
+        }
+    </style>
+</head>
+
+<body style="font-family: Arial, sans-serif; background-color: #f0f4f8; display: flex; flex-direction: column; align-items: center; padding: 50px; color: #333;">
+
+    <h2 style="color: #264653; margin-bottom: 30px; font-size: 2.5em; font-weight: bold; text-align: center; text-decoration: underline;">Job Tracker Features</h2>
+    <h3 style="color: #264653; margin-bottom: 30px; font-size: 2em; font-weight: bold; text-align: center;">Essential Tools for Free</h3>
+        
+    <div class="features-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; max-width: 1200px; margin: 0 auto;">
+            
+        <div class="feature-card" style="background-color: #ffffff; border: 1px solid #ddd; border-radius: 12px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); max-width: 350px; padding: 40px 30px; text-align: center; transition: transform 0.3s, box-shadow 0.3s; width: 100%; margin-bottom: 20px;">
+            <div class="feature-icon" style="font-size: 3em; color: #00c2d1; margin-bottom: 15px;"><i class="bi bi-folder-symlink"></i></div>
+            <div class="feature-title" style="font-size: 1.5em; color: #264653; margin-bottom: 15px; font-weight: bold;">Store Job Applications</div>
+            <div class="feature-description" style="font-size: 1.1em; color: #555; margin-bottom: 20px; line-height: 1.5;">Keep all your job applications organized in one place. Easily access details of each job position.</div>
+        </div>
+
+    
+        <div class="feature-card" style="background-color: #ffffff; border: 1px solid #ddd; border-radius: 12px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); max-width: 350px; padding: 40px 30px; text-align: center; transition: transform 0.3s, box-shadow 0.3s; width: 100%; margin-bottom: 20px;">
+            <div class="feature-icon" style="font-size: 3em; color: #00c2d1; margin-bottom: 15px;"><i class="bi bi-calendar2-week-fill"></i></div>
+            <div class="feature-title" style="font-size: 1.5em; color: #264653; margin-bottom: 15px; font-weight: bold;">Display Upcoming Interviews</div>
+            <div class="feature-description" style="font-size: 1.1em; color: #555; margin-bottom: 20px; line-height: 1.5;">Stay on top of your interview schedule and never miss an important meeting with recruiters.</div>
+        </div>
+
+    
+        <div class="feature-card" style="background-color: #ffffff; border: 1px solid #ddd; border-radius: 12px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); max-width: 350px; padding: 40px 30px; text-align: center; transition: transform 0.3s, box-shadow 0.3s; width: 100%; margin-bottom: 20px;">
+            <div class="feature-icon" style="font-size: 3em; color: #00c2d1; margin-bottom: 15px;"><i class="bi bi-graph-up-arrow"></i></div>
+            <div class="feature-title" style="font-size: 1.5em; color: #264653; margin-bottom: 15px; font-weight: bold;">Show Analytics</div>
+            <div class="feature-description" style="font-size: 1.1em; color: #555; margin-bottom: 20px; line-height: 1.5;">Track your job search progress with analytics, helping you improve your application strategy over time.</div>
+        </div>
+    </div>
+
+    
+    <br> <br> <br> 
+    <!-- Standard Feature -->
+    <h3 style="color: #264653; margin-bottom: 30px; font-size: 2em; font-weight: bold; text-align: center;">Job Search Essentials</h3>
+    <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+    <!-- Standard DIV Feature Container Open -->
+    <div class="features-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; max-width: 1200px; margin: 0 auto;">
+        
+        <!-- Div 1 : Career Goal Tracker -->
+        <div class="feature-card" style="background-color: #ffffff; border: 1px solid #ddd; border-radius: 12px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); max-width: 350px; padding: 40px 30px; text-align: center; transition: transform 0.3s, box-shadow 0.3s; width: 100%; margin-bottom: 20px;">
+            <div class="feature-icon" style="font-size: 3em; color: #00c2d1; margin-bottom: 15px;"><i class="bi bi-flag"></i></div>
+            <div class="feature-title" style="font-size: 1.5em; color: #264653; margin-bottom: 15px; font-weight: bold;">Career Goal Tracker</div>
+            <div class="feature-description" style="font-size: 1.1em; color: #555; margin-bottom: 20px; line-height: 1.5;">Helps users set career goals (like specific job titles or skills) and track their progress to stay motivated.</div>
+        </div>
+        
+        <!-- Div 2 : Interview  Preparation Toolkit -->
+        <div class="feature-card" style="background-color: #ffffff; border: 1px solid #ddd; border-radius: 12px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); max-width: 350px; padding: 40px 30px; text-align: center; transition: transform 0.3s, box-shadow 0.3s; width: 100%; margin-bottom: 20px;">
+            <div class="feature-icon" style="font-size: 3em; color: #00c2d1; margin-bottom: 15px;"><i class="bi-journal-text"></i></div>
+            <div class="feature-title" style="font-size: 1.5em; color: #264653; margin-bottom: 15px; font-weight: bold;">Interview Preparation Toolkit</div>
+            <div class="feature-description" style="font-size: 1.1em; color: #555; margin-bottom: 20px; line-height: 1.5;">Provides a question bank with common interview questions, a space for taking notes, and reminders for follow-up emails after interviews.</div>
+        </div>
+        
+        
+        <!-- Div 3 : Analytics and Visualization -->
+        <div class="feature-card" style="background-color: #ffffff; border: 1px solid #ddd; border-radius: 12px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); max-width: 350px; padding: 40px 30px; text-align: center; transition: transform 0.3s, box-shadow 0.3s; width: 100%; margin-bottom: 20px;">
+            <div class="feature-icon" style="font-size: 3em; color: #00c2d1; margin-bottom: 15px;"><i class="bi bi-bar-chart"></i></div>
+            <div class="feature-title" style="font-size: 1.5em; color: #264653; margin-bottom: 15px; font-weight: bold;">Analytics & Visualization</div>
+            <div class="feature-description" style="font-size: 1.1em; color: #555; margin-bottom: 20px; line-height: 1.5;">Displays basic job search metrics, such as application success rates and monthly progress tracking, using charts and graphs.</div>
+        </div>  
+        <!-- 3 -->
+        
+        <!-- Div 4 : Personalized Email Reminders -->
+        <div class="feature-card" style="background-color: #ffffff; border: 1px solid #ddd; border-radius: 12px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); max-width: 350px; padding: 40px 30px; text-align: center; transition: transform 0.3s, box-shadow 0.3s; width: 100%; margin-bottom: 20px;">
+            <div class="feature-icon" style="font-size: 3em; color: #00c2d1; margin-bottom: 15px;"><i class="bi bi-envelope-check"></i></div>
+            <div class="feature-title" style="font-size: 1.5em; color: #264653; margin-bottom: 15px; font-weight: bold;">Personalized Email Reminders</div>
+            <div class="feature-description" style="font-size: 1.1em; color: #555; margin-bottom: 20px; line-height: 1.5;">Helps users set career goals (like specific job titles or skills) and track their progress to stay motivated.</div>
+        </div>
+        
+        <!-- Div 5 : Document Organizer -->
+        <div class="feature-card" style="background-color: #ffffff; border: 1px solid #ddd; border-radius: 12px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); max-width: 350px; padding: 40px 30px; text-align: center; transition: transform 0.3s, box-shadow 0.3s; width: 100%; margin-bottom: 20px;">
+            <div class="feature-icon" style="font-size: 3em; color: #00c2d1; margin-bottom: 15px;"><i class="bi bi-folder2-open"></i></div>
+            <div class="feature-title" style="font-size: 1.5em; color: #264653; margin-bottom: 15px; font-weight: bold;">Document Organizer</div>
+            <div class="feature-description" style="font-size: 1.1em; color: #555; margin-bottom: 20px; line-height: 1.5;">Lets users store essential job documents like resumes and cover letters, with a limit of up to 5 documents.</div>
+        </div>
+        
+    </div>
+</div>
+<!-- Standard DIV Feature Container Close -->
+
+<br> <br> <br> 
+<!-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+<!-- Premium Package Features -->
+<!-- Premium Feature -->
+<h3 style="color: #264653; margin-bottom: 30px; font-size: 2em; font-weight: bold; text-align: center;">Go Premium - Full Access to All Features</h3>
+<div class="features-container" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; max-width: 1200px; margin: 0 auto;">
+    
+    
+    <!-- Div 1 : SKill Development Planner -->
+    <div class="feature-card" style="background-color: #ffffff; border: 1px solid #ddd; border-radius: 12px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); max-width: 350px; padding: 40px 30px; text-align: center; transition: transform 0.3s, box-shadow 0.3s; width: 100%; margin-bottom: 20px;">
+        
+        
+        <div class="feature-icon" style="font-size: 3em; color: #00c2d1; margin-bottom: 15px;"><i class="bi bi-lightbulb"></i></div>
+        <div class="feature-title" style="font-size: 1.5em; color: #264653; margin-bottom: 15px; font-weight: bold;">Skill Development Planner</div>
+        <div class="feature-description" style="font-size: 1.1em; color: #555; margin-bottom: 20px; line-height: 1.5;">Allows users to track and manage skills for improvement, with curated resources like websites or books for each skill.</div>
+    </div>
+    
+    
+            <!-- Div 2 : Analytics and Reporting : -->
+            <div class="feature-card" style="background-color: #ffffff; border: 1px solid #ddd; border-radius: 12px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); max-width: 350px; padding: 40px 30px; text-align: center; transition: transform 0.3s, box-shadow 0.3s; width: 100%; margin-bottom: 20px;">
+                
+                <div class="feature-icon" style="font-size: 3em; color: #00c2d1; margin-bottom: 15px;"><i class="bi bi-file-earmark-text"></i></div>
+                <div class="feature-title" style="font-size: 1.5em; color: #264653; margin-bottom: 15px; font-weight: bold;">Advanced Analytics & Reporting</div>
+                <div class="feature-description" style="font-size: 1.1em; color: #555; margin-bottom: 20px; line-height: 1.5;">Includes a feature for users to simulate interview answers and review them, with a self-assessment checklist.</div>
+                
+            </div>
+
+    <!-- Div 3:  Interview Practice Mode  -->
+            <div class="feature-card" style="background-color: #ffffff; border: 1px solid #ddd; border-radius: 12px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); max-width: 350px; padding: 40px 30px; text-align: center; transition: transform 0.3s, box-shadow 0.3s; width: 100%; margin-bottom: 20px;">
+                
+                <div class="feature-icon" style="font-size: 3em; color: #00c2d1; margin-bottom: 15px;"><i class="bi bi-person-check"></i></div>
+                <div class="feature-title" style="font-size: 1.5em; color: #264653; margin-bottom: 15px; font-weight: bold;">Interview Practice Mode</div>
+                <div class="feature-description" style="font-size: 1.1em; color: #555; margin-bottom: 20px; line-height: 1.5;">Track your job search progress with analytics, helping you improve your application strategy over time.</div>
+            </div>
+            
+            <!-- Div 4 : Enhanced Document Organizer -->
+            <div class="feature-card" style="background-color: #ffffff; border: 1px solid #ddd; border-radius: 12px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); max-width: 350px; padding: 40px 30px; text-align: center; transition: transform 0.3s, box-shadow 0.3s; width: 100%; margin-bottom: 20px;">                
+                
+                <div class="feature-icon" style="font-size: 3em; color: #00c2d1; margin-bottom: 15px;"><i class="bi bi-folder2"></i></div>
+                <div class="feature-title" style="font-size: 1.5em; color: #264653; margin-bottom: 15px; font-weight: bold;">Enhanced Document Organizer</div>
+                <div class="feature-description" style="font-size: 1.1em; color: #555; margin-bottom: 20px; line-height: 1.5;">Offers storage for multiple resume and cover letter versions (up to 10 documents) and access to editable templates.</div>
+            </div>
+            <!-- ===================================================================================================================================================================================================================================================================================== -->
+            
+            
+            <!-- Div 5 : Collaboration Feature -->
+            <div class="feature-card" style="background-color: #ffffff; border: 1px solid #ddd; border-radius: 12px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); max-width: 350px; padding: 40px 30px; text-align: center; transition: transform 0.3s, box-shadow 0.3s; width: 100%; margin-bottom: 20px;">
+                
+                <div class="feature-icon" style="font-size: 3em; color: #00c2d1; margin-bottom: 15px;"><i class="bi bi-person-lines-fill"></i></div>
+            <div class="feature-title" style="font-size: 1.5em; color: #264653; margin-bottom: 15px; font-weight: bold;">Collaboration Feature</div>
+            <div class="feature-description" style="font-size: 1.1em; color: #555; margin-bottom: 20px; line-height: 1.5;">Enables users to share job application reports with mentors, who can add feedback through secure, expiring links.</div>
+            
+        </div>
+        
+        <!-- Div 6:  Interview Practice Mode  -->
+        <div class="feature-card" style="background-color: #ffffff; border: 1px solid #ddd; border-radius: 12px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); max-width: 350px; padding: 40px 30px; text-align: center; transition: transform 0.3s, box-shadow 0.3s; width: 100%; margin-bottom: 20px;">
+    
+    <div class="feature-icon" style="font-size: 3em; color: #00c2d1; margin-bottom: 15px;"><i class="bi bi-person-check"></i></div>
+    <div class="feature-title" style="font-size: 1.5em; color: #264653; margin-bottom: 15px; font-weight: bold;">Interview Practice Mode</div>
+    <div class="feature-description" style="font-size: 1.1em; color: #555; margin-bottom: 20px; line-height: 1.5;">Track your job search progress with analytics, helping you improve your application strategy over time.</div>
+        </div>
+        
+        <!-- Div 7:  Priority Support & Personal Career Insights  -->
+        <div class="feature-card" style="background-color: #ffffff; border: 1px solid #ddd; border-radius: 12px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); max-width: 350px; padding: 40px 30px; text-align: center; transition: transform 0.3s, box-shadow 0.3s; width: 100%; margin-bottom: 20px;">
+            
+            <div class="feature-icon" style="font-size: 3em; color: #00c2d1; margin-bottom: 15px;"><i class="bi bi-headset"></i></div>
+            <div class="feature-title" style="font-size: 1.5em; color: #264653; margin-bottom: 15px; font-weight: bold;">Priority Support & Personal Career Insights</div>
+            <div class="feature-description" style="font-size: 1.1em; color: #555; margin-bottom: 20px; line-height: 1.5;">Track your job search progress with analytics, helping you improve your application strategy over time.</div>
+                </div>
+                
+<!-- Div 8:  Goal Achievement Badges  -->
+                <div class="feature-card" style="background-color: #ffffff; border: 1px solid #ddd; border-radius: 12px; box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); max-width: 350px; padding: 40px 30px; text-align: center; transition: transform 0.3s, box-shadow 0.3s; width: 100%; margin-bottom: 20px;">
+                    
+                    <div class="feature-icon" style="font-size: 3em; color: #00c2d1; margin-bottom: 15px;"><i class="bi bi-award"></i>
+                    </div>
+                                    <div class="feature-title" style="font-size: 1.5em; color: #264653; margin-bottom: 15px; font-weight: bold;">Goal Achievement Badges</div>
+                                    <div class="feature-description" style="font-size: 1.1em; color: #555; margin-bottom: 20px; line-height: 1.5;">Gamifies job search goals with badges awarded for achievements, like completing an interview or submitting several applications.</div>
+                                </div>
+                
+        
+
+    </div>
+    <!-- Premium Package End -->
+    
+    
+    <button class="get-started-btn" style="background-color: #00c2d1; color: white; padding: 12px 28px; border: none; border-radius: 8px; cursor: pointer; font-size: 1em; margin-top: 40px; transition: background-color 0.3s, transform 0.2s;">Get Started - It's Free</button>
+    
+    <br> <br> <br> 
+    <!-- Bootstrap JS for icons
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <br> <br> <br> -->
+    <div class="pricing-container">
+        <h2>Find the Perfect Plan for Your Job Search</h2>
+        <p>Select the plan that best fits your career goals. Plans are flexible to grow with you.</p>
+
+        <div class="plans">
+            <!-- Free Version -->
+            <div class="plan">
+                <h3>Free Version</h3>
+                <h4>$0<span>/month</span></h4>
+                <ul>
+                    <li>✔️ Free Profile Creation</li>
+                    <li>✔️ Store up to 5 Job Applications</li>
+                    <li>✔️ Manual Job Application Tracking</li>
+                    <li>✔️ Basic Analytics</li>
+                    <li>✔️ Upcoming Interview Display</li>
+                </ul>
+                <!-- <p><em>Note: Limited to 5 job applications</em></p> -->
+                <button class="cta-button">Try It</button>
+            </div>
+
+            <!-- Standard Package -->
+            <div class="plan">
+                <h3>Standard Package</h3>
+                <h4>$10<span>/month</span></h4>
+                <ul>
+                    <li>✔️ Career Goal Tracker</li>
+                    <li>✔️ Interview Question Bank</li>
+                    <li>✔️ Follow-Up Reminders</li>
+                    <li>✔️ Graphical Insights</li>
+                    <li>✔️ Weekly Progress Summary</li>
+                </ul>
+                <button class="cta-button">Buy It</button>
+            </div>
+
+            <!-- Premium Package -->
+            <div class="plan">
+                <h3>Premium Package</h3>
+                <h4>$20<span>/month</span></h4>
+                <ul>
+                    <li>✔️ Skill Tracking</li>
+                    <li>✔️ Detailed Metrics</li>
+                    <li>✔️ Simulated Interview Practice</li>
+                    <li>✔️ Editable Document Templates</li>
+                    <li>✔️ Shareable Progress Reports</li>
+                    <li>✔️ Priority Email Support</li>
+                    <li>✔️ Achievement Badges</li>
+                </ul>
+                <button class="cta-button">Buy It</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

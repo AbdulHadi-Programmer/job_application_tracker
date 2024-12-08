@@ -1,285 +1,104 @@
-<!-- {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
-
+    <title>SignUp</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #e3f2fd; 
-            margin: 0;
-            padding: 0;
+            font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-        }
-        
-        form {
-            background-color: #ffffff;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-            max-height: 1000px;
-            }
-        
-        h2 {
-            text-align: center;
-            color: #0d47a1; 
-            margin-bottom: 20px;
-            margin-left: 20px;
-        }
-        
-        
-        label {
-            display: block;
-            font-weight: bold;
-            color: #1976d2; 
-            margin-bottom: 5px;
-        }
-        
-        input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #bbdefb;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #2196f3;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        
-        button:hover {
-            background-color: #1976d2; 
-        }
-        
-        p {
-            text-align: center;
-            font-size: 14px;
-            color: #555;
-        }
-        
-        a {
-            color: #0d47a1; 
-            text-decoration: none;
-            display: inline-block;
-            justify-content: center;
-            align-items: center;
-
-        }
-        
-        a:hover {
-            text-decoration: underline;
-        }
-        </style>
-
-</head>
-<body>
-    <form method="post">
-
-        <h2>Sign Up</h2><br> <br>
-        {% csrf_token %}
-        <label for="username">Username:</label>
-        <input type="text" name="username" required><br>
-        
-        <label for="email">Email:</label>
-        <input type="email" name="email" required><br>
-        
-        <label for="password">Password:</label>
-        <input type="password" name="password" required><br> <br> 
-        
-        <button type="submit">Sign Up</button> <br> <br>
-    </form>
-    
-</body>
-</html> -->
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signup</title>
-    
-    <style>
-        /* Applying the previously provided CSS styles */
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #e3f2fd; /* Light blue background */
             margin: 0;
-            padding: 0;
-            
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            background-color: #e3fced;
+            /* background-color: #f4f4f9; */
         }
-
-        /* Form container styling */
         form {
             background-color: #ffffff;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-        }
-
-        /* Heading styling */
-        h2 {
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
             text-align: center;
-            color: #0d47a1; /* Dark blue */
-            margin-bottom: 20px;
-            margin-top: 50px;
+            width: 300px;
         }
-
-        /* Label styling */
-        label {
-            display: block;
-            font-weight: bold;
-            color: #1976d2; /* Blue */
-            margin-bottom: 5px;
+        h1 {
+            color: #333333;
+            margin-bottom: 10px;
         }
-
-        /* Input fields */
-        input {
-            width: 100%;
+        
+        .error {
+            color: #ffffff;
             padding: 10px;
+            border-radius: 5px;
             margin-bottom: 15px;
-            border: 1px solid #bbdefb; /* Light blue border */
-            border-radius: 5px;
-            box-sizing: border-box;
+            background-color: #d9534f;
         }
-
-        /* Button styling */
-        button {
-            width: 100%;
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 90%;
             padding: 10px;
-            background-color: #2196f3; /* Blue */
-            color: white;
+            margin: 10px 0;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            width: 100%;
+            margin-top: 10px;
+            color: #ffffff;
             border: none;
-            border-radius: 5px;
-            font-size: 16px;
+            padding: 10px 20px;
+            border-radius: 4px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            font-size: 16px;
         }
-
         button:hover {
-            background-color: #1976d2; /* Darker blue */
+            background-color: #45a049;
         }
-
-        /* Redirect link */
-        p {
-            text-align: center;
-            font-size: 14px;
-            color: #555;
-        }
-
         a {
-            color: #0d47a1; /* Blue for the signup link */
+            color: #4CAF50;
             text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-        @media (max-width: 768){
-            .form{
-                margin-left: 30px;
-                margin-right: 30px;
-            }
-            .body{
-                margin-left: 30px;
-                margin-right: 30px;
-            }
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-
-<div class="container signup-container">
-    <form method="post">
-        <h2>Signup</h2>
+  
+    <!-- <form method="post">
         {% csrf_token %}
+        <h1>SignUp</h1>
         
-        {% if error_json %}
-            <div class="alert alert-danger">
-                <h4>Please fix the following errors:</h4>
-                <ul>
-                    {% for field, errors in error_json.items %}
-                        {% for error in errors %}
-                            <li>{{ error.message }}</li>
-                        {% endfor %}
-                    {% endfor %}
-                </ul>
-            </div>
+        {% if error %}
+            <div class="error">{{ error }}</div>
         {% endif %}
         
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required>
-        </div>
-    
-        <div class="form-group">
-            <label for="full_name">Full Name</label>
-            <input type="text" id="full_name" name="full_name" required>
-        </div>
-    
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
-        </div>
-    
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
-        </div>
-    
-        <div class="form-group">
-            <label for="confirm_password">Confirm Password</label>
-            <input type="password" id="confirm_password" name="confirm_password" required>
-        </div>
-    
-        <div class="form-group">
-            <label for="job_title">Job Title</label>
-            <input type="text" id="job_title" name="job_title">
-        </div>
-    
-        <div class="form-group">
-            <label for="company_name">Company Name</label>
-            <input type="text" id="company_name" name="company_name">
-        </div>
-    
-        <div class="form-group">
-            <label for="country">Country</label>
-            <input type="text" id="country" name="country">
-        </div>
-    
-        <button type="submit">Signup</button>
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+        
+        <button type="submit">Sign Up</button>
+        
+    </form> -->
+
+    <form method="POST">
+        {% csrf_token %}
+        
+        <h1>Signup</h1>
+        
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+
+        <input type="text" id="username" name="username" placeholder="Username" required>
+        <input type="email" id="email" name="email" placeholder="Email" required>
+        <input type="password" id="password" name="password" placeholder="Password" required>
+        <input type="text" id="job_title" name="job_title" placeholder="Job Title">
+        <input type="text" id="country" name="country" placeholder="country">
+
+        <button type="submit">Sign Up</button>
+        <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
     </form>
-
-</div>
-
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
 </body>
 </html>
-
-
-

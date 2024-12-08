@@ -2,26 +2,41 @@ from django.urls import path
 from .views import *
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth import views as auth_views
+from authentication.views import * 
+
+# urlpatterns = [
+#     path('', login_view, name='login'),
+#     path('home/', home, name='home'),
+#     path('signup/', signup_view, name='signup'),
+#     path('verify-otp/', verify_otp_view, name='verify_otp'),
+#     path('forget_password/', forget_password_view, name='forget_password'),
+#     path('verify_reset_otp/', verify_reset_otp_view, name='verify_reset_otp'),
+#     path('change_password/', change_password_view, name='change_password'),
+#     path('logout/', logout_view, name='logout'),
+#     path('jobs/', job_list, name='job_list'),
+#     path('jobs/create/', job_create, name='job_create'),
+#     path('jobs/update/<int:job_id>/', job_update, name='job_update'),
+#     path('jobs/delete/<int:id>/', job_delete, name='job_delete'),
+#     path('jobs/search/', search, name='search'),
+#     path('jobs/profile/', profile, name='profile'),
+#     path('jobs/feedback/', feedback, name='feedback'),
+#     path('jobs/analytics/', analytics_view, name='simple_analytics'),
+#     path('jobs/card', cards, name='cards')
+# ]
+
 
 urlpatterns = [
-    path('', login_page, name="login"),  # Root URL shows the login page
-    path('home/', home, name='home'),    # Home page
-    path('login/', login_page, name='login'),  # Redundant but still useful if referenced directly
-    path('signup/', signup_page, name='signup'),  # Signup page
+    path('', login_view, name='login'),
+    path('home/', home, name='home'),  # uses the redirect logic for auth users
     path('logout/', logout_view, name='logout'),
-# New Path of Urls and add the view from Authentication Project:
-
     path('jobs/', job_list, name='job_list'),
     path('jobs/create/', job_create, name='job_create'),
-    path('home/', home, name='home'),
     path('jobs/update/<int:job_id>/', job_update, name='job_update'),
     path('jobs/delete/<int:id>/', job_delete, name='job_delete'),
-    # path('jobs/search/', search,name='search')
     path('jobs/search/', search, name='search'),
     path('jobs/profile/', profile, name='profile'),
     path('jobs/feedback/', feedback, name='feedback'),
-    # path('jobs/analytics/', analytics_view, name='analytics')
     path('jobs/analytics/', analytics_view, name='simple_analytics'),
-
-
+    path('jobs/card', cards, name='cards'),
+    
 ]
