@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,233 +8,182 @@
     <title>Update Job</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
-    <!-- Reuse the same styles from the Add Job page -->
-        <style>
 
+     <style>
             h1 {
-            text-align: center;
-            color: #000000;
-            margin: 10px 10px 40px;
-        }
+                text-align: center;
+                color: #000000;
+                text-decoration: underline;
+                margin: 10px 10px 40px;
+            }
+    
+            .form-group {
+                margin-bottom: 20px !important;
+            }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        label {
+            
+            label {
             display: block;
             margin: 15px 0 5px;
             font-weight: bold;
-            font-size: 18px;
-        }
-        
-        input[type="text"], input[type="url"], input[type="date"], select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 18px;
-            box-sizing: border-box;
-        }
-        
-        .btn {
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 10px;
-            background-color: #00C2D1;
-            color: white;
-            font-size: 18px;
-            min-width: 120px;
-        }
-        
-        .btn:hover {
-            opacity: 0.8;
-        }
-        
-        body {
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-            background-color: #ffffff; 
-        }
-            
-        .container {
-            display: flex;
-        }
-        
-        .sidebar {
-            width: 270px; 
-            height: 100vh;
-            position: fixed;
-            left: 0;
-            z-index: 1; 
-            background-color: #4e9b5f ;  
-        }
-        
-        .sidebar a {
-            margin-left: 20px;
-            padding: 10px;
-        }
-        
-        .sidebar h2 { 
-            color: #fff8f8;
-            text-align: center;
-            margin-bottom: 40px;
-            margin-top: 40px;
+            font-size: 0.9rem;
+            margin: 0 20px;
         }
 
-        .sidebar a {
-            display: flex;
-            align-items: center;
-            color: #fff;
-            padding: 10px;
-            margin: 10px 0;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 18px;
-        }
-        
-        .sidebar a:hover {
-            background-color:  #ffcc00; 
-            margin-right: 30px!important;
-        }
-        
-        .main-content {
-            margin-left: 270px;
-            padding: 20px;
-            flex-grow: 1;
-        }
-
-        h1 {
-            text-align: center;
-            color: #000000;
-            text-decoration: underline;
-            margin-top: 0px;
-            margin: 10px 10px 40px;
-        }
-
-        .hamburger {
-            display: none;
-        } 
-        
-        .form-container {
-            margin: 0 300px;
-            padding: 20px;
-            background-color: #e3fced;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); 
-            display: none; 
-            z-index: 999; 
-        }
-        @media (max-width: 768px) {
-            input[type="text"], input[type="url"], input[type="date"], select {
-                width: 100%;
-                padding: 10px;
-                border: 1px solid #ddd;
-                border-radius: 5px;
-                font-size: 14px;
-                box-sizing: border-box;
-                padding: 5px !important;
-            }
-
-            label {
-                display: block;
-                margin: 15px 0 5px;
-                font-weight: bold;
-                font-size: 14px;
-            }
-        
-            .form-container {
-                margin: 20px;
-                margin-left: 40px;
-                padding: 20px;
-                background-color: #e3fced;
-                border-radius: 10px;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-                margin-left:  0px !important;
-            }
-            
-            input[type="text"],
-            input[type="url"],
-            input[type="date"],
-            select {
-                font-size: 14px; 
-                padding: 0px;
-                font-family: 'Poppins', sans-serif; 
-            }
-            
             .btn {
-                font-size: 14px;
-                justify-content: center;
-                text-align: center;
-                background-color: #00C2D1;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                background-color: #ffcc00;
+                color: white !important;
+                font-weight: bold;
+                font-size: 0.8rem !important;
+                min-width: 70px;
             }
-            
-            .hamburger {
-                display: block;
-                position: fixed;
-                top: 20px;
-                left: 20px;
-                font-size: 24px;
+        
+            .btn:hover {
+                opacity: 0.8;
             }
-            
-            h1 {
-                text-align: center;
-                color: #000000;
-                /* text-decoration: underline; */
-                margin-top: 0;
-                margin-bottom: 30px;
+
+            body {
+                margin: 0;
+                font-family: 'Poppins', sans-serif;
+                background-color: #ffffff; 
             }
-            
+                
+            .container {
+                display: flex;
+            }
+                
             .sidebar {
-                display: none;
+                width: 11.325rem; 
+                min-width: 180px; 
+                height: 100vh;
+                position: fixed;
+                left: 0;
+                z-index: 1;
+                background-color: #4e9b5f;
+                font-weight: bold;
+            }
+            
+            .sidebar a {
+                margin-left: 20px;
+                padding: 10px;
+            }
+    
+            .sidebar h2 {
+                font-size: 1.3rem;
+                color: white; /* Soft White */
+                text-align: center;
+                margin-bottom: 40px;
+                margin-top: 40px;
+            }
+    
+            .sidebar a {
+                display: flex;
+                align-items: center;
+                color: #fff;
+                padding: 5px;
+                margin: 10px 0;
+                text-decoration: none;
+                border-radius: 5px;
+                font-size: 0.7rem;
+            }
+            .sidebar a:hover {
+                background-color: #ffcc00;
+                margin-right: 30px !important;
             }
             
             .main-content {
-                margin-right:  0px !important;
-            }    
-        }
-        
-        @media (max-width: 1024px) {
-            .hamburger {
-                display: block;
-                position: fixed;
-                top: 20px;
-                left: 20px;
-                font-size: 24px;
+                margin-left: calc(11.325rem + 50px); 
+                padding: 20px;
+                margin-right: 40px !important;
+                flex-grow: 1;
             }
             
-            .sidebar {
-                display: none;
-            }
-            .form-container {
-                margin: 0px !important;
-            }
             h1 {
                 text-align: center;
-                color: #000000;
-                /* text-decoration: underline; */
+                color: #000000 !important;
+                text-decoration: underline;
                 margin-top: 0px;
-                margin-bottom: 30px;
+                margin: 10px 10px 40px;
+                font-size: 1.5rem;
             }
             
+            .hamburger {
+                display: none;
+            }
+            
+            .form-container {
+                margin: 0 181.2px;
+                padding: 20px;
+                background-color: #e3fced;
+                border-radius: 10px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+                font-family: 'Poppins', sans-serif;
+                border-radius: 8px; 
+            }
+/* ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ */
+            .my-input {
+                font-family: 'Poppins', sans-serif;
+                margin-top: 5px !important;
+                width: 90%;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-size: 0.9rem;
+                box-sizing: border-box;
+                padding: 8px;
+                margin: 0 20px;
+                background-color: white;
+            } 
+            
+            input[type="email"] {
+                margin: 5px 30px 0px 20px !important;
+            }
+    
+            label{
+                font-family: 'Poppins', sans-serif;
+                font-size: 0.9rem;
+            }
+
+            .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5); 
+                display: none; 
+                z-index: 999; 
+            }
+    
+            .btn_back-btn {
+                font-size: 0.8rem;
+            }
+        
+        @media (max-width: 1024px) {
+            .main-content{
+                margin-right: 0px !important;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            .sidebar a {
+                margin-right: 20px;
+                padding: 10px;
+                padding-right: 20px;
+                font-size: 15px;
+            }
+
+            .my-input{
+                font-size: 0.9rem; 
+                padding: 8px;
+            }
             .sidebar {
                 display: none; 
-                width: 60%; 
+                width: 60% !important; 
                 top: 0; 
                 left: 0;
                 position: fixed; 
@@ -241,62 +191,179 @@
                 z-index: 1000; 
                 overflow-y: auto;
             }
-            .sidebar a {
-                margin-left: 20px;
-                margin-right: 20px;
-                padding: 10px;
-                padding-right: 20px;
-                font-size: 15px;
-            }
-
+            
             .hamburger {
                 display: block; 
                 position: fixed;
                 top: 20px;
                 left: 20px;
-                font-size: 24px; 
+                font-size: 24px;
+                cursor: pointer;
             }
             
-            .actions {
-                margin-top: 10px;
-                display: flex;
-                justify-content: space-between;
+            .form-container {
+                margin: 10px;
+                padding: 15px;
+                box-shadow: none; 
+            }
+            
+            .main-content {
+                margin: 0;
             }
             
             .btn {
-                color: white;
-                padding: 8px 15px;
-            }
-            
-            .btn-edit {
-                background-color:  #ffcc00 !important;
-            }
-            
-            .btn-delete {
-                background-color: red;  
+                font-size: 0.9rem !important;
+                padding: 8px 12px;
             }
 
-            .btn:hover {
-                opacity: 0.8;
+        }
+
+        
+        @media (max-width: 768px) {
+            .my-input{
+                margin-right: 15px !important;
+                font-size: 0.9rem !important;
+                padding: 5px;
             }
-            .main-content {
+
+            h1 {
+                font-size: 1.4rem;
+            }
+            
+            .sidebar {
+                display: none; 
+                position: fixed;
+                width: 70%;
+                top: 0;
+                left: 0;
+                height: 100%;
+                background-color: #4e9b5f;
+                z-index: 1000;
+            }
+            .main-content{
+                margin-left: 0px !important;
+            }
+            
+            .hamburger {
+                display: block;
+                font-size: 22px;
+                position: fixed;
+                top: 10px;
+                left: 10px;
+            }
+            
+            .form-container {
                 margin: 10px;
+                padding: 10px;
             }
             
-        label {
-            display: block;
-            margin: 15px 0 5px;
-            font-weight: bold;
-            font-size: 14px;
+            .btn {
+                font-size: 0.8rem;
+                padding: 6px 10px;
+            }
+
+            .form-buttons {
+                font-size: 0.9rem;
+            }
+        }
+        
+        /* For very small screens (below 480px) */
+        @media (max-width: 480px) {
+            .my-input{
+                font-size: 0.7rem;
+                padding: 7px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .form-container {
+                margin: 5px;
+                padding: 8px;
+            }
+
+            label {
+                font-size: 0.7rem;
+            }
+
+            .btn {
+                font-size: 0.7rem !important;
+                padding: 5px 8px !important;
+                font-weight: bold; 
+            }
         }
 
-        }
         .form-buttons {
             align-items: center;
             justify-content: center; 
+            font-size: 20px;
+        }
+        .btn_back-btn {
+            font-size: 14px;
         }
 
+/* For tablets and small screens (max-width: 1024px) */
+@media (max-width: 1024px) {
+    .form-container {
+        margin: 0 20px !important;
+        padding: 15px !important;
+        box-shadow: none !important;
+    }
+
+    .btn {
+        font-size: 1rem !important;
+        padding: 10px 14px !important;
+    }
+}
+
+/* For mobile devices (max-width: 768px) */
+@media (max-width: 768px) {
+    label {
+        margin-left: 10px !important;
+        font-size: 1rem !important;
+        margin: 0 15px !important;
+    }
+
+    .feedback-form input,
+    .feedback-form select,
+    .feedback-form textarea {
+        font-size: 1.3rem !important;
+        padding: 20px !important;
+        width: 100% !important;
+        margin: 0 15px !important;
+    }
+
+    .btn {
+        font-size: 0.8rem !important;
+        padding: 10px 14px;
+    }
+}
+
+/* For very small screens (max-width: 480px) */
+@media (max-width: 480px) {
+    label {
+        font-size: 0.9rem !important;
+        margin: 0 10px !important;
+        margin-left: 20px !important;
+    }
+
+    .feedback-form input,
+    .feedback-form select,
+    .feedback-form textarea {
+        font-size: 1rem !important;
+        padding: 10px !important;
+        width: 100% !important;
+        margin: 0 10px !important;
+    }
+
+    .btn {
+        font-size: 0.7rem !important;
+    }
+}
+
         </style>
+    
 </head>
 <body>
 
@@ -319,7 +386,7 @@
     <div class="main-content">
         <form method="POST">
             {% csrf_token %}
-            <div class="form-container" >
+            <div class="form-container">
                 <h1 style="text-decoration: none;">Edit Application</h1>
                 
                 <div class="form-group">
@@ -336,6 +403,7 @@
                     <label for="company_name" id="company_name">Company Name:</label>
                     {{ form.company_name }}
                 </div>
+                
                 <!-- Display the error message if the field is empty -->
                 <div class="form-group" style="margin-bottom: 5px;">
                     <label for="company_email">Company Email:</label>
@@ -364,26 +432,16 @@
                 </div>
 
 
-                <div class="form-buttons" style="margin-top: 30px; display: flex; flex-direction: column; align-items: center;">
-                    <input type="submit" value="Update" class="btn" style="min-width: 120px; background-color: #ffcc00;  margin: 15px !important; padding: 5px 10px; font-size: 15px; color: #fff; font-weight: bold;"> 
-                    <a href="{% url 'job_list' %}" class="btn_back-btn" style="text-decoration: none;  font-weight: bold !important; color: black;">Back to Job List</a>
+                <div class="form-buttons" style="margin-top: 30px; display: flex; flex-direction: column; align-items: center;" >
+                    <input type="submit" value="Update" class="btn" style="margin: 15px; padding: 5px 10px; color: #ffcc00;" > 
+                    <a href="{% url 'job_list' %}" class="btn_back-btn" style="text-decoration: none;  font-weight: bold !important; color: black;" >Back to Job List</a>
                 </div>
             </div>
         </form>
     </div>
 
     <script>
-        // function toggleSidebar() {
-        //     const sidebar = document.getElementById('sidebar');
-        //     const mainContent = document.querySelector('.main-content');
-        //     if (sidebar.style.display === 'block') {
-        //         sidebar.style.display = 'none';
-        //         mainContent.classList.add('sidebar-collapsed');
-        //     } else {
-        //         sidebar.style.display = 'block';
-        //         mainContent.classList.remove('sidebar-collapsed');
-        //     }
-        // }
+        
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('overlay');

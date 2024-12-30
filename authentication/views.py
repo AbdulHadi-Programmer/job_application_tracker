@@ -7,8 +7,7 @@ from datetime import datetime, timedelta
 from django.utils.timezone import now, make_aware, is_naive
 
 
-# Create Account or Signup View
-
+# # Create Account or Signup View
 # def signup_view(request):
 #     error = ""
 #     if request.method == 'POST':
@@ -17,10 +16,12 @@ from django.utils.timezone import now, make_aware, is_naive
 #         password = request.POST['password']
         
 #         # Check if the username or email already exists
-#         if User.objects.filter(username=username).exists():
+#         if User.objects.filter(username=username).exists() and User.objects.filter(email=email).exists():
+#             error = "Username and Email already exists. Please use a different username and email."
+#         elif User.objects.filter(username=username).exists():
 #             error = 'Username already exists. Please choose a different one.'
 #             return render(request, 'signup.html', {'error': error})
-#         if User.objects.filter(email=email).exists():
+#         elif User.objects.filter(email=email).exists():
 #             error = 'Email already exists. Please use a different email.'
 #             return render(request, 'signup.html', {'error': error})
 
@@ -35,11 +36,11 @@ from django.utils.timezone import now, make_aware, is_naive
 #         }
 
 #         # Send OTP to user's email
-#         title = 'Welcome to CareerTraces.com - Verify Your Account'
+#         title = 'Welcome to Career_Traces.com - Verify Your Account'
 #         message = f"""
 #         Dear {username},
 
-#         Thank you for signing up for CareerTraces.com!
+#         Thank you for signing up for Career_Traces.com!
 
 #         To complete your registration, please verify your email address by entering the OTP (One-Time Password) provided below on the verification page:
 
@@ -48,104 +49,70 @@ from django.utils.timezone import now, make_aware, is_naive
 #         This OTP is valid for the next 2 minutes. If you did not initiate this request, please disregard this email.
 
 #         Best regards,
-#         CareerTraces.com Support Team
+#         Career_Traces.com Support Team
 #         """
 #         send_otp_to_users(title, message, email)  # Use the utility function
 
 #         # Redirect to OTP verification page
 #         return redirect('verify_otp')
 #     return render(request, 'signup.html')
-from datetime import datetime
-from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from .utils import generate_otp, send_otp_to_users  # Assuming these utilities exist
-
-## Correct code below perfectly work but the optional are not save
-# def signup_view(request):
-#     error = ""
-#     if request.method == 'POST':
-#         # Fetch data from POST request
-#         username = request.POST.get('username')
-#         email = request.POST.get('email')
-#         password = request.POST.get('password')
-#         job_title = request.POST.get('job_title')
-#         country = request.POST.get('country')
-
-#         # Check if the username or email already exists
-#         if User.objects.filter(username=username).exists():
-#             error = 'Username already exists. Please choose a different one.'
-#             return render(request, 'signup.html', {'error': error})
-#         if User.objects.filter(email=email).exists():
-#             error = 'Email already exists. Please use a different email.'
-#             return render(request, 'signup.html', {'error': error})
-
-#         # Generate OTP and save user details temporarily in the session
-#         otp_code = generate_otp()
-#         request.session['temp_user_data'] = {
-#             'username': username,
-#             'email': email,
-#             'password': password,
-#             'job_title': job_title,
-#             'country': country,
-#             'otp_code': otp_code,
-#             'otp_timestamp': datetime.now().isoformat()  # Save the timestamp
-#         }
-
-#         # Send OTP to user's email
-#         title = 'Welcome to CareerTraces.com - Verify Your Account'
-#         message = f"""
-#         Hello {username},
-
-#         Thank you for signing up with CareerTraces. 
-
-#         To activate your account, please use the following One-Time Password (OTP) on the verification page:
-
-#         OTP: {otp_code}
-
-#         This code is valid for 2 minutes. If you did not request this, please ignore this email.
-
-#         If you have any questions or need assistance, feel free to contact our support team.
-
-#         Kind regards,  
-#         The CareerTraces Team  
-#         """
-
-#         send_otp_to_users(title, message, email)  # Use the utility function
-
-#         # Redirect to OTP verification page
-#         return redirect('verify_otp')
-
-#     return render(request, 'signup.html')
-
-## This new code is save the data because i add userprofile model:
-from .models import UserProfile
+from datetime import datetime
 
 def signup_view(request):
     error = ""
     if request.method == 'POST':
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        job_title = request.POST.get('job_title')
-        country = request.POST.get('country')
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        
+        # Check if the username or email exists
+        user_by_username = User.objects.filter(username=username).first()
+        user_by_email = User.objects.filter(email=email).first()
 
-        # Check if the username or email already exists
-        if User.objects.filter(username=username).exists():
-            error = 'Username already exists. Please choose a different one.'
+        if user_by_username and user_by_email:
+            # Check if username and email belong to the same user
+            if user_by_username != user_by_email:
+                error = "Username and Email are already taken by different users. Please use unique credentials."
+                return render(request, 'signup.html', {'error': error})
+        elif user_by_username:
+            error = "Username already exists. Please choose a different one."
             return render(request, 'signup.html', {'error': error})
-        if User.objects.filter(email=email).exists():
-            error = 'Email already exists. Please use a different email.'
+        elif user_by_email:
+            error = "Email already exists. Please use a different email."
             return render(request, 'signup.html', {'error': error})
 
-        # Create a new user and save the profile
-        user = User.objects.create_user(username=username, email=email, password=password)
-        UserProfile.objects.create(user=user, job_title=job_title, country=country)
+        # Generate OTP and save user details temporarily in the session
+        otp_code = generate_otp()
+        request.session['temp_user_data'] = {
+            'username': username,
+            'email': email,
+            'password': password,
+            'otp_code': otp_code,
+            'otp_timestamp': datetime.now().isoformat()  # Save the timestamp
+        }
 
-        # Redirect to the login page or other page
-        return redirect('login')
+        # Send OTP to user's email
+        title = 'Welcome to Career_Traces.com - Verify Your Account'
+        message = f"""
+        Dear {username},
 
+        Thank you for signing up for Career_Traces.com!
+
+        To complete your registration, please verify your email address by entering the OTP (One-Time Password) provided below on the verification page:
+
+        OTP Code: {otp_code}
+
+        This OTP is valid for the next 2 minutes. If you did not initiate this request, please disregard this email.
+
+        Best regards,
+        Career_Traces.com Support Team
+        """
+        send_otp_to_users(title, message, email)  # Use the utility function
+
+        # Redirect to OTP verification page
+        return redirect('verify_otp')
     return render(request, 'signup.html')
-
 
 
 def verify_otp_view(request):
@@ -264,22 +231,21 @@ def forget_password_view(request):
         )
         
         # Send OTP to user's email
-        title = 'Password Reset OTP for CareerTraces.com'
+        title = 'Password Reset OTP for Career_Traces.com'
         message = f"""
-        Hello {user.username},
+        Dear {user.username},
 
-        We noticed you requested a password reset for your CareerTraces.com account. To continue with the reset process, please use the one-time password (OTP) provided below:
+        We received a request to reset your password for your account at Career_Traces.com.
 
-        **Your OTP Code:** {otp_code}
+        Please enter the OTP below to proceed with password reset:
 
-        This code is valid for the next 2 minutes. If you did not initiate this request, you can safely ignore this message—no action is required.
+        OTP Code: {otp_code}
 
-        If you have any questions or need further assistance, feel free to reach out to our support team.
+        This OTP is valid for the next 2 minutes. If you did not request this, please ignore this email.
 
-        Kind regards,  
-        The CareerTraces.com Support Team
+        Best regards,
+        Career_Traces.com Support Team
         """
-
         send_otp_to_users(title, message, email)  # Use the utility function
 
         # Store user ID and OTP timestamp in session and redirect to OTP verification page
@@ -320,14 +286,14 @@ def verify_reset_otp_view(request):
             OTP.objects.update_or_create(user=user, defaults={'otp_code': new_otp})
 
             # Send OTP via email
-            title = 'Password Reset OTP for CareerTraces.com'
+            title = 'Password Reset OTP for Career_Traces.com'
             message = f"""
             Dear {user.username},
 
             Your new OTP code is {new_otp}. It is valid for 2 minutes.
 
             Best regards,
-            CareerTraces.com Support Team
+            Career_Traces.com Support Team
             """
             send_otp_to_users(title, message, user.email)
 

@@ -15,42 +15,175 @@ class FeedbackForm(forms.ModelForm):
         model = Feedback
         fields = ['name', 'email', 'rating', 'feedback_box']    
 
+from django import forms
+from .models import Add_Job
+
+# class JobForm(forms.ModelForm):
+#     class Meta:
+#         model = Add_Job
+#         fields = [
+#             'job_category', 'job_level', 'company_name', 'company_email',
+#             'reference_link', 'employment_type', 'application_status', 'interview_date',
+#         ]
+#         widgets = {
+#             'job_category': forms.Select(attrs={'class': 'custom-input'}),
+#             'job_level': forms.Select(attrs={'class': 'custom-input'}),
+#             'company_name': forms.TextInput(attrs={'class': 'custom-input'}),
+#             'company_email':forms.EmailInput(attrs={'class': 'custom_input'}),            # Add widgets for other fields as needed
+#             'reference_link': forms.URLInput(attrs={'class': 'custom_input'}),
+#             'employment_type': forms.Select(attrs={'class': 'custom_input'}),
+#             'application_status': forms.Select(attrs={'class': 'custom_input'}),
+#             'interview_date': forms.DateInput(attrs={'class': 'custom_input'}),
+#         }
+
 class JobForm(forms.ModelForm):
     class Meta:
         model = Add_Job
         fields = ['job_category', 'job_level', 'company_name', 'company_email', 'reference_link', 'employment_type', 'application_status', 'interview_date']
+        # widget=forms.Select(attrs={"class": "custom-input"})
+
         widgets = {
-            'job_category': forms.TextInput(attrs={
-                'style': 'padding: 8px !important; width: calc(100% - 20px); box-sizing: border-box; margin-right: 30px; border: 1px solid #ddd; border-radius: 5px; font-size: 15px;',
-                'required': True,
-            }),
+            # 'job_category': forms.TextInput(attrs={
+            #     'style': 'padding: 8px !important; width: calc(100% - 20px); box-sizing: border-box; margin-right: 30px; border: 1px solid #ddd; border-radius: 5px; font-size: 15px;',
+            #     'style': '''font-family: 'Poppins', sans-serif;
+            #     margin-top: 5px !important;
+            #     width: 90%;
+            #     border: 1px solid #ddd;
+            #     border-radius: 5px;
+            #     font-size: 0.9rem;
+            #     box-sizing: border-box;
+            #     padding: 5px;
+            #     margin: 0 20px;
+            #     background-color: white;''',
+            #     'required': True,
+            # }),
+            'job_category': forms.TextInput({
+                    'class': 'my-input', 
+                }),
+
+            # 'job_level': forms.Select(attrs={
+            #     'style': 'padding: 8px !important; width: calc(100% - 20px); box-sizing: border-box; margin-right: 30px; border: 1px solid #ddd; border-radius: 5px; font-size: 15px;',
+            #     'style': '''font-family: 'Poppins', sans-serif;
+            #     margin-top: 5px !important;
+            #     width: 90%;
+            #     border: 1px solid #ddd;
+            #     border-radius: 5px;
+            #     font-size: 0.9rem;
+            #     box-sizing: border-box;
+            #     padding: 5px;
+            #     margin: 0 20px;
+            #     background-color: white;''',
+            #     'required': True,
+            # }),
             'job_level': forms.Select(attrs={
-                'style': 'padding: 8px !important; width: calc(100% - 20px); box-sizing: border-box; margin-right: 30px; border: 1px solid #ddd; border-radius: 5px; font-size: 15px;',
-                'required': True,
+                'class': 'my-input',
             }),
+
+            # 'company_name': forms.TextInput(attrs={
+            #     'style': 'padding: 8px !important; width: calc(100% - 20px); box-sizing: border-box; margin-right: 30px; border: 1px solid #ddd; border-radius: 5px; font-size: 15px;',
+            #     'style': '''font-family: 'Poppins', sans-serif;
+            #     margin-top: 5px !important;
+            #     width: 90%;
+            #     border: 1px solid #ddd;
+            #     border-radius: 5px;
+            #     font-size: 0.9rem;
+            #     box-sizing: border-box;
+            #     padding: 5px;
+            #     margin: 0 20px;
+            #     background-color: white;''',
+            #     'required': True,
+            # }),
             'company_name': forms.TextInput(attrs={
-                'style': 'padding: 8px !important; width: calc(100% - 20px); box-sizing: border-box; margin-right: 30px; border: 1px solid #ddd; border-radius: 5px; font-size: 15px;',
-                'required': True,
+                'class': 'my-input',
             }),
+
+            # 'company_email': forms.EmailInput(attrs={
+            #     'style': 'padding: 8px; width: calc(100% - 20px); box-sizing: border-box; margin-right: 30px; border: 1px solid #ddd; border-radius: 5px; font-size: 15px;',
+            #     'style': '''font-family: 'Poppins', sans-serif;
+            #     margin-top: 5px !important;
+            #     width: 90%;
+            #     border: 1px solid #ddd;
+            #     border-radius: 5px;
+            #     font-size: 0.9rem;
+            #     box-sizing: border-box;
+            #     padding: 5px;
+            #     margin: 0 20px;
+            #     background-color: white;'''
+            # }),
             'company_email': forms.EmailInput(attrs={
-                'style': 'padding: 8px; width: calc(100% - 20px); box-sizing: border-box; margin-right: 30px; border: 1px solid #ddd; border-radius: 5px; font-size: 15px;',
-                # 'required': True,
+                'class': 'my-input',
             }),
+
+            # 'reference_link': forms.URLInput(attrs={
+            #     'style': 'padding: 8px !important; width: calc(100% - 20px); box-sizing: border-box; margin-right: 30px; border: 1px solid #ddd; border-radius: 5px; font-size: 15px;',
+            #     'style': '''font-family: 'Poppins', sans-serif;
+            #     margin-top: 5px !important;
+            #     width: 90%;
+            #     border: 1px solid #ddd;
+            #     border-radius: 5px;
+            #     font-size: 0.9rem;
+            #     box-sizing: border-box;
+            #     padding: 5px;
+            #     margin: 0 20px;
+            #     background-color: white;''',
+            #     'required': True,
+            # }),
             'reference_link': forms.URLInput(attrs={
-                'style': 'padding: 8px !important; width: calc(100% - 20px); box-sizing: border-box; margin-right: 30px; border: 1px solid #ddd; border-radius: 5px; font-size: 15px;',
-                'required': True,
+                'class': 'my-input',
             }),
+
+            # 'employment_type': forms.Select(attrs={
+            #     'style': 'padding: 8px !important; width: calc(100% - 20px); box-sizing: border-box; margin-right: 30px; border: 1px solid #ddd; border-radius: 5px; font-size: 15px;',
+            #     'style': '''font-family: 'Poppins', sans-serif;
+            #     margin-top: 5px !important;
+            #     width: 90%;
+            #     border: 1px solid #ddd;
+            #     border-radius: 5px;
+            #     font-size: 0.9rem;
+            #     box-sizing: border-box;
+            #     padding: 5px;
+            #     margin: 0 20px;
+            #     background-color: white;''',
+            #     'required': True,
+            # }),
             'employment_type': forms.Select(attrs={
-                'style': 'padding: 8px !important; width: calc(100% - 20px); box-sizing: border-box; margin-right: 30px; border: 1px solid #ddd; border-radius: 5px; font-size: 15px;',
-                'required': True,
+                'class': 'my-input',
             }),
+
+            # 'application_status': forms.Select(attrs={
+            #     'style': 'padding: 8px !important; width: calc(100% - 20px); box-sizing: border-box; margin-right: 30px; border: 1px solid #ddd; border-radius: 5px; font-size: 15px;',
+            #     'style': '''font-family: 'Poppins', sans-serif;
+            #     margin-top: 5px !important;
+            #     width: 90%;
+            #     border: 1px solid #ddd;
+            #     border-radius: 5px;
+            #     font-size: 0.9rem;
+            #     box-sizing: border-box;
+            #     padding: 5px;
+            #     margin: 0 20px;
+            #     background-color: white;''',
+            #     'required': True,
+            # }),
             'application_status': forms.Select(attrs={
-                'style': 'padding: 8px !important; width: calc(100% - 20px); box-sizing: border-box; margin-right: 30px; border: 1px solid #ddd; border-radius: 5px; font-size: 15px;',
-                'required': True,
+                'class': 'my-input',
             }),
+
+            # 'interview_date': forms.DateInput(attrs={
+            #     'type': 'date',
+            #     'style': 'padding: 8px !important; width: calc(100% - 20px); box-sizing: border-box; margin-right: 30px; border: 1px solid #ddd; border-radius: 5px; font-size: 15px;',
+            #     'style': '''font-family: 'Poppins', sans-serif;
+            #     margin-top: 5px !important;
+            #     width: 90%;
+            #     border: 1px solid #ddd;
+            #     border-radius: 5px;
+            #     font-size: 0.9rem;
+            #     box-sizing: border-box;
+            #     padding: 5px;
+            #     margin: 0 20px;
+            #     background-color: white;''',
+            # }),
             'interview_date': forms.DateInput(attrs={
-                'type': 'date',
-                'style': 'padding: 8px !important; width: calc(100% - 20px); box-sizing: border-box; margin-right: 30px; border: 1px solid #ddd; border-radius: 5px; font-size: 15px;',
+                'class': 'my-input',
             }),
         }
 

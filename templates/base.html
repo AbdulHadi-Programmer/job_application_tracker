@@ -1,0 +1,574 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Job List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+<!-- For Job List Page -->
+    <style>
+body {
+    margin: 0;
+    background-color: #e3fced; /* Soft Beige for overall background */
+    font-family: 'Poppins', sans-serif;
+}
+
+
+.sidebar {
+    width: 11.325rem; /* 20% of the viewport width */
+    min-width: 180px; /* Ensure a minimum width for readability */
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    z-index: 1; 
+    background-color: #4e9b5f ; 
+    font-weight: bold;
+}
+
+.sidebar h2 { 
+    font-size: 1.3rem;
+    color: white; /* Soft White */
+    text-align: center;
+    margin-bottom: 40px;
+    margin-top: 40px;
+}
+
+.sidebar a {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    padding: 5px;
+    margin: 10px 0;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 0.7rem;
+}
+
+.sidebar a:hover {
+    background-color: #ffcc00;
+    margin-right: 30px!important;
+}
+
+/* Main Content */
+.main-content {
+    margin-left: calc(11.325rem + 20px); /* Dynamic adjustment */
+    padding: 20px;
+    margin-right: 80px!important;
+    flex-grow: 1;
+}
+
+/* Heading */
+h1 {
+    /* font-size: 1.8rem; */
+    text-align: center;
+    color: #000000; /* Charcoal Gray */
+    margin-top: 0px;
+    margin: 10px 10px 40px;
+    text-decoration: none;
+}
+
+.container {
+    display: flex;
+}
+
+.job-card, .job-card label, .job-card .job-item span {
+    background-color: #d2f8de !important;
+}
+/* Buttons */
+.btn {
+    border: none;
+    border-radius: 5px;
+    font-size: 0.8rem !important;
+    cursor: pointer;
+    display: inline;
+    margin: 10px; /* Adjust to uniform spacing */
+}
+
+/* Table with Zebra Stripes */
+table {
+    margin-right: 10px; 
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}
+
+th, td {
+    padding: 5px;
+    text-align: center;
+    border: 2px solid #ddd; 
+    font-size: 0.8rem;
+}
+
+th {
+    color: white;
+}
+
+/* Zebra Stripe for Table Rows */
+tr:nth-child(even) , td .btn-delete{ 
+    background-color: #f0f2f5 !important; 
+}
+
+tr:nth-child(odd) td .btn-delete { 
+    background-color: #ffffff !important; 
+}
+
+td a {
+    display: inline-block;
+    word-wrap: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    color: #ffcc00;
+    
+}
+
+.btn {
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem !important;
+    cursor: pointer;
+    display: inline;
+    margin: 10px; 
+}
+
+.job-card {
+    border: 1px solid #4e9b5f !important;
+    margin-left: 0px;
+    background-color: white; 
+    border-radius: 15px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+    padding: 1rem; 
+    margin-bottom: 1.5rem;
+}
+
+.job-card label {
+    color: white; 
+}
+
+.job-card .job-item span {
+    display: block;
+    background-color: white;
+    color: #F4f9fc;
+}
+
+.job-card .btn {
+    display: none;
+}
+
+.job-card a {
+    color: #f4f4f4 !important; 
+}
+
+table {
+    margin-right: 10px;
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+    border: 2px solid #ddd;
+}
+
+td {
+    padding: 0px !important;
+}
+
+th {
+    padding: 5px !important;
+    background-color: #4e9b5f;   /* Light Blue for table header */
+    color: white;
+}
+
+td a {
+    display: inline-block;
+    word-wrap: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #00a6ed; 
+}
+
+.hamburger {
+    display: none;  
+    cursor: pointer;
+}
+
+#JobCards {
+    display: none;
+    margin-bottom: 100px;
+    border-radius: 10px;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    display: none; 
+    z-index: 999; 
+}
+
+@media (max-width: 768px) {
+    body{
+        background-color: #e3fced;
+    }
+
+    
+    .hamburger {
+        display: block;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        font-size: 24px;
+    }
+
+    h1 {
+        text-align: center;     
+        color: #000000;       
+        margin-top: 0;           
+        margin-bottom: 30px;    
+    }
+    
+    .main-content {
+        margin-right: 15px !important;
+    }
+    .sidebar {
+        display: none;
+    }
+    
+    table {
+        display: none;
+    }
+    
+    #jobCards {
+        flex-direction: column;  
+        margin-top: 0px !important;
+    }
+
+    .job-card {
+        flex: 1 1 100%; 
+        margin-bottom: 20px;
+    }
+
+    .job-card .btn {
+        display: block;
+    }
+
+    .job-card span {
+        background-color: #f4f9fc;
+    }
+
+    .job-card .job-item a, span, label {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 1024px) {
+    h1 {
+        text-align: center;
+        color: #000000;
+        margin-top: 0px;
+        margin-bottom: 30px;
+    }
+
+    .sidebar {
+        display: none; 
+        width: 60%; 
+        top: 0; 
+        left: 0;
+        position: fixed; 
+        height: 100vh; 
+        z-index: 1000; 
+        overflow-y: auto;
+    }
+
+    .sidebar a {
+        margin-right: 20px;
+        padding: 10px;
+        padding-right: 20px;
+        font-size: 15px;
+    }
+
+    .hamburger {
+        display: block; 
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        font-size: 24px; 
+    }
+
+    table {
+        display: none;
+    }
+
+    .job-card {
+        border: 1px solid #ddd;
+        padding: 20px;
+        margin-bottom: 30px;
+        margin-left: 0px;
+        background-color: white; 
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+        transition: box-shadow 0.3s ease-in-out;
+    }
+
+    .job-card:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .job-card .job-item {
+        margin-bottom: 15px;
+    }
+
+    .job-card .job-item label {
+        text-decoration: 2px underline #333;
+        font-weight: bold;
+        display: block;
+        color: #000000;
+        margin-bottom: 5px;
+    }
+
+    .job-card .job-item span {
+        display: block;
+        color: #001cd1 !important;
+    }
+
+    .job-card .job-item span {
+        background-color: white ;
+    }
+
+    .job-card .job-item a {
+        color: #001cd1 !important;
+        display: inline-block;
+        width: 350px;
+        overflow: hidden; 
+        white-space: nowrap; 
+        text-overflow: ellipsis; 
+        color: blue;
+    }
+
+    .job-card .job-item a, span, label {
+        font-size: 15px;
+    }
+
+    .actions {
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .btn {
+        color: white;
+    }
+
+    .btn-edit {
+        background-color: #00a6ed; /* Light Blue for edit button */
+    }
+
+    .btn-delete {
+        background-color: transparent; /* Set background to transparent */
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        opacity: 0.8;
+    }
+
+    .main-content {
+        margin: 10px;
+    }
+}
+
+.no-jobs-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-left: 40px;
+    margin-right: 0px !important;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+.no-jobs-message-other {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 20px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.8rem;
+    }
+td {
+    padding: 0; /* Remove extra padding */
+    margin: 0; /* Remove margin */
+    height: auto; /* Ensure cells adjust to content */
+    max-height: 10px !important; 
+  }
+  
+
+table th:nth-child(1), table td:nth-child(1) { width: 10%; }
+    table th:nth-child(2), table td:nth-child(2) { width: 8%; }
+    table th:nth-child(3), table td:nth-child(3) { width: 12%; }
+    table th:nth-child(4), table td:nth-child(4) { width: 8%; }
+    table th:nth-child(5), table td:nth-child(5) { width: 10%; }
+    table th:nth-child(6), table td:nth-child(6) { width: 8%; }
+    table th:nth-child(7), table td:nth-child(7) { width: 10%; }
+    table th:nth-child(8), table td:nth-child(8) { width: 6%; }
+
+    </style>
+</head>
+<body> 
+    
+<div class="hamburger" onclick="toggleSidebar()">
+        <i class="fa fa-bars"></i>
+    </div>
+    <div class="sidebar" id="sidebar" style="padding-left: 20px; margin-right: 15px !important; ">
+        <h2>Dashboard</h2>
+        <a href="{% url 'job_list' %}"> <i class="fas fa-clipboard-list" style="padding-right: 10px;"></i> Job Tracker</a>
+        <a href="{% url 'job_create' %}"> <i class="fas fa-plus-square" style="padding-right: 10px;"></i> Add Application</a>
+        <a href="{% url 'feedback' %}"> <i class="fas fa-comment" style="padding-right: 10px;"></i>Your Thoughts</a>
+        <a href="{% url 'simple_analytics' %}"> <i class="fas fa-chart-bar" style="padding-right: 10px;"></i>Application Stats</a>
+        <a href="{% url 'logout' %}"> <i class="fas fa-power-off" style="padding-right: 10px;"></i> Logout</a>
+        
+    </div>
+    
+    <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+    <div class="main-content">
+    <!-- Job list CSS below -->
+        <style>
+            .search-container {
+                position: relative;
+                display: inline-block;
+                text-align: center;
+                width: 100%;
+            }
+            
+            form {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            
+            input[type="search"] {
+                width: 80%;
+                max-width: 200px;
+                padding: 10px 45px 10px 15px;
+                font-size: 0.8em;
+                border: 2px solid ;
+                border-radius: 15px;
+                transition: border-color 0.3s ease;
+                outline: none;
+                min-width: 295px;
+                margin-left: 0px;
+                margin-right: 0px;
+            }
+            
+            input[type="search"]:focus {  
+                border-color: #4e9b5f; 
+                /* outline: none; */
+            }
+    
+            .search-icon {
+                position: absolute;
+                right: 20px;  
+                top: 50%;  
+                transform: translateY(-50%);  
+                color: #aaa;  
+                pointer-events: none; 
+            }
+            
+            input[type="search"]:focus + .search-icon {
+                color: #4e9b5f !important;
+            }
+    
+            .search-container{
+                margin-bottom: 20px;
+            }
+    
+            @media (min-width: 768px) {
+                .form{
+                    margin-left: 0px !important;
+                    
+                }
+                .search-icon {
+                    display: none;  
+                }
+                
+                .search-container{
+                    margin-bottom: 30px;
+                }
+            }
+            </style>
+        {% block content %}
+        
+
+
+        {% endblock %}
+        <script>
+        
+            // JavaScript logic to detect screen width and toggle display
+            function checkScreenWidth() {
+                const width = window.innerWidth; // Get the screen width
+                const jobTable = document.getElementById('jobTable');
+                const jobCards = document.getElementById('jobCards');
+    
+                if (width > 768) {
+                    jobTable.style.display = 'table';  // Show table for larger screens
+                    jobCards.style.display = 'none';   // Hide cards on larger screens
+                } else {
+                    jobTable.style.display = 'none';   // Hide table on smaller screens
+                    jobCards.style.display = 'block';  // Show cards for smaller screens
+                }
+            }
+    
+            // Run checkScreenWidth on load and when window is resized
+            window.onload = checkScreenWidth;
+            window.onresize = checkScreenWidth;
+            
+            function toggleSidebar() {
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('overlay');
+    
+                if (sidebar.style.display === 'block') {
+                    sidebar.style.display = 'none';
+                    overlay.style.display = 'none'; // Hide overlay
+    
+                } else {
+                    sidebar.style.display = 'block';
+                    overlay.style.display = 'block'; // Show overlay
+                }
+            }
+            function closeSidebar() {
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('overlay');
+    
+                sidebar.style.display = 'none'; // Hide sidebar
+                overlay.style.display = 'none'; // Hide overlay
+            }
+    
+        </script>
+    </body>
+    </html>
+    
+    

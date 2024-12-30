@@ -44,10 +44,12 @@ def job_list(request):
 
     # Check if all company_email fields are empty or None
     all_emails_empty = not any(job.company_email for job in jobs)
+    all_dates_empty = not any(job.interview_date for job in jobs)
 
     context = {
         'jobs': jobs,
         'all_emails_empty': all_emails_empty,  # Pass the flag to the template
+        'all_dates_empty': all_dates_empty,
     }
     return render(request, 'job_list.html', context)
 
@@ -112,7 +114,8 @@ def search(request):
             job_category = request.GET.get('job_category', '').strip()
 
             if job_category:
-                data = data.filter(Add_Job(job_category__icontains=job_category))  # Partial match
+                # data = data.filter(Add_Job(job_category__icontains=job_category))  # Partial match
+                data = data.filter(job_category__icontains=job_category)
 
         context = {
             'data': data,

@@ -1,0 +1,10 @@
+Django Concept Imp topics for interview:
+
+1. Models (Hot Topic) and ORM and DB all query
+2. Queryset, model manager, limit , specific amount of data
+3. Django MiddleWare (most quest), api restriction
+4. Authentication (user and customize ), session, jwt, oauth, social authentication
+5. Permission and Authorization 
+6. Signals (Post, presave, preread, delete), how model work 
+7. Transaction, log, transaction and logs 
+8. DebugToolBar for debugging all types of django concept

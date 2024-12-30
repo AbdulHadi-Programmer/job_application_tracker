@@ -1,0 +1,344 @@
+Student Id, Name, Marks Out of 60
+100047775, Habbibullah, 24
+100047779,Wardan Jabeen, 30
+100047780,Hooriya Turrab, 26
+100047782,Muzammil Farooque, 33
+100047783,Anosha, 32
+100047785,Waseem, 32
+100047787, fatima zehra chandio, 33
+100047788,razia eman, 26
+100047790,alishba shahid, 32
+100047792,kainat Shabbir, 27
+100047793, Ali Mehdi, 39
+100047795 ,Aman hussain, 36 
+100047796 ,Aatif Arbab, 25
+100047799 ,Laweeza Iqbal, 20
+100047800 ,Farhan Adil, 29 
+100047801, Ayesha Nadeem, 26
+100047802, Pradeep Kumar, 29
+100047804, Kamra Ali, 23
+100047806, saqib hussain, 24
+100047807, Muhammad Burrio, 29
+100047808, Muhammad Shaheer, 25
+100047811, Pasand Ali, 19
+100047814, rahima hunerkar, 24
+100047815, momina naveed, 30
+100047816, arsalan ali, 27
+100047817, Saman Ayaz Shaikh, 32
+100047820, Khadija Shahid, 22
+100047821, Vishal Kumar, 20
+100047822, Inshirah Salam, 27
+100047823, Faira Anwar, 19
+100047826, Muskan Haider, 32 
+100047828, Shafaq Zaman, 28
+100047831, Ali Abbas, 19
+100047833, Nimra Imran, 33
+100047834, Shahzain Ahmed, 33
+100047835, Huzaima Ali, 42
+100047836, Javeria Sohail, 39
+100047838,Noman Arshad, 19
+100047839, Ahmed Raza Hanif, 28
+100047841,Ezan Ashraf Ali, 36
+100047843, Khizar Shuja Awan, 38
+100047844, Muhammad Ruhab, 45
+100047845, Suneel Kumar, 27
+100047846, Anas Khatri, 44
+100047847, Malik Abdullah, 19
+100047849, Pardeep, 19
+100047850, Abdul Haseeb, 29
+100047851, fakhir Ahmed, 37
+100047852, Samiullah, 30
+100047860, Abdul Rauf, 28
+100047862, Usman , 35
+100047864, Samad, 27
+100047865, Ahmed Baig, 29
+100047866, Hussain Abbas, 36
+100047868, Sufiyan Shakir, 23
+100047871, Bharat kumar, 24
+100047873, Manahil Aftab, 40
+100047874, Zoya Ahsan, 29
+100047875, Muhammad Rayan, 38
+100047877, Taha bhatti, 36
+100047879, Shaikh Ayan, 41
+100047882, Preeti Khatri, 25
+100047883, Muniza Haroon, 29
+100047885, Shahzaib Akram, 31
+100047886, Ateeqa Rehman, 36
+100047889, Khubaib Tahir Arain, 30
+100047890, Kumal Abbas, 28
+100047891, Areeb Rashid, 29
+100047892, Sheharyar, 32
+100047895, Mujtaba Ayaz, 29
+100047896, Haseeb Mughal, 31
+100047897, Kareema Nazeer, 18
+100047901, Afraseem, 14
+100047902, Sheharyar Iqbal, 23
+100047903, Haram Nabeel, 20
+100047906, Saqib, 36
+100047908, Talha, 38
+100047910, Faiza Junejo, 17
+100047911, Reyan Afzal, 39
+100047913, Faisal, 18
+100047914, Hammas Qazi, 39
+100047915, Ammarah, 34
+100047919, suman gopal, 23
+100047921, haseeb hussain, 38
+100047922, Farheen Aman , 36
+100047924, Ghulam Mustafa, 25
+100047925, Aliza Tauqeer, 30
+100047927, Menahil Javed, 30
+100047928, Sindhayah, 30
+100047929, Youdhistawar, 40
+100047932, Usman khan, 31
+100047933, Abdur Rafay, 32
+100047935, Dino lagari, 26
+100047937, Shaif ur rehman, 27
+100047938, Imran, 23
+100047939, Siraj Ahmed, 37
+100047941, Anabia Nasir, 
+100047942, Tasleem un nisa, 46
+100047943, Aftab Ali, 26
+100047944, Hamza Lakhani, 34
+100047946, Asad Hussain, 31
+100047947, Hassan Shahid, 28
+100047948, Tasmiya Chohan, 22
+100047949, Aleena, 26
+100047953, Sanobar, 23
+100047955, Kashmala , 35
+100047957, Hassan, 19
+100047959, Zainab, 35
+100047960, Muhammad Ahmed, 22
+100047961, Fazl-e - Rabi, 35
+100047962, Zainab Asif, 28
+100047966, Najaf Azeem, 32
+100047969, Marium tahir, 34
+100047970, Isha Sadiq, 21
+100047974, Owais, 36
+100047977, Mubeen Hussain, 32 
+100047979, Deep Singh, 26
+100047981, Mubashir, 20
+
+100047983 ,
+100047988 ,
+100047990 ,
+100047995 ,
+100047997 ,
+100047998 ,
+100048000 ,
+100048002 , 
+100047 , 
+100047 ,
+100047 ,
+100047 , 
+100047 ,
+100047 ,
+100047 ,
+100047 , 
+100047981,
+100047981,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard with Analytics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+<style>
+    body {
+        margin: 0;
+        background-color: #e3fced;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    .container {
+        display: flex;
+    }
+    
+    /* Sidebar */
+    .sidebar {
+        width: 11.325rem;
+        min-width: 180px;
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        z-index: 1;
+        background-color: #4e9b5f;
+        font-weight: bold;
+    }
+    
+    .sidebar h2 {
+        font-size: 1.3rem;
+        color: white;
+        text-align: center;
+        margin: 40px 0;
+    }
+    
+    .sidebar a {
+        display: flex;
+        align-items: center;
+        color: #fff;
+        padding: 5px;
+        margin: 10px 0;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 0.7rem;
+    }
+    
+    .sidebar a:hover {
+        background-color: #ffcc00;
+        margin-right: 30px !important;
+    }
+    
+    /* Main Content */
+    .main-content {
+        margin-left: calc(11.325rem + 20px);
+        padding: 20px;
+        flex-grow: 1;
+    }
+    
+    /* Media Queries */
+    @media (max-width: 768px) {
+        .sidebar {
+            display: none;
+        }
+    
+        .hamburger {
+            display: block;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+        }
+    
+        .main-content {
+            margin: 10px;
+        }
+    }
+    
+    @media (max-width: 1024px) {
+        .sidebar {
+            display: none;
+            width: 60%;
+            top: 0;
+            left: 0;
+            position: fixed;
+            height: 100vh;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+    
+        .sidebar a {
+            margin-right: 20px;
+            padding: 10px;
+            font-size: 15px;
+        }
+    
+        .hamburger {
+            display: block;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+        }
+    
+        .main-content {
+            margin: 10px;
+        }
+    }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+    {% block content %}
+        
+
+
+    {% endblock %}
+    <script>
+        
+        // JavaScript logic to detect screen width and toggle display
+        function checkScreenWidth() {
+            const width = window.innerWidth; // Get the screen width
+            const jobTable = document.getElementById('jobTable');
+            const jobCards = document.getElementById('jobCards');
+
+            if (width > 768) {
+                jobTable.style.display = 'table';  // Show table for larger screens
+                jobCards.style.display = 'none';   // Hide cards on larger screens
+            } else {
+                jobTable.style.display = 'none';   // Hide table on smaller screens
+                jobCards.style.display = 'block';  // Show cards for smaller screens
+            }
+        }
+
+        // Run checkScreenWidth on load and when window is resized
+        window.onload = checkScreenWidth;
+        window.onresize = checkScreenWidth;
+        
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+
+            if (sidebar.style.display === 'block') {
+                sidebar.style.display = 'none';
+                overlay.style.display = 'none'; // Hide overlay
+
+            } else {
+                sidebar.style.display = 'block';
+                overlay.style.display = 'block'; // Show overlay
+            }
+        }
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+
+            sidebar.style.display = 'none'; // Hide sidebar
+            overlay.style.display = 'none'; // Hide overlay
+        }
+
+    </script>
+</body>
+</html>

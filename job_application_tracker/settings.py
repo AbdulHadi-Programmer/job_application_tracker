@@ -53,11 +53,21 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
 # Application definition
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8000",     
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:8000",    
+#     "http://192.168.2.103",
     # "http://192.168.100.176",  # Adjust this to match your IP/domain
-    "http://192.168.2.104",  # Adjust this to match your IP/domain
-]
+    # "http://192.168.2.106",  # Adjust this to match your IP/domain
+# ]
+
+# ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.2.106']   # Home Wifi
+# ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.1.111']   # Muhammad Home Wifi
+# ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.57.148']  # Mobile hostpot
+# ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.100.176']   # Library Wifi
+# ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.2.103']   # Computer Table Wifi
+ALLOWED_HOSTS = ["*"]     # Allow all host 
+
+
 X_FRAME_OPTIONS = 'ALLOWALL'
 
 

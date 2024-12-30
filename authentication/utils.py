@@ -17,4 +17,3 @@ def send_otp_to_users(title, message, email):
         [email],
         fail_silently=False,
     )
-
