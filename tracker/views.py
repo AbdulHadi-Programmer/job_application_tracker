@@ -1,7 +1,7 @@
 # This is a function to search a job 
 # views.py
 import json
-from .forms import FeedbackForm
+# from .forms import FeedbackForm
 from .models import Feedback 
 from django.db.models import Count  # Ensure Count is imported
 from django.utils import timezone  # Ensure timezone is imported
@@ -21,14 +21,25 @@ from django.contrib.auth.models import User
 from django.conf import settings
 from .forms import  *
 from .models import *
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 
-@login_required
-# def home(request):
-#     return redirect(request, 'job_list')
-def home(request):
+
+def home_page(request):
+    """
+    If the user is authenticated, redirect to the job list.
+    Otherwise, render the home page.
+    """
     if request.user.is_authenticated:
-        return redirect('job_list')
-    return redirect('login')
+        button_url = 'job_list'
+    else:
+        button_url = 'signup'
+    
+    # return render(request, 'home.html', {'button_url': button_url})
+    if request.user.is_authenticated:
+        return redirect('job_list')  # Authenticated users are redirected
+    return render(request, 'home_page.html', {'button_url': button_url})  # Unauthenticated users see the homepage
+
 
 @login_required
 def job_list(request):
@@ -145,18 +156,57 @@ def profile(request):
 
 
 
+# @login_required
+# def feedback(request):
+#     if request.method == 'POST':
+#         form = FeedbackForm(request.POST)
+#         if form.is_valid():
+#             form.save()  # Save the feedback to the database
+#             return redirect('job_list')  # Redirect after saving
+#     else:
+#         form = FeedbackForm()
+
+#     return render(request, 'feedback.html', {'form': form})
+############################################
+# @login_required
+# def feedback(request):
+#     if request.method == 'POST':
+#         form = FeedbackForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('job_list')
+#         else:
+#             print(form.errors)  # Print errors in the console for debugging
+#     else:
+#         form = FeedbackForm()
+#     return render(request, 'feedback.html', {'form': form})
+
+from django.http import HttpResponse
+
 @login_required
 def feedback(request):
-    if request.method == 'POST':
-        form = FeedbackForm(request.POST)
-        if form.is_valid():
-            form.save()  # Save the feedback to the database
-            return redirect('job_list')  # Redirect after saving
-    else:
-        form = FeedbackForm()
-
-    return render(request, 'feedback.html', {'form': form})
-
+    if request.method == "POST":
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        rating = request.POST.get("rating")
+        discovery = request.POST.get("discovery")
+        features = request.POST.get("features", "")
+        navigation = request.POST.get("navigation")
+        recommendation = request.POST.get("recommendation", "")
+        
+        # Save data to the database
+        Feedback.objects.create(
+            name=name,
+            email=email,
+            rating=rating,
+            discovery=discovery,
+            features=features,
+            navigation=navigation,
+            recommendation=recommendation
+        )
+        
+        return render(request, 'job_list.html')
+    return render(request, "feedback.html")
 
 
 def analytics_view(request):

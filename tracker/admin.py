@@ -8,18 +8,11 @@ class AddJobAdmin(admin.ModelAdmin):
 
 admin.site.register(Add_Job, AddJobAdmin)
 
-# from django.contrib import admin
-# from .models import Add_Job
+from django.contrib import admin
+from .models import Feedback
 
-# class AddJobAdmin(admin.ModelAdmin):
-#     list_display = ('job_category', 'job_level', 'company_name', 'employment_type', 'user')  # Display the user field
-#     search_fields = ('company_name', 'job_category')  # Fields to search
-#     list_filter = ('job_level', 'employment_type', 'user')  # Add 'user' to list_filter
+# class FeedbackAdmin1(admin.ModelAdmin):
+#     list_display = ('name', 'email', 'satisfaction', 'likes', 'improvements', 'additional_comments')
 
-# admin.site.register(Add_Job, AddJobAdmin)
-
-
-# Simply add:
-# admin.site.register(Add_Job)
-
+# admin.site.register(Feedback, FeedbackAdmin1)
 admin.site.register(Feedback)

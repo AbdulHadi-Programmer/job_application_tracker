@@ -1,0 +1,521 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Traces</title>
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+        <!-- <link rel="shortcut icon" href='img/logo.ico' type="image/x-icon"> -->
+        <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+    </head> 
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #e3fced;
+            color: #000;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .navbar {
+            /* background-color: #4e9b5f;  */
+            background-color: white;
+            border-bottom: 3px solid #4e9b5f;
+            /* border: 3px solid #4e9b5f; */
+            /* color: #000;  */
+        }
+
+        .navbar .btn {
+            background-color: #ffcc00; 
+            color: #000;
+            border-radius: 20px;
+            padding: 0.5rem 1.5rem;
+            font-size: 1rem;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .navbar .btn:hover {
+            background-color: #e3fced; 
+            color: #4e9b5f; 
+            border: 1px solid #4e9b5f;
+        }
+
+        .hero {
+            padding: 5rem 1rem;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(78, 155, 95, 0.8) 30%, rgba(227, 252, 237, 0) 100%);
+            color: #000;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: bold;
+        }
+        
+        .hero p {
+            font-size: 1.25rem;
+            margin-top: 1rem;
+            color: #333;
+        }
+
+        .features {
+            padding: 3rem 1rem;
+        }
+
+        .features .card {
+            background-color: #fff; 
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            transition: transform 0.3s;
+        }
+
+        .features .card:hover {
+            transform: scale(1.05);
+            border: 1px solid #4e9b5f;
+        }
+
+        .features .card-body {
+            text-align: center;
+        }
+
+        .features .card i {
+            font-size: 3rem;
+            color: #4e9b5f; 
+            margin-bottom: 1rem;
+        }
+
+
+        .btn-primary {
+            background-color: #4e9b5f; 
+            border: none;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #ffcc00; 
+            color: #000;
+        }
+
+/* Features Section Heading *//* Features Section Heading */
+.features-heading {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #4e9b5f;
+    margin-bottom: 1.5rem;
+    padding-left: 1rem;
+    border-left: 5px solid #4e9b5f;
+    display: inline-block;
+}
+
+/* FAQ Section Heading */
+.faq-heading {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1.5rem;
+    padding-left: 1rem;
+    border-left: 5px solid #4e9b5f;
+    display: inline-block;
+}
+
+/* FAQ Item Style */
+.faq-item {
+    margin-bottom: 2rem;
+    transition: background-color 0.3s ease, border-left 0.3s ease;
+    padding-left: 1rem;
+    border-left: 5px solid transparent;
+}
+
+.faq-item:hover {
+    background-color: #e3fced;
+    border-left: 5px solid #4e9b5f;
+}
+
+/* FAQ Question Heading Style */
+.faq-item h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #4e9b5f;
+    margin-bottom: 1rem;
+    transition: color 0.3s ease;
+}
+
+/* FAQ Answer Style */
+.faq-item p, .faq-item ul {
+    font-size: 1rem;
+    line-height: 1.6;
+    transition: color 0.3s ease;
+}
+
+.faq-item:hover p, .faq-item:hover ul {
+    color: #333;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    /* Features Section Heading for Mobile */
+    .features-heading {
+        font-size: 1.5rem;  /* Adjust font size for smaller screens */
+        margin-bottom: 1rem;
+    }
+    
+    /* FAQ Section Heading for Mobile */
+    .faq-heading {
+        font-size: 1.5rem;  /* Adjust font size for smaller screens */
+        margin-bottom: 1rem;
+    }
+
+    /* FAQ Question Heading for Mobile */
+    .faq-item h3 {
+        font-size: 1.25rem; /* Smaller font size for mobile */
+        margin-bottom: 0.8rem;
+    }
+
+    /* FAQ Answer Style for Mobile */
+    .faq-item p, .faq-item ul {
+        font-size: 0.9rem;  /* Smaller font size for mobile */
+        line-height: 1.5;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Features Section Heading for Mobile */
+    .hero h1 {
+        font-size: 2.4rem;
+        font-weight: bold;
+    }
+    .features-heading {
+        font-size: 1.25rem;  /* Adjust font size for very small screens */
+        margin-bottom: 0.8rem;
+    }
+
+    /* FAQ Section Heading for Mobile */
+    .faq-heading {
+        font-size: 1.25rem;  /* Adjust font size for very small screens */
+        margin-bottom: 0.8rem;
+        margin-bottom: 30px !important;
+    }
+
+    /* FAQ Question Heading for Mobile */
+    .faq-item h3 {
+        font-size: 1.1rem;  /* Even smaller font size for mobile */
+        margin-bottom: 0.6rem;
+    }
+
+    /* FAQ Answer Style for Mobile */
+    .faq-item p, .faq-item ul {
+        font-size: 0.85rem;  /* Even smaller font size for mobile */
+        line-height: 1.4;
+    }
+}
+
+@media (max-width: 480px) {
+            .navbar .btn {
+                padding: 0.5rem 0.8rem; /* Further adjust padding for very small screens */
+                font-size: 0.85rem; /* Even smaller font size for small screens */
+            }
+
+            .navbar-toggler {
+                background-color: #4e9b5f;
+            }
+
+            .navbar-collapse {
+                text-align: center;
+                padding-top: 10px;
+            }
+        }
+
+/* FAQ List Item Style */
+.faq-item .point {
+    font-size: 1rem;   /* Default font size */
+    line-height: 1.6;  /* Improves readability */
+    position: relative;
+    padding-left: 25px;  /* Adds space for custom bullet */
+    color: #555;   /* Text color */
+    margin-bottom: 10px;
+}
+
+/* Custom Bullet Style for FAQ List Items */
+.faq-item .point::before {
+    content: "✔";  /* Adds checkmark as the bullet point */
+    position: absolute;
+    left: 0;
+    color: #4e9b5f;  /* Green color for the bullet */
+    font-weight: bold;  /* Makes the checkmark bold */
+    font-size: 1.2rem;  /* Adjust bullet size */
+}
+
+/* Hover Effect for FAQ List Item */
+.faq-item .point:hover {
+    color: #333;   /* Darken text color on hover */
+}
+
+/* Mobile Responsiveness for FAQ List */
+@media (max-width: 768px) {
+    .faq-item .point {
+        margin-left: 0px;
+        font-size: 0.95rem;  /* Smaller font size for mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .faq-item .point {
+        font-size: 0.85rem;  /* Even smaller font size for very small screens */
+    }
+}
+
+/* Current Card Style */
+.features .card {
+    background-color: #fff;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    transition: transform 0.3s;
+    display: flex; /* Ensure card uses flexbox layout */
+    flex-direction: column; /* Stack elements vertically */
+    height: 100%; /* Ensure card takes up available space */
+}
+
+.features .card:hover {
+    transform: scale(1.05);
+    border: 1px solid #4e9b5f;
+}
+
+.features .card-body {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Evenly space out content in card */
+    flex-grow: 1; /* Allow the body to take remaining space */
+}
+
+/* Icon Styling */
+.features .card i {
+    font-size: 3rem;
+    color: #4e9b5f;
+    margin-bottom: 1rem;
+}
+
+/* Make sure card size remains the same even with different content */
+.features .card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+
+.features .card-text {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Ensure consistent height for card on large screens */
+@media (min-width: 768px) {
+    .features .card {
+        height: 100%; /* Cards will take the full available height */
+    }
+
+    .features .col-md-4 {
+        display: flex;
+        justify-content: center;
+        align-items: stretch; /* Stretch columns to fill available height */
+    }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .features .card {
+        max-width: 100%;
+        margin: 10px 0;
+    }
+
+    .features .card-body {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .features .card {
+        margin: 8px 0;
+    }
+
+    .features .card-body {
+        padding: 10px;
+    }
+}/* Main Features Heading Styling */
+.features-heading-main {
+    font-size: 2.2rem; /* Larger font size for prominence */
+    font-weight: 700;  /* Bold to make it stand out */
+    color: black; /* Color for the text */
+    text-align: center; /* Center the text */
+    margin-bottom: 2.5rem; /* Space below the heading */
+    text-transform: uppercase; /* Capitalize letters for emphasis */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .features-heading-main {
+        font-size: 2rem; /* Slightly smaller on medium screens */
+        margin-bottom: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .features-heading-main {
+        font-size: 1.75rem; /* Even smaller on very small screens */
+        margin-bottom: 1.5rem;
+    }
+}
+
+
+
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#" style="color: #000;">Career Traces</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="btn" href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <a class="btn" href="{% url 'signup' %}">Signup</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Seamless Job Application Tracking</h1>
+            <p>Keep your job search organized and progress in check with Career Traces.</p>
+             <a href="{% url 'signup' %}" class="btn btn-primary mt-4">Get Started</a>
+<!-- 
+            {% if user.is_authenticated %}
+                <a href="{% url 'job_list' %}" >Get Started</a>
+            {% else %}
+                <a href="{% url 'signup' %}" >Get Started</a>
+            {% endif %} -->
+            <!-- <a href="{% url user.is_authenticated|yesno:'job_list,signup' %}" class="btn btn-primary">Get Started</a> -->
+
+
+
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <h2 class="features-heading-main">Key Features</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <i class="fas fa-clipboard-list"></i>
+                            <h5 class="card-title mt-3">Manual Job Tracking</h5>
+                            <p class="card-text">Effortlessly track your job applications and stay ahead.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <i class="fas fa-chart-bar"></i>
+                            <h5 class="card-title mt-3">Analytics</h5>
+                            <!-- <p class="card-text">Visualize your job application trends with detailed charts.</p> -->
+                            <p class="card-text">Visualize your job application progress through insightful charts.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <i class="fas fa-calendar-alt"></i>
+                            <h5 class="card-title mt-3">Interview Scheduler</h5>
+                            <p class="card-text">Automatically display upcoming interview dates based on your application data.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+ <br> <br> <br>
+     <!-- FAQ Section (added below the features section) -->
+     <section class="faq-section">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 30px;">Frequently Asked Questions</h2>
+            <div class="faq-item">
+                <h3>What is Career Traces?</h3>
+                <p><b> Career Traces</b> helps you track your job applications, stay organized, and view analytics on your application progress.</p>
+            </div>
+            <div class="faq-item">
+                <h3>How do I get started?</h3>
+                <p>Click on the <b> "Get Started" </b> button and sign up to start tracking your job applications.</p>
+            </div>
+            <div class="faq-item">
+                <h3>What features does Career Traces currently offer?</h3>
+                <!-- <ul>
+                    <li>Manual tracking of job applications.</li>
+                    <li>Analytics display through charts</li>
+                    <li>Interview Scheduler based on user data</li>
+                    <li>A simple, user-friendly interface with free access to all current features.</li>
+                </ul> -->
+                
+                    <p class="point">Manual tracking of job applications.</p>
+                    <p class="point">Analytics display through charts</p>
+                    <p class="point">Interview Scheduler based on user data</p>
+                    <p class="point">A simple, user-friendly interface with free access to all current features.</p>
+                
+            </div> 
+            <div class="faq-item">
+                <h3>Is Career Traces free ?</h3>
+                <p>Yes, <b>Career Traces is currently free</b>. We plan to introduce subscription-based advanced features in the future.
+                    .</p>
+            </div>
+            
+            <div class="faq-item">
+                <h3>Can I use Career Traces to find job opportunities?</h3>
+                <p> No, <b>Career Traces is not a job portal</b>. It focuses on helping users organize and track job applications they apply for externally.</p>
+            </div>
+            <div class="faq-item">
+                <h3>How do I reset my password if I forget it? </h3>
+                <p>You can use the <b>Forgot Password</b> option on the login page, and a one-time password (OTP) will be sent to your registered email for verification.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Will my data remain private?  </h3>
+                <p>Yes, we value your privacy. <b> All your data is securely stored </b> and only accessible by you.</p>
+            </div>
+            <div class="faq-item">
+                <h3> Can I export my job application data?</h3>
+                <p>Export functionality is under consideration for future updates.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Is Career Traces mobile-friendly?</h3>
+                <p>Yes, <b>Career Traces is Responsive</b> and work seamlessly on both desktop and mobile devices.</p>
+            </div>
+        </div>
+    </section>
+
+
+    <br> <br> <br> <br> 
+    <!-- <footer>
+        <p>&copy; 2024 Career Traces. All Rights Reserved.</p>
+    </footer> -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+

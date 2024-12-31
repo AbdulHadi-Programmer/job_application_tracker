@@ -18,9 +18,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # LOGIN_URL = 'login'
 
-LOGIN_URL = '/auth/login/'
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/auth/login/'
+# LOGIN_URL = '/auth/login/'
+# LOGIN_REDIRECT_URL = '/'
+# LOGOUT_REDIRECT_URL = '/auth/login/'
+
+LOGIN_URL = '/login/'
+
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Default session engine
 SESSION_COOKIE_AGE = 1209600  # Two weeks (in seconds)
@@ -190,15 +193,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'staticfiles/'
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'staticfiles'),
-# ]
-# STATICFILES_DIRS = [
-#     BASE_DIR / "static",  # Directory where your static files live (other than the app's static directories)
-# ]
+STATIC_URL = '/static/'
 
+# Directory where `collectstatic` will gather all static files for production.
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# List of directories where Django searches for additional static files during development.
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # Custom directory for static files in development
+]
+
+# Ensure STATIC_ROOT is not in STATICFILES_DIRS.
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

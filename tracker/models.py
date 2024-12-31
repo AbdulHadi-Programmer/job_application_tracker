@@ -59,75 +59,86 @@ class Add_Job(models.Model):
 
 
 
-class Feedback(models.Model):
-    name = models.CharField(max_length=150, null=True, blank=True)
-    email = models.CharField(max_length=150, null=True, blank=True)
-    rating = [
-        ('5', '⭐⭐⭐⭐⭐ - Excellent'),
-        ('4', '⭐⭐⭐⭐ - Good'),
-        ('3', '⭐⭐⭐ - Average'),
-        ('2', '⭐⭐ - Poor'),
-        ('1', '⭐ - Terrible'),
-    ]
-    rating = models.CharField(max_length=10 ,choices=rating, default='----------')
-    feedback_box = models.TextField(max_length=5000)
-
-    def __str__(self):
-        return self.name if self.name else "Anonymous Feedback"
-
 # from django.db import models
-# from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-# from django.core.validators import RegexValidator
-# from django.contrib.auth.models import User
+# # New Feedback Form Page : 
+# class Feedback(models.Model):
+#     name = models.CharField(max_length=255, null=True, blank=True)
+#     email = models.EmailField(max_length=100, default="")
+#     satisfaction = models.IntegerField(choices=[
+#         (1, 'Very Dissatisfied'),
+#         (2, 'Dissatisfied'),
+#         (3, 'Neutral'),
+#         (4, 'Satisfied'),
+#         (5, 'Very Satisfied')
+#     ], blank=False, default=0)  # This ensures it is required (not null)
 
-# # Create your models here.
-# class OTP(models.Model):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE)
-#     otp_code = models.CharField(max_length=6)
-#     created_at = models.DateTimeField(auto_now_add=True)
-
-# class UserManager(BaseUserManager):
-#     def create_user(self, username, full_name, email, password=None, **extra_fields):
-#         if not email:
-#             raise ValueError("The Email field is required")
-#         if not username:
-#             raise ValueError("The Username field is required")
-
-#         email = self.normalize_email(email)
-#         user = self.model(username=username, full_name=full_name, email=email, **extra_fields)
-#         user.set_password(password)
-#         user.save(using=self._db)
-#         return user
-
-#     def create_superuser(self, username, full_name, email, password=None, **extra_fields):
-#         extra_fields.setdefault('is_staff', True)
-#         extra_fields.setdefault('is_superuser', True)
-
-#         return self.create_user(username, full_name, email, password, **extra_fields)
-
-
-# class User(AbstractBaseUser):
-#     username = models.CharField(
-#         max_length=30,
-#         unique=True,
-#         validators=[RegexValidator(
-#             regex=r'^[a-zA-Z0-9]+$',
-#             message="Username must contain only letters and numbers, with no spaces or special characters."
-#         )]
-#     )
-#     full_name = models.CharField(max_length=100)
-#     email = models.EmailField(unique=True)
-#     job_title = models.CharField(max_length=100, blank=True, null=True)  # Optional
-#     company_name = models.CharField(max_length=100, blank=True, null=True)  # Optional
-#     country = models.CharField(max_length=50)
-#     is_active = models.BooleanField(default=True)
-#     is_staff = models.BooleanField(default=False)
-
-#     objects = UserManager()
-
-#     USERNAME_FIELD = 'username'
-#     REQUIRED_FIELDS = ['full_name', 'email', 'country']
+#     likes = models.TextField(default="No likes yet")
+#     improvements = models.TextField(default="No value given")
+#     additional_comments = models.TextField(null=True, blank=True)
 
 #     def __str__(self):
-#         return self.username
+#         return f"Feedback from {self.name if self.name else 'Anonymous'}"
 
+from django.db import models
+
+class Feedback(models.Model):
+    # Required fields
+    name = models.CharField(max_length=255)
+    email = models.EmailField()
+    # rating = models.PositiveSmallIntegerField()  # Values between 1-10
+    rating = models.IntegerField(
+        choices=[(i, i) for i in range(1, 11)],  # Rating choices from 1 to 10
+        default=5,  # Default value for rating field
+    )
+    # DISCOVERY_CHOICES = [
+    #     ('social_media', 'Social Media'),
+    #     ('word_of_mouth', 'Word of Mouth'),
+    #     ('search_engine', 'Search Engine'),
+    #     ('friend', 'Friend/Colleague'),
+    #     ('advertisement', 'Advertisement'),
+    #     ('other', 'Other'),
+    # ]
+
+    discovery = models.CharField(
+        max_length=50,
+        choices=[
+            ('social_media', 'Social Media'),
+            ('word_of_mouth', 'Word of Mouth'),
+            ('search_engine', 'Search Engine'),
+            ('friend', 'Friend/Colleague'),
+            ('advertisement', 'Advertisement'),
+            ('other', 'Other'),
+        ],
+        default='social_media',  # Add default value here
+    )
+
+    # discovery = models.CharField(max_length=50, choices=DISCOVERY_CHOICES)
+    # NAVIGATION_CHOICES = [
+    #     ('very_easy', 'Very Easy'),
+    #     ('easy', 'Easy'),
+    #     ('neutral', 'Neutral'),
+    #     ('difficult', 'Difficult'),
+    #     ('very_difficult', 'Very Difficult'),
+    # ]
+    # navigation = models.CharField(max_length=50, choices=NAVIGATION_CHOICES)
+    navigation = models.CharField(
+        max_length=50,
+        choices=[
+            ('very_easy', 'Very Easy'),
+            ('easy', 'Easy'),
+            ('neutral', 'Neutral'),
+            ('difficult', 'Difficult'),
+            ('very_difficult', 'Very Difficult'),
+        ],
+        default='neutral',  # Default value for navigation field
+    )
+
+    # Optional fields
+    features = models.TextField(blank=True, null=True)
+    recommendation = models.TextField(blank=True, null=True)
+    
+    # Timestamp
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Feedback by {self.name} - Rating: {self.rating}"

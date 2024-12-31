@@ -1,4 +1,3 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,12 +7,7 @@
     <title>Feedback Form</title>
     <head>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-        <!-- <link rel="icon" href="/img/new_logo_img.png" type="image/png"> -->
-        <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
-        
-        
     </head>
-    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">  
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -28,10 +22,6 @@
             
         .container {
             display: flex;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
         }
                 
         .sidebar {
@@ -87,6 +77,34 @@
             font-size: 1.5rem;
         }
 
+        .feedback-form { 
+            margin: 20px;
+        }
+        .feedback-form { 
+            margin: 0 181.2px;
+            padding: 20px;
+            background-color: #e3fced;;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            font-family: 'Poppins', sans-serif;
+            border-radius: 8px; 
+        }
+        
+        .feedback-form input,
+        .feedback-form select,
+        .feedback-form textarea {
+            font-family: 'Poppins', sans-serif;
+            margin-top: 5px !important;
+            width: 90%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            box-sizing: border-box;
+            padding: 5px;
+            margin: 0 20px;
+            background-color: white;
+        }
+
         .feedback-form button {
             background-color: #28a745;
             color: white;
@@ -116,10 +134,17 @@
             flex: 1 1 calc(33.333% - 40px);
             text-align: center;
         }
+        label{
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            font-weight: bold;
+            padding: 5px;
+            margin: 0 20px;
+        }
         
         label{
             margin-top: 20px !important;
-        } 
+        }
 
         /* Overlay styles */
         .overlay {
@@ -172,7 +197,6 @@
                 padding: 12px; /* Add padding for better mobile UI */
                 font-size: 1.1rem; /* Slightly larger font size for mobile */
             }
-            
         }
 
         @media (max-width: 768px) {
@@ -234,12 +258,6 @@
         }
         
         @media (max-width: 1024px) {
-            .feedback-form-container {
-                /* margin: 0 20px !important; */
-                margin: 0 181.2px !important;
-                padding: 15px !important;
-                box-shadow: none !important;
-            }
             h1 {
                 text-align: center;
                 color: #000000;
@@ -274,12 +292,13 @@
             .feedback-form textarea {
                 font-family: 'Poppins', sans-serif;
                 margin-top: 5px !important;
-                width: 80%;
+                width: 90%;
                 border: 1px solid #ddd;
                 border-radius: 5px;
                 font-size: 0.9rem;
                 box-sizing: border-box;
                 padding: 5px;
+                /* margin: 0 20px; */
                 background-color: white;
             }
             .hamburger {
@@ -345,18 +364,17 @@
 /* ============================================================================================================================ */
 /* ============================================================================================================================ */
 .feedback-form-container {
-            width: calc(100% - 362.4px);
-            margin: 0 181.2px !important;
-            margin-bottom: 10px !important;
+            width: 100%;
+            max-width: 600px;
+            margin: 50px auto;
             padding: 20px;
-            background-color: #e3fced;
+            background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         .feedback-form-container h2 {
-            text-decoration: underline;
             text-align: center;
-            color: black;
+            color: #4e9b5f;
             margin-bottom: 20px;
         }
         .form-group {
@@ -373,158 +391,24 @@
             border-radius: 4px;
             border: 1px solid #ccc;
             box-sizing: border-box;
-            
         }
         .form-group textarea {
             height: 100px;
             resize: vertical;
         }
         .form-group button {
-            background-color: #ffcc00;
+            background-color: #4e9b5f;
             color: #fff;
             padding: 10px 20px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 0.8rem;
-            justify-content: center;
-            text-align: center;
-            font-weight: bold;
+            font-size: 16px;
             width: 100%;
         }
         .form-group button:hover {
-            opacity: 0.75;
+            background-color: #3b7b4a;
         }
-        /* Feedback Form Styles */
-@media (max-width: 1024px) {
-.feedback-form-container {
-    width: calc(100% - 362.4px); /* Adjust width for margin */
-    margin: 0 181.2px !important; /* Apply the side margins */
-    margin-bottom: 10px !important; /* Apply bottom margin */
-    padding: 20px;
-    background-color: #e3fced;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.feedback-form-container h2 {
-    text-decoration: underline;
-    text-align: center;
-    color: black;
-    margin-bottom: 20px;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    font-weight: bold;
-    margin-bottom: 5px;
-    display: block;
-}
-
-.form-group input, 
-.form-group textarea, 
-.form-group select {
-    width: 100%;
-    padding: 8px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-}
-
-.form-group textarea {
-    height: 100px;
-    resize: vertical;
-}
-
-.form-group button {
-    background-color: #ffcc00;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.8rem;
-    justify-content: center;
-    text-align: center;
-    font-weight: bold;
-    width: 100%;
-}
-
-.form-group button:hover {
-    opacity: 0.75;
-}
-}
-/* Media Queries for Feedback Form */
-@media (max-width: 768px) {
-    .feedback-form-container {
-        margin-left: 20px;
-        margin-right: 20px;
-        padding: 15px;
-        width: 100%;
-        max-width: 90%;
-    }
-
-    .feedback-form-container h2 {
-        font-size: 24px;
-    }
-
-    .form-group input, 
-    .form-group textarea, 
-    .form-group select {
-        padding: 10px;
-    }
-
-    .form-group button {
-        font-size: 14px;
-        padding: 12px 20px;
-    }
-}
-
-
-@media (max-width: 768px) {
-    .feedback-form-container {
-        margin-left: 20px;
-        padding: 15px;
-        width: 100%;
-        max-width: 90%;
-    }
-    .feedback-form-container h2 {
-        font-size: 24px;
-    }
-    .form-group input, .form-group textarea, .form-group select {
-        padding: 10px;
-    }
-    .form-group button {
-        font-size: 14px;
-        padding: 12px 20px;
-    }
-}
-
-@media (max-width: 480px) {
-    .feedback-form-container {
-        margin-left: 5px !important;
-        padding: 10px;
-        width: 90%;
-        max-width: 90%;
-    }
-    .feedback-form-container h2 {
-        font-size: 20px;
-    }
-    .form-group input, .form-group textarea, .form-group select {
-        padding: 8px;
-    }
-    .form-group button {
-        width: 50%;
-        font-size: 12px;
-        padding: 10px 15px;
-        margin-left: 75px !important;
-    }
-    
-}
-
 
     </style>
 </head>
@@ -552,17 +436,16 @@
     <div class="feedback-form-container">
         <h2>Career Traces Feedback</h2>
         <form  method="POST">
-            {% csrf_token %}
             <!-- Name Field -->
             <div class="form-group">
                 <label for="name">Full Name</label>
-                <input type="text" id="name" name="name" required placeholder="Your Full Name">
+                <input type="text" id="name" name="name" required="" placeholder="Your Full Name">
             </div>
 
             <!-- Email Field -->
             <div class="form-group">
                 <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" required placeholder="Your Email Address">
+                <input type="email" id="email" name="email" required="" placeholder="Your Email Address">
             </div>
 
             <!-- Rating Field -->

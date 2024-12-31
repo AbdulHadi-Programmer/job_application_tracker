@@ -7,55 +7,6 @@ from datetime import datetime, timedelta
 from django.utils.timezone import now, make_aware, is_naive
 
 
-# # Create Account or Signup View
-# def signup_view(request):
-#     error = ""
-#     if request.method == 'POST':
-#         username = request.POST['username']
-#         email = request.POST['email']
-#         password = request.POST['password']
-        
-#         # Check if the username or email already exists
-#         if User.objects.filter(username=username).exists() and User.objects.filter(email=email).exists():
-#             error = "Username and Email already exists. Please use a different username and email."
-#         elif User.objects.filter(username=username).exists():
-#             error = 'Username already exists. Please choose a different one.'
-#             return render(request, 'signup.html', {'error': error})
-#         elif User.objects.filter(email=email).exists():
-#             error = 'Email already exists. Please use a different email.'
-#             return render(request, 'signup.html', {'error': error})
-
-#         # Generate OTP and user detail and save it temporarily in the session
-#         otp_code = generate_otp()
-#         request.session['temp_user_data'] = {
-#             'username': username,
-#             'email': email,
-#             'password': password,
-#             'otp_code': otp_code,
-#             'otp_timestamp': datetime.now().isoformat()  # Save the timestamp
-#         }
-
-#         # Send OTP to user's email
-#         title = 'Welcome to Career_Traces.com - Verify Your Account'
-#         message = f"""
-#         Dear {username},
-
-#         Thank you for signing up for Career_Traces.com!
-
-#         To complete your registration, please verify your email address by entering the OTP (One-Time Password) provided below on the verification page:
-
-#         OTP Code: {otp_code}
-
-#         This OTP is valid for the next 2 minutes. If you did not initiate this request, please disregard this email.
-
-#         Best regards,
-#         Career_Traces.com Support Team
-#         """
-#         send_otp_to_users(title, message, email)  # Use the utility function
-
-#         # Redirect to OTP verification page
-#         return redirect('verify_otp')
-#     return render(request, 'signup.html')
 from django.contrib.auth.models import User
 from datetime import datetime
 
@@ -203,7 +154,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('home')  # Redirect to home page after login
+            return redirect('home_page')  # Redirect to home page after login
         else:
             error = 'Invalid credentials'
             return render(request, 'login.html', {'error': error})
@@ -372,6 +323,14 @@ def change_password_view(request):
             error = "User does not exist. Please try again."
         
     return render(request, 'change_password.html', {'success': success, 'error': error})
+
+
+def home_page(request):
+    if request.user.is_authenticated:
+        # Redirect authenticated users to the job list
+        return redirect('job_list')
+    # Render the home page for unauthenticated users
+    return render(request, 'home_page.html')
 
 
 # Logout View

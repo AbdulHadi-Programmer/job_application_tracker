@@ -24,10 +24,27 @@ from authentication.views import *
 #     path('jobs/card', cards, name='cards')
 # ]
 
+## Correct all urls and also :
+# urlpatterns = [
+#     path('', login_view, name='login'),
+#     path('home/', home, name='home'),  # uses the redirect logic for auth users
+#     path('logout/', logout_view, name='logout'),
+#     path('jobs/', job_list, name='job_list'),
+#     path('jobs/create/', job_create, name='job_create'),
+#     path('jobs/update/<int:job_id>/', job_update, name='job_update'),
+#     path('jobs/delete/<int:id>/', job_delete, name='job_delete'),
+#     path('jobs/search/', search, name='search'),
+#     path('jobs/profile/', profile, name='profile'),
+#     path('jobs/feedback/', feedback, name='feedback'),
+#     path('jobs/analytics/', analytics_view, name='simple_analytics'),
+#     path('jobs/card', cards, name='cards'),
+
+# ]
 
 urlpatterns = [
-    path('', login_view, name='login'),
-    path('home/', home, name='home'),  # uses the redirect logic for auth users
+    path('', home_page, name='home'),  # uses the redirect logic for auth users
+    path('login/', login_view, name='login'),
+    
     path('logout/', logout_view, name='logout'),
     path('jobs/', job_list, name='job_list'),
     path('jobs/create/', job_create, name='job_create'),
