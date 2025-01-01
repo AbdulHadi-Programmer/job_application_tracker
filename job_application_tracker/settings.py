@@ -69,7 +69,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.100.176']   # Library Wifi
 # ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.2.103']   # Computer Table Wifi
 ALLOWED_HOSTS = ["*"]     # Allow all host 
-
+ALLOWED_HOSTS = ["careertraces.pythonanywhere.com"]
 
 X_FRAME_OPTIONS = 'ALLOWALL'
 
