@@ -219,7 +219,6 @@ def feedback(request):
             navigation=navigation,
             recommendation=recommendation
         )
-        
         return render(request, 'job_list')
     return render(request, "feedback.html")
 
