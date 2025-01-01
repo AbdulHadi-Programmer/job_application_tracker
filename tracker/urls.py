@@ -54,6 +54,7 @@ urlpatterns = [
     path('jobs/search/', search, name='search'),
     path('jobs/profile/', profile, name='profile'),
     path('jobs/feedback/', feedback, name='feedback'),
+    path('job/delete/confirm/<int:id>/', job_delete_confirmation, name='job_delete_confirmation'),
     path('jobs/analytics/', analytics_view, name='simple_analytics'),
     path('jobs/card', cards, name='cards'),
     

@@ -45,20 +45,37 @@ def signup_view(request):
 
         # Send OTP to user's email
         title = 'Welcome to Career_Traces.com - Verify Your Account'
-        message = f"""
-        Dear {username},
+        # message = f"""
+        # Dear {username},
 
-        Thank you for signing up for Career_Traces.com!
+        # Thank you for signing up for Career_Traces.com!
 
-        To complete your registration, please verify your email address by entering the OTP (One-Time Password) provided below on the verification page:
+        # To complete your registration, please verify your email address by entering the OTP (One-Time Password) provided below on the verification page:
 
-        OTP Code: {otp_code}
+        # OTP Code: {otp_code}
 
-        This OTP is valid for the next 2 minutes. If you did not initiate this request, please disregard this email.
+        # This OTP is valid for the next 2 minutes. If you did not initiate this request, please disregard this email.
 
-        Best regards,
-        Career_Traces.com Support Team
-        """
+        # Best regards,
+        # Career_Traces.com Support Team
+        # """
+        message = """
+Dear {username},
+
+Welcome to Career_Traces.com! We're excited to have you on board.
+
+To complete your registration, please verify your email address by entering the One-Time Password (OTP) provided below:
+
+OTP Code: {otp_code}
+
+This OTP will expire in 2 minutes. If you did not request this verification, please disregard this email.
+
+Thank you for joining us!
+
+Best regards,
+Career_Traces.com Support Team
+"""
+
         send_otp_to_users(title, message, email)  # Use the utility function
 
         # Redirect to OTP verification page
@@ -183,20 +200,35 @@ def forget_password_view(request):
         
         # Send OTP to user's email
         title = 'Password Reset OTP for Career_Traces.com'
-        message = f"""
-        Dear {user.username},
+        # message = f"""
+        # Dear {user.username},
 
-        We received a request to reset your password for your account at Career_Traces.com.
+        # We received a request to reset your password for your account at Career_Traces.com.
 
-        Please enter the OTP below to proceed with password reset:
+        # Please enter the OTP below to proceed with password reset:
 
-        OTP Code: {otp_code}
+        # OTP Code: {otp_code}
 
-        This OTP is valid for the next 2 minutes. If you did not request this, please ignore this email.
+        # This OTP is valid for the next 2 minutes. If you did not request this, please ignore this email.
 
-        Best regards,
-        Career_Traces.com Support Team
-        """
+        # Best regards,
+        # Career_Traces.com Support Team
+        # """
+        message = """
+Dear {user.username},
+
+We received a request to reset the password for your account at Career_Traces.com.
+
+To proceed with the reset, please enter the OTP below:
+
+OTP Code: {otp_code}
+
+This OTP will expire in 2 minutes. If you did not initiate this request, please ignore this email.
+
+Best regards,
+Career_Traces.com Support Team
+"""
+
         send_otp_to_users(title, message, email)  # Use the utility function
 
         # Store user ID and OTP timestamp in session and redirect to OTP verification page
@@ -238,14 +270,24 @@ def verify_reset_otp_view(request):
 
             # Send OTP via email
             title = 'Password Reset OTP for Career_Traces.com'
-            message = f"""
-            Dear {user.username},
+            # message = f"""
+            #     Dear {user.username},
 
-            Your new OTP code is {new_otp}. It is valid for 2 minutes.
+            #     Your new OTP code is {new_otp}. It is valid for 2 minutes.
 
-            Best regards,
-            Career_Traces.com Support Team
-            """
+            #     Best regards,
+            #     Career_Traces.com Support Team
+            # """
+            message = """
+Dear {user.username},
+
+Your OTP for resetting your password is: {new_otp}. Please enter this code on the verification page.
+
+This OTP will expire in 2 minutes.
+
+Best regards,
+Career_Traces.com Support Team
+"""
             send_otp_to_users(title, message, user.email)
 
             return render(request, 'verify_otp.html', {

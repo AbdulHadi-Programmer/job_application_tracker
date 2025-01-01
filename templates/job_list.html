@@ -21,14 +21,20 @@
         .no-jobs-message {
             display: none;
         }
+        .cta-button1{
+            display: none;
+        }
         }
     </style>
     
         <table id="jobTable" style="margin-top: 0px !important; border-radius: 10px; margin-left: 30px;">
             {% if jobs|length == 0 %}
-            <div class="no-jobs-message">
-                <p>No application is added.</p>
-            </div>
+                <div class="no-jobs-message">
+                    <p>No application is added.</p>
+                </div>
+                <div class="cta-container">
+                    <a href="{% url 'job_create' %}" class="cta-button">Add Application</a>
+                </div>
             {% else %}
             <tr>
                 <th>Job Category</th>
@@ -70,15 +76,19 @@
                     </td>
                 {% endif %}
                     <td>
-                    <a href="{% url 'job_update' job.id %}" title="Edit" class="btn" style="display:inline; color: #ffc00c; width: 20px !important; padding: 0px !important;"> 
+                    <a href="{% url 'job_update' job.id %}" title="Edit" class="btn" style="display:inline; font-size: 1.2rem !important; color: #ffc00c; width: 20px !important; padding: 0px !important;"> 
                         <i class="fa fa-pencil"></i>
                     </a>
-                    <form action="{% url 'job_delete' job.id %}" method="POST" style="display:inline;">
+                    <!-- <form action="{% url 'job_delete' job.id %}" method="POST" style="display:inline;">
                         {% csrf_token %}
                         <button type="submit" title="Delete" class="btn btn-delete" style=" padding: 0px !important; color: red!important ; width: 20px !important; background-color: #fff;">
                             <i class="fa fa-trash"></i>
                         </button>
-                    </form>
+                    </form> -->
+                    <!-- Redirect to the confirmation page -->
+                    <a href="{% url 'job_delete_confirmation' job.id %}" class="btn btn-delete" style="background-color: red;">
+                        <i class="fa fa-trash" style="font-size:1.2rem !important; padding: 8px 15px; color: red;"></i>
+                    </a>
                 </td>
             </tr>
             {% endfor %}
@@ -90,7 +100,12 @@
             <div class="no-jobs-message-other">
                 <p>No application is added.</p>
             </div>
+            <div class="cta-container">
+                <a href="{% url 'job_create' %}" class="cta-button1">Add Application</a>
+            </div>
             {% else %}
+            
+
             {% for job in jobs %}
             <div class="job-card">
                 <div class="job-item">
@@ -136,18 +151,96 @@
                     <span>{{ job.interview_date | date:"Y-m-d" }}</span>
                 </div>
                 {% endif %}
-                
+                <!--
                 <div class="actions">
                     <a href="{% url 'job_update' job.id %}" class="btn btn-edit" style="text-decoration: underline; font-size: 1.2rem !important; padding: 8px 15px;">✏️</a>
-                    <form action="{% url 'job_delete' job.id %}" method="POST">
+                     <form action="{% url 'job_delete' job.id %}" method="POST">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-delete" style="background-color: red; "> <i class="fa fa-trash-o" style="font-size:1.2rem !important; padding: 8px 15px;"></i> </button>  
-                    </form>
+                    </form> -->
+
+<!-- -------------------------------------------------------------------------------------------------------------- -->
+                <div class="actions">
+                    <a href="{% url 'job_update' job.id %}" class="btn btn-edit" style="text-decoration: underline; font-size: 1.2rem !important; padding: 8px 15px;">✏️</a>
+                    
+                    <!-- Redirect to the confirmation page -->
+                    <a href="{% url 'job_delete_confirmation' job.id %}" class="btn btn-delete" style="background-color: red;">
+                        <i class="fa fa-trash-o" style="font-size:1.2rem !important; padding: 8px 15px;"></i>
+                    </a>
+                </div>
+<!---------------------------------------------------------------------------------------------------------------- -->
+
+                    
                 </div>
             </div>
             {% endfor %}
             {% endif %}
         </div>
+        <script>
+            // Show the confirmation dialog
+            function confirmDelete(event, jobId) {
+                event.preventDefault(); // Prevent immediate form submission
+                // Show the warning message
+                document.getElementById('delete-warning' + jobId).style.display = 'block';
+            }
         
+            // Submit the form to delete the job when the user confirms
+            function confirmDeletion(jobId) {
+                document.getElementById('deleteForm' + jobId).submit(); // Submit the form for deletion
+            }
+        
+            // Hide the warning message if the user cancels
+            function cancelDeletion(jobId) {
+                document.getElementById('delete-warning' + jobId).style.display = 'none';
+            }
+        </script>
+        
+        <!-- CSS for the confirmation message -->
+        <style>
+            .delete-warning {
+                background-color: #ffeb3b;
+                color: #721c24;
+                padding: 15px;
+                border-radius: 8px;
+                margin-top: 20px;
+                text-align: center;
+                font-weight: bold;
+                font-size: 1rem;
+                border: 2px solid #721c24;
+            }
+        
+            .delete-warning p {
+                margin: 10px 0;
+            }
+        
+            .confirm-btn {
+                background-color: #4e9b5f;
+                color: white;
+                padding: 10px 20px;
+                font-size: 1rem;
+                border-radius: 5px;
+                margin: 5px;
+                cursor: pointer;
+            }
+        
+            .confirm-btn:hover {
+                background-color: #388e3c;
+            }
+        
+            .cancel-btn {
+                background-color: #f44336;
+                color: white;
+                padding: 10px 20px;
+                font-size: 1rem;
+                border-radius: 5px;
+                margin: 5px;
+                cursor: pointer;
+            }
+        
+            .cancel-btn:hover {
+                background-color: #d32f2f;
+            }
+        </style>
+
     </div>
     {% endblock %}

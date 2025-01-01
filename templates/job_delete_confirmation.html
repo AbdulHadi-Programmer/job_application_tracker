@@ -1,0 +1,199 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Confirmation</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+        <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
+    </head> 
+
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e3fced;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .delete-card {
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .delete-card .icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 20px auto;
+            width: 60px;
+            height: 60px;
+            border: 3px solid #ff4d4d;
+            border-radius: 50%;
+            background-color: #ffeaea;
+        }
+
+        .delete-card .icon i {
+            color: #ff4d4d;
+            font-size: 2rem;
+        }
+
+        .delete-card h1 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .delete-card p {
+            font-size: 0.95rem;
+            color: #666;
+            /* margin-bottom: 20px; */
+        }
+
+        .delete-card .btn {
+            display: block;
+            width: 100%;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: background-color 0.3s;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-delete {
+            background-color: #ff4d4d;
+            color: #fff;
+        }
+
+        .btn-delete:hover {
+            background-color: #d93636;
+        }
+
+        .btn-cancel {
+            background-color: #f4f4f4;
+            color: #333;
+            border: 1px solid #ccc;
+        }
+
+        .btn-cancel:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .delete-card {
+                padding: 20px;
+            }
+
+            .delete-card h1 {
+                font-size: 1.3rem;
+            }
+
+            .delete-card p {
+                font-size: 0.9rem;
+            }
+
+            .delete-card .btn {
+                font-size: 0.9rem;
+            }
+
+            .delete-card .icon {
+                width: 50px;
+                height: 50px;
+            }
+
+            .delete-card .icon i {
+                font-size: 1.5rem;
+            }
+        }
+
+
+        /* Job Information Styling */
+.job-info {
+    background-color: #f9f9f9; /* Light background for the job details */
+    padding-top: 4px;
+    padding: 7px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.job-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #d93636 !important;
+    /* margin-bottom: 10px; */
+}
+
+.job-description {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+    </style>
+</head>
+<body>
+    <div class="delete-card">
+        <!-- Cross in a Circle Icon -->
+        <div class="icon">
+            <i class="bi bi-exclamation-triangle-fill"></i>
+        </div>
+
+        <!-- <h1>Are you sure?</h1>
+
+         {{ job }}
+        <p>This action cannot be undone. All values associated with this job application will be permanently deleted.</p>
+
+        
+        <form action="{% url 'job_delete' job.id %}" method="POST" style="margin-bottom: 0;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-delete">Delete Job</button>
+        </form>
+        <a href="{% url 'job_list' %}" class="btn btn-cancel">Cancel</a> -->
+
+        <!-- Title -->
+<h1>Are you sure?</h1>
+
+<!-- Job Information -->
+<div class="job-info">
+    <p class="job-title">{{ job }}</p> <!-- Assuming job has a title attribute -->
+    <!-- <p class="job-description">{{ job }}</p> Assuming job has a description attribute -->
+</div>
+
+<p style="margin-bottom: 13px;">This action cannot be undone. All values associated with this job application will be permanently deleted.</p>
+
+<!-- Action Buttons -->
+<form action="{% url 'job_delete' job.id %}" method="POST" style="margin-bottom: 0;">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-delete">Delete Job</button>
+</form>
+<a href="{% url 'job_list' %}" class="btn btn-cancel">Cancel</a>
+
+    </div>
+</body>
+</html>

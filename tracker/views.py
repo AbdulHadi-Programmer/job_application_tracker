@@ -105,6 +105,23 @@ def job_delete(request, id):
     
     return render(request, 'job_list.html', {'job': job})
 
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from .models import Add_Job
+
+@login_required
+def job_delete_confirmation(request, id):
+    job = get_object_or_404(Add_Job, id=id, user=request.user)  # Ensure the job belongs to the current user
+    
+    if request.method == 'POST':
+        # If POST request, delete the job and redirect
+        job.delete()
+        messages.success(request, 'Job deleted successfully!')
+        return redirect('job_list')
+    
+    # If GET request, render confirmation page
+    return render(request, 'job_delete_confirmation.html', {'job': job})
+
 
 def logout_view(request):
     logout(request)             

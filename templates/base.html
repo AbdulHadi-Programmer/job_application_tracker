@@ -141,7 +141,7 @@ td a {
 }
 
 .job-card {
-    border: 1px solid #4e9b5f !important;
+    border: 1px solid #e3fced !important;
     margin-left: 0px;
     background-color: white; 
     border-radius: 15px; 
@@ -149,6 +149,7 @@ td a {
     transition: box-shadow 0.3s ease-in-out;
     padding: 1rem; 
     margin-bottom: 1.5rem;
+    display: none ;
 }
 
 .job-card label {
@@ -279,6 +280,17 @@ td a {
     .job-card .job-item a, span, label {
         font-size: 14px;
     }
+    .job-card {
+    border: 1px solid #4e9b5f !important;
+    margin-left: 0px;
+    background-color: white; 
+    border-radius: 15px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+    padding: 1rem; 
+    margin-bottom: 1.5rem;
+    display: block;
+}
 }
 
 @media (max-width: 1024px) {
@@ -397,20 +409,6 @@ td a {
         margin: 10px;
     }
 }
-
-.no-jobs-message {
-    background-color: #f8d7da;
-    color: #721c24;
-    padding: 5px;
-    border-radius: 5px;
-    margin-top: 20px;
-    margin-left: 40px;
-    margin-right: 0px !important;
-    text-align: center;
-    font-weight: bold;
-    font-size: 0.8rem;
-}
-
 .no-jobs-message-other {
     background-color: #f8d7da;
     color: #721c24;
@@ -421,6 +419,60 @@ td a {
     font-weight: bold;
     font-size: 0.8rem;
     }
+
+/* General CSS */
+.no-jobs-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.cta-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.cta-button {
+    background-color: #4e9b5f; /* Button color */
+    color: white;
+    padding: 12px 30px;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.cta-button:hover {
+    background-color: #ffcc00; /* Hover color */
+    transform: scale(1.05);
+}
+
+.cta-button:focus {
+    outline: none;
+}
+
+.cta-button:active {
+    background-color: #ffcc00; /* Active state color */
+}
+
+/* Media Query for mobile devices */
+@media only screen and (max-width: 768px) {
+    .no-jobs-message {
+        display: none; /* Hide the message on mobile */
+    }
+
+    .cta-button {
+        font-size: 1rem; /* Adjust button size for smaller screens */
+    }
+}
+
+
 td {
     padding: 0; /* Remove extra padding */
     margin: 0; /* Remove margin */
