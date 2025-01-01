@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1 style="text-decoration: none;">Job Application List</h1> 
+{% load static %}
+
+
+
+<h1  style="text-decoration: none;">Job Application List</h1> 
         
 
 <!-- Only Update dashboard is not working on mobile devices -->
@@ -144,5 +148,6 @@
             {% endfor %}
             {% endif %}
         </div>
+        
     </div>
     {% endblock %}

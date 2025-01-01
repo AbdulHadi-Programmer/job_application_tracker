@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Navbar</title>
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Navbar styling */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #e3fced; /* Updated navbar color */
+            padding: 10px 20px;
+            color: black;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* Default nav-links styling (hidden on small screens) */
+        .nav-links {
+            list-style: none;
+            display: flex;
+            /*gap: 20px;*/
+        }
+
+        .nav-links li {
+            display: inline-block;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: black;
+            padding: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background-color: #ffcc00; /* Updated hover color */
+            border-radius: 4px;
+        }
+
+        .nav-links a.active {
+            background-color: black;
+            color: white;
+            border-radius: 4px;
+        }
+
+        /* Hamburger menu */
+        .menu-toggle {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: black;
+            cursor: pointer;
+            display: none; /* Hidden by default (for larger screens) */
+        }
+
+        /* Small screens styling */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block; /* Display hamburger menu on smaller screens */
+            }
+
+            .nav-links {
+                display: none; /* Hidden by default on small screens */
+                flex-direction: column;
+                position: absolute;
+                top: 50px;
+                left: 0;
+                width: 100%;
+                background-color: #e3fced; /* Match navbar color */
+            }
+
+            .nav-links li {
+                border-bottom: 1px solid #555;
+                text-align: center;
+            }
+
+            .nav-links li:last-child {
+                border-bottom: none;
+            }
+
+            .nav-links a {
+                display: block;
+                padding: 10px;
+                color: black;
+            }
+        }
+
+        /* Medium to large screens styling */
+        @media (min-width: 769px) {
+            .nav-links {
+                display: flex; /* Always visible on larger screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">WebSiteName</div>
+        <button class="menu-toggle" id="menu-toggle">
+            ☰
+        </button>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="#" class="active">Home</a></li>
+            <li><a href="#">Sign Up</a></li>
+            <li><a href="#">Login</a></li>
+        </ul>
+    </nav>
+    <script>
+        const menuToggle = document.getElementById("menu-toggle");
+        const navLinks = document.getElementById("nav-links");
+
+        menuToggle.addEventListener("click", () => {
+            // Toggle display for nav-links
+            if (navLinks.style.display === "flex") {
+                navLinks.style.display = "none";
+            } else {
+                navLinks.style.display = "flex";
+            }
+        });
+    </script>
+</body>
+</html>

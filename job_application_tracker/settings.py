@@ -228,6 +228,9 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
+# load_dotenv(dotenv_path=os.path.join(BASE_DIR, 'reamde/.env'))  # Adjust path as needed
+# print(os.path.join(BASE_DIR, 'readme/.env'))
+load_dotenv(dotenv_path=os.path.join(BASE_DIR, '.env'))
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'

@@ -5,10 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Job List</title>
+    <title>Job Application List</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">  
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+        <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
+    </head> 
 <!-- For Job List Page -->
     <style>
 body {
@@ -31,10 +34,12 @@ body {
 
 .sidebar h2 { 
     font-size: 1.3rem;
-    color: white; /* Soft White */
+    color: white;
+    
     text-align: center;
     margin-bottom: 40px;
     margin-top: 40px;
+    text-decoration: underline;
 }
 
 .sidebar a {
@@ -48,10 +53,7 @@ body {
     font-size: 0.7rem;
 }
 
-.sidebar a:hover {
-    background-color: #ffcc00;
-    margin-right: 30px!important;
-}
+
 
 /* Main Content */
 .main-content {
@@ -436,6 +438,39 @@ table th:nth-child(1), table td:nth-child(1) { width: 10%; }
     table th:nth-child(7), table td:nth-child(7) { width: 10%; }
     table th:nth-child(8), table td:nth-child(8) { width: 6%; }
 
+    /* ---------------------------------------------------------------------------------------------------------------------------------------- */
+    /* ---------------------------------------------------------------------------------------------------------------------------------------- */
+    /* ---------------------------------------------------------------------------------------------------------------------------------------- */
+    /* ---------------------------------------------------------------------------------------------------------------------------------------- */
+    
+    /* ONLY THIS PAGE CSS IS PERFECTLY WORKING BECAUSE I AM COMMENTED AS ON EACH PAGE IT CAUSE ISSUE DIFF TYPE */
+    
+    /* .abc a:hover{
+        text-decoration: none !important;
+    }
+    .sidebar .abc:hover {
+        background-color: #ffcc00;
+        margin-right: 30px!important;
+    }
+        .logo {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        .logo {
+            width: 50px;
+            height: auto;
+            margin-right: 10px;
+            object-fit: contain;
+            color: black;
+        }
+        @media (max-width: 768px) {
+        .logo {
+            width: 40px; 
+            margin-right: 8px;
+        }
+    } */
+    
+
     </style>
 </head>
 <body> 
@@ -443,14 +478,23 @@ table th:nth-child(1), table td:nth-child(1) { width: 10%; }
 <div class="hamburger" onclick="toggleSidebar()">
         <i class="fa fa-bars"></i>
     </div>
+
     <div class="sidebar" id="sidebar" style="padding-left: 20px; margin-right: 15px !important; ">
-        <h2>Dashboard</h2>
-        <a href="{% url 'job_list' %}"> <i class="fas fa-clipboard-list" style="padding-right: 10px;"></i> Job Tracker</a>
-        <a href="{% url 'job_create' %}"> <i class="fas fa-plus-square" style="padding-right: 10px;"></i> Add Application</a>
-        <a href="{% url 'feedback' %}"> <i class="fas fa-comment" style="padding-right: 10px;"></i>Your Thoughts</a>
-        <a href="{% url 'simple_analytics' %}"> <i class="fas fa-chart-bar" style="padding-right: 10px;"></i>Application Stats</a>
-        <a href="{% url 'logout' %}"> <i class="fas fa-power-off" style="padding-right: 10px;"></i> Logout</a>
         
+         <!-- <a href="{% url 'default' %}" class="logo-img" style="text-decoration: none; color: inherit;">
+            <img src="{% static 'img/logo.png' %}" alt="Logo" style="width: 30px; height: auto; margin-right: 10px; object-fit: contain; background-color: #e3fced; border-radius: 10px; padding: 5px; margin-bottom: 0px;"><span class="logo" style="color: #fff;"> Career Traces</span>
+        </a> -->
+        
+        <h2>Dashboard</h2>
+        
+        
+        <a class="abc" href="{% url 'default' %}"><i class="fas fa-home" style="padding-right: 10px;"></i>Home page</a>
+        <a class="abc" href="{% url 'job_list' %}"> <i class="fas fa-clipboard-list" style="padding-right: 10px;"></i> Job Tracker</a>
+        <a class="abc" href="{% url 'job_create' %}"> <i class="fas fa-plus-square" style="padding-right: 10px;"></i> Add Application</a>
+        <a class="abc" href="{% url 'feedback' %}"> <i class="fas fa-comment" style="padding-right: 10px;"></i>Your Thoughts</a>
+        <a class="abc" href="{% url 'simple_analytics' %}"> <i class="fas fa-chart-bar" style="padding-right: 10px;"></i>Application Stats</a>
+        <a class="abc" href="{% url 'logout' %}"> <i class="fas fa-power-off" style="padding-right: 10px;"></i> Logout</a>
+
     </div>
     
     <div class="overlay" id="overlay" onclick="closeSidebar()"></div>

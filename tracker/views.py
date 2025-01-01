@@ -24,6 +24,10 @@ from .models import *
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
+# Specific Home page to display without logout : 
+def home_page_default(request):
+    return render(request, 'home_page.html')
+
 
 def home_page(request):
     """
@@ -31,14 +35,8 @@ def home_page(request):
     Otherwise, render the home page.
     """
     if request.user.is_authenticated:
-        button_url = 'job_list'
-    else:
-        button_url = 'signup'
-    
-    # return render(request, 'home.html', {'button_url': button_url})
-    if request.user.is_authenticated:
         return redirect('job_list')  # Authenticated users are redirected
-    return render(request, 'home_page.html', {'button_url': button_url})  # Unauthenticated users see the homepage
+    return render(request, 'home_page.html')    # Unauthenticated users see the homepage
 
 
 @login_required
@@ -205,7 +203,7 @@ def feedback(request):
             recommendation=recommendation
         )
         
-        return render(request, 'job_list.html')
+        return render(request, 'job_list')
     return render(request, "feedback.html")
 
 

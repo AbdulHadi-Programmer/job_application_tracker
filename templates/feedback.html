@@ -8,11 +8,8 @@
     <title>Feedback Form</title>
     <head>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-        <!-- <link rel="icon" href="/img/new_logo_img.png" type="image/png"> -->
-        <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
-        
-        
-    </head>
+        <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
+    </head> 
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">  
@@ -525,7 +522,6 @@
     
 }
 
-
     </style>
 </head>
 
@@ -541,9 +537,12 @@
         <a href="{% url 'logout' %}"> <i class="fas fa-power-off" style="padding-right: 10px;"></i> Logout</a>
        
     </div>
+   
 
     <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
-    <div class="hamburger" onclick="toggleSidebar()"><i class="fa fa-bars"></i></div>
+    <div class="hamburger" onclick="toggleSidebar()">
+        <i class="fa fa-bars"></i>
+    </div>
     <!-- <div class="hamburger" onclick="toggleSidebar()"><i class="fa fa-bars"></i></div> -->
     
     <div class="main-content" style="padding-top: 0px;">

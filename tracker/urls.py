@@ -44,7 +44,8 @@ from authentication.views import *
 urlpatterns = [
     path('', home_page, name='home'),  # uses the redirect logic for auth users
     path('login/', login_view, name='login'),
-    
+    path('home-page/', home_page_default, name="default"),
+
     path('logout/', logout_view, name='logout'),
     path('jobs/', job_list, name='job_list'),
     path('jobs/create/', job_create, name='job_create'),
