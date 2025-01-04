@@ -38,7 +38,8 @@ SESSION_COOKIE_AGE = 1209600  # Two weeks (in seconds)
 SECRET_KEY = 'django-insecure-*zy$9ahx^-q$fp9fb#m-_%g0fozpv(f(r1u!#n-9h7j-*=b-wa'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = False
 
 # ALLOWED_HOSTS = []
 # ALLOWED_HOSTS = ['*']
@@ -68,10 +69,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.57.148']  # Mobile hostpot
 # ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.100.176']   # Library Wifi
 # ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.2.103']   # Computer Table Wifi
-ALLOWED_HOSTS = ["*"]     # Allow all host 
-ALLOWED_HOSTS = ["careertraces.pythonanywhere.com"]
+# ALLOWED_HOSTS = ["*"]     # Allow all host 
+# ALLOWED_HOSTS = ["careertraces.pythonanywhere.com"]
+ALLOWED_HOSTS = ['careertraces.pythonanywhere.com', 'www.careertraces.com']
 
-X_FRAME_OPTIONS = 'ALLOWALL'
+
+# X_FRAME_OPTIONS = 'ALLOWALL'
 
 
 INSTALLED_APPS = [

@@ -379,3 +379,10 @@ def home_page(request):
 def logout_view(request):
     logout(request)
     return redirect("/")
+
+
+from django.shortcuts import render
+
+def custom_404(request, exception):
+    return render(request, '404.html', status=404)
+
