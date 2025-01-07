@@ -201,7 +201,7 @@
 <body>
     <form method="post">
         {% csrf_token %}
-        <img src="{% static 'img/logo.png' %}" alt="Logo" class="logo">
+        <img src="{% static 'img/logo.png' %}" alt="" class="logo">
         <h1>Login Here!</h1>
         {% if error %}
             <p class="error">{{ error }}</p>

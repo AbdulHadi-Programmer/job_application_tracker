@@ -1,0 +1,11 @@
+Figma UI Design App Design:
+1. Home Page
+2. Signup page
+3. Sign In/Log In Page
+4. Dashboard (Main working) page include (input data, pdf file upload, urls) 
+5. -Input Data Page (All 5 are under this page)
+5. Text Input (All can be in also )
+5. PDF file Upload Page (All can be in also )
+5. URLs  (All can be in also )
+6. -Quiz Options 
+7. - Generated Quiz Page
