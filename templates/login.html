@@ -137,7 +137,7 @@
             background-color: #d9534f;
         }
         input[type="text"], input[type="password"] {
-            width: 100%;
+            width: 95%;
             padding: 10px;
             margin: 5px 0 15px;
             border: 1px solid #cccccc;
@@ -167,11 +167,11 @@
             text-decoration: none;
             font-weight: bold;
         }
-        .logo {
+        /* .logo {
             max-width: 100%;
             height: auto;
             margin-bottom: 10px;
-        }
+        } */
         label {
             display: block;
             text-align: left;
@@ -179,6 +179,33 @@
             font-weight: 500;
             color: #333;
         }
+        /* Base style for the logo */
+.logo {
+    width: 100px;  /* Default size */
+    height: 100px;  /* Maintain aspect ratio */
+    display: block;  /* Remove extra space below image */
+    margin: 20px auto; /* Center the logo with margin */
+    transition: transform 0.3s ease-in-out;  /* Smooth hover effect */
+}
+
+/* Hover effect */
+.logo:hover {
+    transform: scale(1.1);  /* Slight zoom effect on hover */
+}
+
+/* Responsive media query */
+@media (max-width: 768px) {
+    .logo {
+        width: 120px; /* Smaller logo for tablets and smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        width: 100px; /* Even smaller logo for mobile screens */
+    }
+}
+
         @media (max-width: 600px) {
             body {
                 align-items: flex-start;
@@ -210,7 +237,7 @@
         <input type="text" name="username" id="username" placeholder="Enter your username" required>
         <label for="password">Password:</label>
         <input type="password" name="password" id="password" placeholder="Enter your password" required>
-        <p><a href="{% url 'forget_password' %}">Forget Password?</a></p>
+        <p><a href="{% url 'forget_password' %}" style="margin-top: 0px; margin-bottom: 0px;">Forget Password?</a></p>
         <button type="submit">Login</button>
         <p>Don’t have an account? <a href="{% url 'signup' %}">Sign Up</a></p>
     </form>

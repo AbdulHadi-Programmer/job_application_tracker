@@ -1,195 +1,4 @@
 {% load static %}
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SignUp</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #e3fced;
-            /* background-color: #f4f4f9; */
-        }
-        form {
-            background-color: #ffffff;
-            padding: 20px 30px;
-            border-radius: 8px;
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            width: 300px;
-        }
-        h1 {
-            color: #333333;
-            margin-bottom: 10px;
-        }
-        
-        .error {
-            color: #ffffff;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            background-color: #d9534f;
-        }
-        input[type="text"], input[type="email"], input[type="password"] {
-            width: 90%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #cccccc;
-            border-radius: 4px;
-        }
-        button {
-            background-color: #4CAF50;
-            width: 100%;
-            margin-top: 10px;
-            color: #ffffff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        a {
-            color: #4CAF50;
-            text-decoration: none;
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
-  
-
-    <form method="POST">
-        {% csrf_token %}
-        
-        <h1>Signup</h1>
-       
-        {% if messages %}
-            {% for message in messages %}
-                <div class="error" class="alert alert-{{ message.tags }}">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-
-        <input type="text" id="username" name="username" placeholder="Username" required>
-        <input type="email" id="email" name="email" placeholder="Email" required>
-        <input type="password" id="password" name="password" placeholder="Password" required>
-        
-        {% if success %}
-        <div class="error" style="background-color: #ffcc00;">{{ success }}</div>
-        {% endif %}
-        
-        <button type="submit">Sign Up</button>
-        <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
-    </form>
-    
-</body>
-</html> -->
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <head>
-            <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-        </head>        
-        <title>SignUp</title>
-        <style>
-            body {
-            font-family: 'Poppins', sans-serif; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #e3fced;
-        }
-        form {
-            background-color: #ffffff;
-            padding: 20px 30px;
-            border-radius: 8px;
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            width: 300px;
-            margin-top: -40px !important;
-        }
-        h1 {
-            color: #333333;
-            margin-bottom: 10px;
-        }
-        
-        .error {
-            color: #ffffff;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            background-color: #d9534f;
-        }
-        input[type="text"], input[type="email"], input[type="password"] {
-            width: 90%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #cccccc;
-            border-radius: 4px;
-        }
-        button {
-            /* background-color: #4e9b5f; */
-            background-color: #4CAF50;
-            width: 100%;
-            margin-top: 10px;
-            color: #ffffff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #4e9b5f;
-        }
-        a {
-            color: #4CAF50;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        input:focus{
-            border-color: #ffcc00;
-            border: 2px solid #ffcc00;
-            outline: none;
-            }
-
-
-    </style>
-</head>
-<body>
-  
-    <form method="post">
-        {% csrf_token %}
-        <h1>SignUp</h1>
-        
-        {% if error %}
-            <div class="error">{{ error }}</div>    
-        {% endif %}                                 
-        
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <input type="password" name="password" placeholder="Password" required>
-        
-        <button type="submit">Sign Up</button>
-        
-        <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
-    </form>
-</body>
-</html> -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -290,6 +99,32 @@
                 width: 90%;
             }
         }
+        /* Base style for the logo */
+        .logo {
+    width: 100px;  /* Default size */
+    height: 100px;  /* Maintain aspect ratio */
+    display: block;  /* Remove extra space below image */
+    margin: 20px auto; /* Center the logo with margin */
+    transition: transform 0.3s ease-in-out;  /* Smooth hover effect */
+}
+
+/* Hover effect */
+.logo:hover {
+    transform: scale(1.1);  /* Slight zoom effect on hover */
+}
+
+/* Responsive media query */
+@media (max-width: 768px) {
+    .logo {
+        width: 120px; /* Smaller logo for tablets and smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        width: 100px; /* Even smaller logo for mobile screens */
+    }
+}
     </style>
 </head>
 <body>
