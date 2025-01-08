@@ -34,7 +34,8 @@
             padding: 10px;
             border-radius: 5px;
             margin-bottom: 15px;
-            background-color: #d9534f;
+            /* background-color: #d9534f; */
+            background-color: #FFC0CB;
         }
         input[type="text"], input[type="email"], input[type="password"] {
             width: 90%;
@@ -131,7 +132,8 @@
     <div class="container">
         <!-- Add logo here -->
         <form method="post">
-            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+            <!-- <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}"> -->
+            {% csrf_token %}
 
             <img src="{% static 'img/logo.png' %}" alt="logo" class="logo">
             <h1>SignUp</h1>
