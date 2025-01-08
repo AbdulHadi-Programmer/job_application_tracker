@@ -131,7 +131,8 @@
     <div class="container">
         <!-- Add logo here -->
         <form method="post">
-            {% csrf_token %}
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
             <img src="{% static 'img/logo.png' %}" alt="logo" class="logo">
             <h1>SignUp</h1>
 
