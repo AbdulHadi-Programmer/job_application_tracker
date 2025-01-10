@@ -51,7 +51,7 @@ STATIC_ROOT = BASE_DIR / "staticfiles"  # Optional: Used when collecting static 
 
 
 # ALLOWED_HOSTS = ['careertraces.pythonanywhere.com', 'www.careertraces.com']
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["*"] 
 
 # X_FRAME_OPTIONS = 'ALLOWALL'
 

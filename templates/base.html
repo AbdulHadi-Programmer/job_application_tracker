@@ -59,13 +59,12 @@ body {
 .main-content {
     margin-left: calc(11.325rem + 20px); /* Dynamic adjustment */
     padding: 20px;
-    margin-right: 80px!important;
+    margin-right: 80px !important;
     flex-grow: 1;
 }
 
 /* Heading */
 h1 {
-    /* font-size: 1.8rem; */
     text-align: center;
     color: #000000; /* Charcoal Gray */
     margin-top: 0px;
@@ -169,6 +168,10 @@ td a {
 .job-card a {
     color: #f4f4f4 !important; 
 }
+
+/* -------------------------------------------------------------------------------------------------------------------------------------------------- */
+
+/* -------------------------------------------------------------------------------------------------------------------------------------------------- */
 
 table {
     margin-right: 10px;
@@ -280,6 +283,7 @@ td a {
     .job-card .job-item a, span, label {
         font-size: 14px;
     }
+
     .job-card {
     border: 1px solid #4e9b5f !important;
     margin-left: 0px;
@@ -290,16 +294,61 @@ td a {
     padding: 1rem; 
     margin-bottom: 1.5rem;
     display: block;
-}
+    }
+    
+
 }
 
 .job-card {
-    
-    /* width: 300px;        */
     max-width: 300px;  
     box-sizing: border-box;
 }
+
+/* Adjust for smaller screens */
+@media (max-width: 768px) {
+    #jobCards {
+        flex-direction: column;
+    }
+
+    .job-card {
+        flex: 1 1 100%; /* Single column layout */
+        max-width: 800px;
+    }
+    .btn-delete {
+        font-size: 1.5 rem !important;
+    }
+}
+
 @media (max-width: 1024px) {
+    .job-card .btn-delete {
+        font-size: 1.2 rem;
+    }
+
+    #jobCards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start; 
+        gap: 20px; 
+        margin: 0 auto;
+        /* padding: 10px; */
+        max-width: 1000px; 
+    }
+
+    .job-card {
+        flex: 1 1 calc(33.33% - 20px); 
+        box-sizing: border-box;
+        border: 1px solid #ddd;
+        padding: 20px;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+        transition: box-shadow 0.3s ease-in-out;
+    }
+    
+    .main-content{
+        margin: 10px;
+    }
+
     h1 {
         text-align: center;
         color: #000000;
@@ -469,6 +518,10 @@ td a {
 
 /* Media Query for mobile devices */
 @media only screen and (max-width: 768px) {
+    .main-content{
+        margin: 10px;
+    }
+    
     .no-jobs-message {
         display: none; /* Hide the message on mobile */
     }
@@ -481,7 +534,7 @@ td a {
 
 td {
     padding: 0; /* Remove extra padding */
-    margin: 0; /* Remove margin */
+    margin: 0;  /* Remove margin */
     height: auto; /* Ensure cells adjust to content */
     max-height: 10px !important; 
   }
