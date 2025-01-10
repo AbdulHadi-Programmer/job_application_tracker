@@ -38,8 +38,8 @@ SESSION_COOKIE_AGE = 1209600  # Two weeks (in seconds)
 SECRET_KEY = 'django-insecure-*zy$9ahx^-q$fp9fb#m-_%g0fozpv(f(r1u!#n-9h7j-*=b-wa'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-# DEBUG = False
+# DEBUG = True
+DEBUG = False
 
 # STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 

@@ -5,11 +5,12 @@ from authentication.models import OTP
 from authentication.utils import generate_otp, send_otp_to_users
 from datetime import datetime, timedelta
 from django.utils.timezone import now, make_aware, is_naive
-
+# from django.contrib.au
 
 from django.contrib.auth.models import User
 from datetime import datetime
 
+# @csrf_protect
 def signup_view(request):
     error = ""
     if request.method == 'POST':
