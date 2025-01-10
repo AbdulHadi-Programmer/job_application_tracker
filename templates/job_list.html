@@ -14,7 +14,6 @@
         <i class="fas fa-search search-icon"></i> 
     </form>
 </div>
-   JOB CARD  
     
     <style>
         @media only screen and (max-width: 768px) {
@@ -65,7 +64,7 @@
                         {% endif %}
                     </td>
                 {% endif %}
-                <td><a href="{{ job.reference_link }}" style="width: 170px; color: blue">{{ job.reference_link }}</a></td>
+                <td><a href="{{ job.reference_link }}" style="width: 150px !important; color: blue">{{ job.reference_link }}</a></td>
                 <td>{{ job.employment_type }}</td>
                 <td>{{ job.application_status }}</td>
                 {% if not all_dates_empty %}
@@ -79,16 +78,13 @@
                     <a href="{% url 'job_update' job.id %}" title="Edit" class="btn" style="display:inline; font-size: 1.2rem !important; color: #ffc00c; width: 20px !important; padding: 0px !important;"> 
                         <i class="fa fa-pencil"></i>
                     </a>
-                    <!-- <form action="{% url 'job_delete' job.id %}" method="POST" style="display:inline;">
-                        {% csrf_token %}
-                        <button type="submit" title="Delete" class="btn btn-delete" style=" padding: 0px !important; color: red!important ; width: 20px !important; background-color: #fff;">
-                            <i class="fa fa-trash"></i>
-                        </button>
-                    </form> -->
+                    
                     <!-- Redirect to the confirmation page -->
                     <a href="{% url 'job_delete_confirmation' job.id %}" class="btn btn-delete" style="background-color: red;">
-                        <i class="fa fa-trash" style="font-size:1.2rem !important; padding: 8px 15px; color: red;"></i>
+                        <i class="fa fa-trash" style="padding: 8px 15px; color: red;"></i>
                     </a>
+                    
+                    <!-- font-size:1.2rem !important;  -->
                 </td>
             </tr>
             {% endfor %}
@@ -108,74 +104,68 @@
 
             {% for job in jobs %}
             <div class="job-card">
-                <div class="job-item">
-                    <label>Job Category:</label>
-                    <span>{{ job.job_category }}</span>
-                </div>
-                <div class="job-item">
-                    <label>Job Level:</label>
-                    <span>{{ job.job_level }}</span>
-                </div>
-                <div class="job-item">
-                    <label>Company Name:</label>
-                    <span>{{ job.company_name }}</span>
-                </div>
-                
-                {% if not all_emails_empty %}
-                    <!-- Only display this block if there are some emails in the job list -->
-                    {% if job.company_email %}
-                        <div class="job-item">
-                            <label>Company Email:</label>
-                            <span>{{ job.company_email }}</span>
-                        </div>
+                    <div class="job-item">
+                        <label>Job Category:</label>
+                        <span>{{ job.job_category }}</span>
+                    </div>
+                    <div class="job-item">
+                        <label>Job Level:</label>
+                        <span>{{ job.job_level }}</span>
+                    </div>
+                    <div class="job-item">
+                        <label>Company Name:</label>
+                        <span>{{ job.company_name }}</span>
+                    </div>
+                    
+                    {% if not all_emails_empty %}
+                        <!-- Only display this block if there are some emails in the job list -->
+                        {% if job.company_email %}
+                            <div class="job-item">
+                                <label>Company Email:</label>
+                                <span>{{ job.company_email }}</span>
+                            </div>
+                        {% endif %}
                     {% endif %}
-                {% endif %}
-                
-
-                <div class="job-item">
-                    <label>Reference Link:</label>
-                    <span><a href="{{ job.reference_link }}" style="display: inline-block; width: 250px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: blue;">{{ job.reference_link }}</a></span>
-                </div>
-                <div class="job-item">
-                    <label>Employment Type:</label>
-                    <span>{{ job.employment_type }}</span>
-                </div>
-                <div class="job-item">
-                    <label>Application Status:</label>
-                    <span>{{ job.application_status }}</span>
-                </div>
-                
-                {% if job.interview_date %}
-                <div class="job-item">
-                    <label>Interview Date:</label>
-                    <span>{{ job.interview_date | date:"Y-m-d" }}</span>
-                </div>
-                {% endif %}
-                <!--
-                <div class="actions">
-                    <a href="{% url 'job_update' job.id %}" class="btn btn-edit" style="text-decoration: underline; font-size: 1.2rem !important; padding: 8px 15px;">✏️</a>
-                     <form action="{% url 'job_delete' job.id %}" method="POST">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-delete" style="background-color: red; "> <i class="fa fa-trash-o" style="font-size:1.2rem !important; padding: 8px 15px;"></i> </button>  
-                    </form> -->
-
-<!-- -------------------------------------------------------------------------------------------------------------- -->
-                <div class="actions">
-                    <a href="{% url 'job_update' job.id %}" class="btn btn-edit" style="text-decoration: underline; font-size: 1.2rem !important; padding: 8px 15px;">✏️</a>
                     
-                    <!-- Redirect to the confirmation page -->
-                    <a href="{% url 'job_delete_confirmation' job.id %}" class="btn btn-delete" style="background-color: red;">
-                        <i class="fa fa-trash-o" style="font-size:1.2rem !important; padding: 8px 15px;"></i>
-                    </a>
-                </div>
-<!---------------------------------------------------------------------------------------------------------------- -->
 
+                    <div class="job-item">
+                        <label>Reference Link:</label>
+                        <span><a href="{{ job.reference_link }}" style="display: inline-block; width: 180px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: blue;">{{ job.reference_link }}</a></span>
+                    </div>
+                    <div class="job-item">
+                        <label>Employment Type:</label>
+                        <span>{{ job.employment_type }}</span>
+                    </div>
+                    <div class="job-item">
+                        <label>Application Status:</label>
+                        <span>{{ job.application_status }}</span>
+                    </div>
                     
-                </div>
+                    {% if job.interview_date %}
+                    <div class="job-item">
+                        <label>Interview Date:</label>
+                        <span>{{ job.interview_date | date:"Y-m-d" }}</span>
+                    </div>
+                    {% endif %}
+                    
+    <!-- -------------------------------------------------------------------------------------------------------------- -->
+                    <div class="actions">
+                        <a href="{% url 'job_update' job.id %}" class="btn btn-edit" style="text-decoration: underline; font-size: 1.2rem !important; padding: 8px 15px;">✏️</a>
+                        
+                        <!-- Redirect to the confirmation page -->
+                        <a href="{% url 'job_delete_confirmation' job.id %}" class="btn btn-delete" style="background-color: red;">
+                            <i class="fa fa-trash-o" style="font-size:1.2rem !important; padding: 8px 15px;"></i>
+                        </a>
+                    </div>
+    <!---------------------------------------------------------------------------------------------------------------- -->
             </div>
+
+                    
             {% endfor %}
             {% endif %}
+            </div>
         </div>
+
         <script>
             // Show the confirmation dialog
             function confirmDelete(event, jobId) {
