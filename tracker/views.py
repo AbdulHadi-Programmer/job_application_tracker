@@ -250,3 +250,4 @@ def analytics_view(request):
 
 def cards(request):
     return render(request, "card.html")
+    
