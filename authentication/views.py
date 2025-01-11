@@ -40,7 +40,7 @@ def signup_view(request):
 
         # If both username and email are taken by different users, return an error
         if user_by_username and user_by_email and user_by_username != user_by_email:
-            error = "Username and Email are already taken by different users. Please use unique credentials."
+            error = "Username and email are already in use. Please choose another combination"
             return render(request, 'signup.html', {'error': error})
 
         # If only username exists, show an error
