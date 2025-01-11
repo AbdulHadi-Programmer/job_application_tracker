@@ -85,19 +85,11 @@ class Feedback(models.Model):
     # Required fields
     name = models.CharField(max_length=255)
     email = models.EmailField()
-    # rating = models.PositiveSmallIntegerField()  # Values between 1-10
     rating = models.IntegerField(
         choices=[(i, i) for i in range(1, 11)],  # Rating choices from 1 to 10
         default=5,  # Default value for rating field
     )
-    # DISCOVERY_CHOICES = [
-    #     ('social_media', 'Social Media'),
-    #     ('word_of_mouth', 'Word of Mouth'),
-    #     ('search_engine', 'Search Engine'),
-    #     ('friend', 'Friend/Colleague'),
-    #     ('advertisement', 'Advertisement'),
-    #     ('other', 'Other'),
-    # ]
+    
 
     discovery = models.CharField(
         max_length=50,
@@ -111,16 +103,6 @@ class Feedback(models.Model):
         ],
         default='social_media',  # Add default value here
     )
-
-    # discovery = models.CharField(max_length=50, choices=DISCOVERY_CHOICES)
-    # NAVIGATION_CHOICES = [
-    #     ('very_easy', 'Very Easy'),
-    #     ('easy', 'Easy'),
-    #     ('neutral', 'Neutral'),
-    #     ('difficult', 'Difficult'),
-    #     ('very_difficult', 'Very Difficult'),
-    # ]
-    # navigation = models.CharField(max_length=50, choices=NAVIGATION_CHOICES)
     navigation = models.CharField(
         max_length=50,
         choices=[

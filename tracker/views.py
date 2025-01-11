@@ -198,6 +198,34 @@ def profile(request):
 
 from django.http import HttpResponse
 
+# @login_required
+# def feedback(request):
+#     if request.method == "POST":
+#         name = request.POST.get("name")
+#         email = request.POST.get("email")
+#         rating = request.POST.get("rating")
+#         discovery = request.POST.get("discovery")
+#         features = request.POST.get("features", "")
+#         navigation = request.POST.get("navigation")
+#         recommendation = request.POST.get("recommendation", "")
+        
+#         # Save data to the database
+#         Feedback.objects.create(
+#             name=name,
+#             email=email,
+#             rating=rating,
+#             discovery=discovery,
+#             features=features,
+#             navigation=navigation,
+#             recommendation=recommendation
+#         )
+#         # return render(request, 'job_list')
+#         return render(request, 'job_list.html')  # If you meant a template file
+#     return render(request, "feedback.html")
+from django.shortcuts import render, redirect
+from .models import Feedback
+from django.contrib.auth.decorators import login_required
+
 @login_required
 def feedback(request):
     if request.method == "POST":
@@ -208,18 +236,20 @@ def feedback(request):
         features = request.POST.get("features", "")
         navigation = request.POST.get("navigation")
         recommendation = request.POST.get("recommendation", "")
-        
-        # Save data to the database
-        Feedback.objects.create(
-            name=name,
-            email=email,
-            rating=rating,
-            discovery=discovery,
-            features=features,
-            navigation=navigation,
-            recommendation=recommendation
-        )
-        return render(request, 'job_list')
+
+        try:
+            Feedback.objects.create(
+                name=name,
+                email=email,
+                rating=rating,
+                discovery=discovery,
+                features=features,
+                navigation=navigation,
+                recommendation=recommendation
+            )
+            return redirect('job_list')  # Redirect to a valid URL pattern
+        except Exception as e:
+            return render(request, "feedback.html", {'error': str(e)})
     return render(request, "feedback.html")
 
 
