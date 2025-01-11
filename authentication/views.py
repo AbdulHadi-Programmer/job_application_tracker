@@ -18,21 +18,41 @@ def signup_view(request):
         email = request.POST['email']
         password = request.POST['password']
         
-        # Check if the username or email exists
+        # # Check if the username or email exists
+        # user_by_username = User.objects.filter(username=username).first()
+        # user_by_email = User.objects.filter(email=email).first()
+
+        # if user_by_username and user_by_email:
+        #     # Check if username and email belong to the same user
+        #     if user_by_username != user_by_email:
+        #         error = "Username and Email are already taken by different users. Please use unique credentials."
+        #         return render(request, 'signup.html', {'error': error})
+        # elif user_by_username:
+        #     error = "Username already exists. Please choose a different one."
+        #     return render(request, 'signup.html', {'error': error})
+        # elif user_by_email:
+        #     error = "Email already exists. Please use a different email."
+        #     return render(request, 'signup.html', {'error': error})
+        # Check if the username exists
         user_by_username = User.objects.filter(username=username).first()
+        # Check if the email exists
         user_by_email = User.objects.filter(email=email).first()
 
-        if user_by_username and user_by_email:
-            # Check if username and email belong to the same user
-            if user_by_username != user_by_email:
-                error = "Username and Email are already taken by different users. Please use unique credentials."
-                return render(request, 'signup.html', {'error': error})
+        # If both username and email are taken by different users, return an error
+        if user_by_username and user_by_email and user_by_username != user_by_email:
+            error = "Username and Email are already taken by different users. Please use unique credentials."
+            return render(request, 'signup.html', {'error': error})
+
+        # If only username exists, show an error
         elif user_by_username:
             error = "Username already exists. Please choose a different one."
             return render(request, 'signup.html', {'error': error})
+
+        # If only email exists, show an error
         elif user_by_email:
             error = "Email already exists. Please use a different email."
             return render(request, 'signup.html', {'error': error})
+
 
         # Generate OTP and save user details temporarily in the session
         otp_code = generate_otp()

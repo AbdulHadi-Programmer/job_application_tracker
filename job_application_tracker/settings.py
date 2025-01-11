@@ -45,10 +45,10 @@ DEBUG = False
 
 # settings.py
 
-STATIC_URL = '/static/'  # This is the URL path where static files will be served
-STATICFILES_DIRS = [BASE_DIR / "static"]  # Optional: Path where your static files are stored (adjust if necessary)
-STATIC_ROOT = BASE_DIR / "staticfiles"  # Optional: Used when collecting static files for production
-
+# Static Files Configuration for Deployment
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [BASE_DIR / 'static']  # If you have a 'static' folder in your project
 
 # ALLOWED_HOSTS = ['careertraces.pythonanywhere.com', 'www.careertraces.com']
 ALLOWED_HOSTS = ["*"] 
@@ -79,6 +79,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',    
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.http.ConditionalGetMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Add this line here
 ]
 
 # Static Files Caching
