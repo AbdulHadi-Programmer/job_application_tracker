@@ -292,21 +292,8 @@ def forget_password_view(request):
         
         # Send OTP to user's email
         title = 'Password Reset OTP for Career_Traces.com'
-        # message = f"""
-        # Dear {user.username},
-
-        # We received a request to reset your password for your account at Career_Traces.com.
-
-        # Please enter the OTP below to proceed with password reset:
-
-        # OTP Code: {otp_code}
-
-        # This OTP is valid for the next 2 minutes. If you did not request this, please ignore this email.
-
-        # Best regards,
-        # Career_Traces.com Support Team
-        # """
-        message = """
+        
+        message = f"""
 Dear {user.username},
 
 We received a request to reset the password for your account at Career_Traces.com.
@@ -370,7 +357,7 @@ def verify_reset_otp_view(request):
             #     Best regards,
             #     Career_Traces.com Support Team
             # """
-            message = """
+            message = f"""
 Dear {user.username},
 
 Your OTP for resetting your password is: {new_otp}. Please enter this code on the verification page.
