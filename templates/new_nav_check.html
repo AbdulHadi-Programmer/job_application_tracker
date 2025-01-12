@@ -3,134 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Navbar</title>
-    <style>
-        /* Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        /* Navbar styling */
-        .navbar {
+    <title>Document</title>
+</head>
+    
+<style>
+        body {
+            font-family: 'Poppins', sans-serif; 
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            background-color: #e3fced; /* Updated navbar color */
+            height: 100vh;
+            margin: 0;
+            background-color: #e3fced;
+        }
+        form {
+            background-color: #ffffff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        h1 {
+            color: #333333;
+            margin-bottom: 10px;
+        }
+        
+        .error {
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            /* background-color: #d9534f; */
+            background-color: #FFC0CB;
+        }
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+        }
+        button {
+            /* background-color: #4e9b5f; */
+            background-color: #4CAF50;
+            width: 100%;
+            margin-top: 10px;
+            color: #ffffff;
+            border: none;
             padding: 10px 20px;
-            color: black;
-            position: relative;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #4e9b5f;
+        }
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        input:focus{
+            border-color: #ffcc00;
+            border: 2px solid #ffcc00;
+            outline: none;
         }
 
         .logo {
-            font-size: 20px;
-            font-weight: bold;
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
         }
-
-        /* Default nav-links styling (hidden on small screens) */
-        .nav-links {
-            list-style: none;
-            display: flex;
-            /*gap: 20px;*/
+        label {
+            display: block;
+            text-align: left;
+            margin-top: 10px;
+            font-weight: 500;
+            color: #333;
         }
-
-        .nav-links li {
-            display: inline-block;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: black;
-            padding: 10px;
-            transition: background-color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            background-color: #ffcc00; /* Updated hover color */
-            border-radius: 4px;
-        }
-
-        .nav-links a.active {
-            background-color: black;
-            color: white;
-            border-radius: 4px;
-        }
-
-        /* Hamburger menu */
-        .menu-toggle {
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: black;
-            cursor: pointer;
-            display: none; /* Hidden by default (for larger screens) */
-        }
-
-        /* Small screens styling */
-        @media (max-width: 768px) {
-            .menu-toggle {
-                display: block; /* Display hamburger menu on smaller screens */
+        
+        @media (max-width: 600px) {
+            body {
+                align-items: flex-start;
+                padding-top: 20px;
             }
-
-            .nav-links {
-                display: none; /* Hidden by default on small screens */
-                flex-direction: column;
-                position: absolute;
-                top: 50px;
-                left: 0;
-                width: 100%;
-                background-color: #e3fced; /* Match navbar color */
+            form {
+                margin-top: 20% !important;
+                width: 90%;
+                padding: 15px;
             }
-
-            .nav-links li {
-                border-bottom: 1px solid #555;
-                text-align: center;
+            label {
+                margin-left: 5px;
             }
-
-            .nav-links li:last-child {
-                border-bottom: none;
-            }
-
-            .nav-links a {
-                display: block;
-                padding: 10px;
-                color: black;
+            input[type="text"], input[type="password"] {
+                width: 90%;
             }
         }
+        /* Base style for the logo */
+        .logo {
+    width: 100px;  /* Default size */
+    height: 100px;  /* Maintain aspect ratio */
+    display: block;  /* Remove extra space below image */
+    margin: 20px auto; /* Center the logo with margin */
+    transition: transform 0.3s ease-in-out;  /* Smooth hover effect */
+}
 
-        /* Medium to large screens styling */
-        @media (min-width: 769px) {
-            .nav-links {
-                display: flex; /* Always visible on larger screens */
-            }
-        }
-    </style>
-</head>
-<body>
-    <nav class="navbar">
-        <div class="logo">WebSiteName</div>
-        <button class="menu-toggle" id="menu-toggle">
-            ☰
-        </button>
-        <ul class="nav-links" id="nav-links">
-            <li><a href="#" class="active">Home</a></li>
-            <li><a href="#">Sign Up</a></li>
-            <li><a href="#">Login</a></li>
-        </ul>
-    </nav>
-    <script>
-        const menuToggle = document.getElementById("menu-toggle");
-        const navLinks = document.getElementById("nav-links");
+/* Hover effect */
+.logo:hover {
+    transform: scale(1.1);  /* Slight zoom effect on hover */
+}
 
-        menuToggle.addEventListener("click", () => {
-            // Toggle display for nav-links
-            if (navLinks.style.display === "flex") {
-                navLinks.style.display = "none";
-            } else {
-                navLinks.style.display = "flex";
-            }
-        });
-    </script>
+/* Responsive media query */
+@media (max-width: 768px) {
+    .logo {
+        width: 120px; /* Smaller logo for tablets and smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        width: 100px; /* Even smaller logo for mobile screens */
+    }
+}
+</style>>
+
 </body>
 </html>

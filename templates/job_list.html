@@ -28,12 +28,13 @@
     
         <table id="jobTable" style="margin-top: 0px !important; border-radius: 10px; margin-left: 30px;">
             {% if jobs|length == 0 %}
-                <div class="no-jobs-message">
-                    <p>No application is added.</p>
-                </div>
-                <div class="cta-container">
-                    <a href="{% url 'job_create' %}" class="cta-button">Add Application</a>
-                </div>
+            <div class="cta-container">
+                <a href="{% url 'job_create' %}" class="cta-button">Add Application</a>
+            </div>
+    
+            <div class="no-jobs-message">
+                <p>No application is added.</p>
+            </div>
             {% else %}
             <tr>
                 <th>Job Category</th>
