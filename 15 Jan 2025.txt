@@ -1,0 +1,45 @@
+Task to be Completed or Done: (Today)
+
+--------------------------------------------------------------------------------------------------------------------
+# Time Duration (2 hours):
+-> Learn Mysql (20min atleast --5:50 hour) --Today  Done 
+-> Learn Tajweed (20 min a day)
+-> Create and Review Project made for learning Relationship ( 30min )   (In progress)
+# complete above before 2pm 
+
+# Complete before 4pm 
+-> Correct the mvp git problem db is deleted, discussed with SUK.  
+
+# complete before 6 pm (If possible because all required Internet so this can be done at 9pm to 10pm):
+-> Learn Django (ORM and Relationship concept, 30min)
+-> Complete Mentor Task, check trello
+-> Make Django Handwritten Notes and also making a list of django concepts
+
+# Time Duration (2 hours, with Dev Team)
+-> Learn Git and English Language 
+--------------------------------------------------------------------------------------------------------------------
+
+
+--> This Week Task (Done before 18 Jan):
+- Write some habit and follow it (Young Trainer 2, part)
+- Add Profile section and resolve the git and bash error for db (MVP)
+- Complete 4 lesson of Tajweed  (Spirtual)
+
+
+# Django Deployment Website:
+1. Defang.io  (free of cost, 1 core and 1 gb storage) only one project each account
+2. AWS free tier (but take a card num)
+3. Koyeb (we can add 5 custom domains and also deploy and host the postgres db)
+4. Railway.app (card required but it has more features in free and sql database 
+   is not use mean other third party db is imp to use
+5. Google Cloud 
+ 
+
+
+
+
+
+
+
+
+
