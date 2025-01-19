@@ -65,34 +65,56 @@ def job_list(request):
 
 
 
-@login_required # (with Foreign Key new code)
-def job_create(request):
-    if request.method == 'POST':
-        form = JobForm(request.POST)
-        if form.is_valid():
-            job = form.save(commit=False)
-            job.user = request.user  # Automatically assign the current user
-            job.save()
-            messages.success(request, 'Job created successfully!')
-            return redirect('job_list')
+# @login_required # (with Foreign Key new code)
+# def job_create(request):
+#     if request.method == 'POST':
+#         form = JobForm(request.POST)
+#         if form.is_valid():
+#             job = form.save(commit=False)
+#             job.user = request.user  # Automatically assign the current user
+#             job.save()
+#             messages.success(request, 'Job created successfully!')
+#             return redirect('job_list')
+#     else:
+#         form = JobForm()
+#     return render(request, 'job_form.html', {'form': form})
+
+
+
+# @login_required # (with Foreign Key new code)
+# def job_update(request, job_id):
+#     job = get_object_or_404(Add_Job, id=job_id, user=request.user)  # Ensure the job belongs to the current user
+#     if request.method == 'POST':
+#         form = JobForm(request.POST, instance=job)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, 'Job updated successfully!')
+#             return redirect('job_list')
+#     else:
+#         form = JobForm(instance=job)
+#     return render(request, 'job_update.html', {'form': form, 'job': job})
+@login_required
+def job_create_or_update(request, job_id=None):
+    if job_id:
+        # Edit existing job
+        job = get_object_or_404(Add_Job, id=job_id, user=request.user)
+        form = JobForm(request.POST or None, instance=job)
+        action = 'Update'
     else:
-        form = JobForm()
-    return render(request, 'job_form.html', {'form': form})
-
-
-
-@login_required # (with Foreign Key new code)
-def job_update(request, job_id):
-    job = get_object_or_404(Add_Job, id=job_id, user=request.user)  # Ensure the job belongs to the current user
+        # Create new job
+        job = None
+        form = JobForm(request.POST or None)
+        action = 'Add'
+    
     if request.method == 'POST':
-        form = JobForm(request.POST, instance=job)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Job updated successfully!')
+            job_instance = form.save(commit=False)
+            job_instance.user = request.user  # Automatically assign the current user
+            job_instance.save()
+            messages.success(request, f'Job {action.lower()}d successfully!')
             return redirect('job_list')
-    else:
-        form = JobForm(instance=job)
-    return render(request, 'job_update.html', {'form': form, 'job': job})
+    
+    return render(request, 'job_form.html', {'form': form, 'job': job, 'action': action})
 
 
 @login_required

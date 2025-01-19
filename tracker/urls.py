@@ -48,8 +48,15 @@ urlpatterns = [
 
     path('logout/', logout_view, name='logout'),
     path('jobs/', job_list, name='job_list'),
-    path('jobs/create/', job_create, name='job_create'),
-    path('jobs/update/<int:job_id>/', job_update, name='job_update'),
+    # path('jobs/create/', job_create, name='job_create'),
+    # path('jobs/update/<int:job_id>/', job_update, name='job_update'),
+
+    # URL for creating a new job
+    path('job/create/', job_create_or_update, name='job_create_or_update'),
+    # URL for updating a job
+    path('job/update/<int:job_id>/', job_create_or_update, name='job_create_or_update'),
+
+
     path('jobs/delete/<int:id>/', job_delete, name='job_delete'),
     path('jobs/search/', search, name='search'), 
     path('jobs/profile/', profile, name='profile'),

@@ -66,8 +66,8 @@ label {
 /* For tablets and small screens (max-width: 1024px) */
 @media (max-width: 1024px) {
     .form-container {
-        /* margin: 0 20px !important;
-        padding: 15px !important; */
+        margin: 0 20px !important;
+        padding: 15px !important;
         box-shadow: none !important;
     }
 
@@ -207,7 +207,7 @@ body {
     border-radius: 8px; 
 }
 
-input[type="text"], input[type="url"], input[type="date"], input[type="email"], select {
+input[type="text"], input[type="url"], input[type="date"], select {
     font-family: 'Poppins', sans-serif;
     margin-top: 5px !important;
     width: 90%;
@@ -284,7 +284,6 @@ input[type="text"], input[type="url"], input[type="date"], input[type="email"], 
     input[type="text"],
     input[type="url"],
     input[type="date"],
-    input[type="email"],
     select {
         font-size: 1rem; 
         padding: 8px;
@@ -332,7 +331,6 @@ input[type="text"], input[type="url"], input[type="date"], input[type="email"], 
     input[type="text"],
     input[type="url"],
     input[type="date"],
-    input[type="email"],
     select {
         margin-right: 15px !important;
         font-size: 0.9rem !important;
@@ -371,7 +369,6 @@ input[type="text"], input[type="url"], input[type="date"], input[type="email"], 
     input[type="text"],
     input[type="url"],
     input[type="date"],
-    input[type="email"],
     select {
         font-size: 0.7rem;
         padding: 7px;
@@ -397,6 +394,7 @@ input[type="text"], input[type="url"], input[type="date"], input[type="email"], 
     </style>
 </head>
 <body> 
+
     <div class="hamburger" onclick="toggleSidebar()">
         <i class="fa fa-bars"></i>
     </div>
@@ -423,7 +421,7 @@ input[type="text"], input[type="url"], input[type="date"], input[type="email"], 
     
                 <div class="form-group">
                     <label for="job_category">Job Category:</label>
-                    <input type="text" id="job_category" name="job_category" value="{{ form.job_category.value |default:'' }}" required>
+                    <input type="text" id="job_category" name="job_category" value="{{ form.job_category.value }}" required>
                 </div>
     
                 <div class="form-group">
@@ -444,17 +442,17 @@ input[type="text"], input[type="url"], input[type="date"], input[type="email"], 
     
                 <div class="form-group">
                     <label for="company_name">Company Name:</label>
-                    <input type="text" id="company_name" name="company_name" value="{{ form.company_name.value |default:'' }}" required>
+                    <input type="text" id="company_name" name="company_name" value="{{ form.company_name.value }}" required>
                 </div>
     
                 <div class="form-group">
                     <label for="company_email">Company Email:</label>
-                    <input type="email" id="company_email" name="company_email" value="{{ form.company_email.value |default:'' }}">
+                    <input type="email" id="company_email" name="company_email" value="{{ form.company_email.value }}">
                 </div>
     
                 <div class="form-group">
                     <label for="reference_link">Reference Link:</label>
-                    <input type="url" id="reference_link" name="reference_link" value="{{ form.reference_link.value |default:'' }}" required>
+                    <input type="url" id="reference_link" name="reference_link" value="{{ form.reference_link.value }}" required>
                 </div>
     
                 <div class="form-group">
@@ -488,13 +486,13 @@ input[type="text"], input[type="url"], input[type="date"], input[type="email"], 
     
                 <div class="form-group">
                     <label for="interview_date">Interview Date:</label>
-                    <input type="date" id="interview_date" name="interview_date" value="{{ form.interview_date.value |default:'' }}">
+                    <input type="date" id="interview_date" name="interview_date" value="{{ form.interview_date.value }}">
                 </div>
     
                 <div class="form-buttons" style="text-align: center;">
                     <input type="submit" value="{{ action }} Application" class="btn" style="margin: 15px; padding: 5px 10px; color: #ffcc00; padding: 7px;">
                     <br>
-                    <a href="{% url 'job_list' %}" class="btn_back-btn" style="text-decoration: none; font-weight: bold !important; color: black;">Back to Application List</a>
+                    <a href="{% url 'job_list' %}" class="btn_back-btn" style="text-decoration: none; font-weight: bold !important; color: black;">Back to Job List</a>
                 </div>
             </div>
         </form>
@@ -522,7 +520,8 @@ input[type="text"], input[type="url"], input[type="date"], input[type="email"], 
             overlay.style.display = 'none'; // Hide overlay
         }
     </script>
-        
+    
+    
     <style>
         .overlay {
             position: fixed;
