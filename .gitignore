@@ -1,2 +1,5 @@
 job_application_tracker/.gitignore
 
+db_backup.sqlite3
+db.sqlite3
+

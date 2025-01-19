@@ -119,6 +119,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': BASE_DIR / 'db.sqlite3',
         'NAME': BASE_DIR / '../db.sqlite3',
+        # 'NAME': BASE_DIR / '/job_application_tracker/db.sqlite3',
         'OPTIONS': {
             'timeout': 20,  # Increase timeout to 20 seconds
         },
