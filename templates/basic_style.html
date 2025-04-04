@@ -10,6 +10,7 @@
     <head>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     </head>
+
 <style>
     body {
         margin: 0;
@@ -114,7 +115,16 @@
     }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    </head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JZ5EM6ZP04"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        
+        gtag('config', 'G-JZ5EM6ZP04');
+        </script>
+</head>
     {% block content %}
         
 
@@ -163,5 +173,6 @@
         }
 
     </script>
+
 </body>
 </html>

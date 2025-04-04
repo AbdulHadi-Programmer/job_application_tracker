@@ -7,6 +7,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
     <title>Login</title>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-JZ5EM6ZP04"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', 'G-JZ5EM6ZP04');
+        </script>
     <style>
 
 body {
@@ -119,7 +128,7 @@ label {
     </style>
 </head>
 <body>
-    <form method="post">
+    <!-- <form method="post">
         {% csrf_token %}
         <img src="{% static 'img/logo.png' %}" alt="" class="logo">
         <h1>Login Here!</h1>
@@ -133,6 +142,27 @@ label {
         <p><a href="{% url 'forget_password' %}" style="margin-top: 0px; margin-bottom: 0px;">Forget Password?</a></p>
         <button type="submit">Login</button>
         <p>Don’t have an account? <a href="{% url 'signup' %}">Sign Up</a></p>
+    </form> -->
+    <form method="post">
+        {% csrf_token %}
+        <img src="{% static 'img/logo.png' %}" alt="" class="logo">
+        <h1>Login Here!</h1>
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" placeholder="Enter your username" required>
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" placeholder="Enter your password" required>
+    
+        <label>
+            <input type="checkbox" name="remember_me"> Remember Me
+        </label>
+    
+        <p><a href="{% url 'forget_password' %}">Forget Password?</a></p>
+        <button type="submit">Login</button>
+        <p>Don’t have an account? <a href="{% url 'signup' %}">Sign Up</a></p>
     </form>
+    
 </body>
 </html>

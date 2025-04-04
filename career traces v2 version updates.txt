@@ -1,0 +1,6 @@
+Changes to Made in the Website :
+
+1. Change the SMTP system 
+2. Check the responsiveness and all authentication with adding avoiding career traces in field
+3. Remove unnecessary pages and also hide it so it may not disturb the main website
+4. 

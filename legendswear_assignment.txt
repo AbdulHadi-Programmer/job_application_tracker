@@ -1,0 +1,6 @@
+One page Website (Legends Wear): 
+1. templates folder include header and footer
+2. Core include template folder, and it only has this 
+   app specific template.
+3. Create a template page to display the data of website 
+4. 

@@ -1,0 +1,27 @@
+Task and Deadlines :
+
+1. University subjects (Mid Term Exam) [before 11 April 25]
+ - Calculas (lecture 1- Lecture End)
+ - Discrete Structure (lecture 1-lecture 5)
+ - PF (C language from basic to loops and also solve error )
+ - ICT (Learn chp 1-chp 4)
+ - Functional English (from lecture to end)
+
+2. Django Backend Development (Deadline 3 months - 28 June 25) 
+ - Learn Django + DRF (complete this 1 month - before 28 April)
+ - Complete the v2 of Career Traces and Launch Personalize Expense Tracker  
+ - Create some project that is must to create (Blogging Website, Portfolio)
+ - Learn Complete Backend with database + deploying + technology + library,
+   modules etc
+ - Create fun projects for temporary way to get idea but it should be useful
+   like as i create some project in Streamlit (Text Summarizer, Mcqs Generator, Text-to-Speech Converter)
+ 
+3. Networking and Hobbies :
+ - Make more Connection with almost all proffession 
+ - Learn new Hobby each month 
+ - Collaborate with more Developers 
+ - Teach other and Gather Confidence 
+ - Learn fighting, self defence, manipulation tricks 
+ 
+
+

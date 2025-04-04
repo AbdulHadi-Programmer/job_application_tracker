@@ -28,6 +28,9 @@ LOGIN_URL = '/login/'
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Default session engine
 SESSION_COOKIE_AGE = 1209600  # Two weeks (in seconds)
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # AUTH_USER_MODEL = 'tracker.User'  # Adjust according to your app name and model name
 # AUTH_USER_MODEL = 'tracker.CustomUser'
 
@@ -38,8 +41,8 @@ SESSION_COOKIE_AGE = 1209600  # Two weeks (in seconds)
 SECRET_KEY = 'django-insecure-*zy$9ahx^-q$fp9fb#m-_%g0fozpv(f(r1u!#n-9h7j-*=b-wa'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = False
+DEBUG = True
+# DEBUG = False
 
 # STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
