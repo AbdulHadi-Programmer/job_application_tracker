@@ -91,83 +91,6 @@ Career_Traces.com Support Team
     return render(request, 'signup.html')
 
 
-# def verify_otp_view(request):
-#     # Retrieve temporary user data from session
-#     temp_user_data = request.session.get('temp_user_data')
-
-#     if not temp_user_data:
-#         return redirect('signup')  # Redirect to signup if no session data exists
-
-#     otp_timestamp = temp_user_data['otp_timestamp']
-#     otp_timestamp = datetime.fromisoformat(otp_timestamp)
-
-#     # Ensure `otp_timestamp` is timezone-aware
-#     if is_naive(otp_timestamp):
-#         otp_timestamp = make_aware(otp_timestamp)
-
-#     # Calculate remaining time
-#     remaining_time = max(0, (otp_timestamp + timedelta(minutes=2) - now()).total_seconds())
-
-#     if request.method == 'POST':
-#         if 'resend_otp' in request.POST:
-#             # Generate and send a new OTP
-#             new_otp = generate_otp()
-#             temp_user_data['otp_code'] = new_otp
-#             temp_user_data['otp_timestamp'] = now().isoformat()
-#             request.session['temp_user_data'] = temp_user_data  # Update session data
-
-#             # Send the OTP via email
-#             email = temp_user_data['email']
-#             title = "Your New OTP Code"
-#             message = f"Your new OTP code is {new_otp}. It is valid for 2 minutes."
-#             send_otp_to_users(title, message, email)
-
-#             return render(request, 'verify_otp.html', {
-#                 'info': 'A new OTP has been sent to your email.',
-#                 'remaining_time': 120,  # Reset timer to 2 minutes
-#                 'show_resend': False
-#             })
-
-#         # Combine OTP inputs into a single string
-#         otp_code = (
-#             request.POST.get('otp1', '') +
-#             request.POST.get('otp2', '') +
-#             request.POST.get('otp3', '') +
-#             request.POST.get('otp4', '') +
-#             request.POST.get('otp5', '') +
-#             request.POST.get('otp6', '')
-#         )
-
-#         # Handle OTP expiration
-#         if remaining_time <= 0:
-#             return render(request, 'verify_otp.html', {
-#                 'error': 'OTP expired. Please resend a new OTP.',
-#                 'remaining_time': 0,
-#                 'show_resend': True  # Show the "Resend OTP" button
-#             })
-
-#         # Handle invalid OTP
-#         if otp_code != temp_user_data['otp_code']:
-#             return render(request, 'verify_otp.html', {
-#                 'error': 'Invalid OTP. Please try again.',
-#                 'remaining_time': int(remaining_time),
-#             })
-
-#         # OTP verification successful
-#         user = User.objects.create_user(
-#             username=temp_user_data['username'],
-#             email=temp_user_data['email'],
-#             password=temp_user_data['password']
-#         )
-#         OTP.objects.create(user=user, otp_code=temp_user_data['otp_code'])
-#         del request.session['temp_user_data']  # Clear session data
-#         return redirect('login')
-
-#     # Render the OTP verification page with timer
-#     return render(request, 'verify_otp.html', {
-#         'remaining_time': int(remaining_time),
-#         'show_resend': remaining_time == 0  # Show "Resend OTP" button if time is up
-#     })
 def verify_otp_view(request):
     # Retrieve temporary user data from session
     temp_user_data = request.session.get('temp_user_data')
@@ -255,19 +178,51 @@ def verify_otp_view(request):
 
 
 # Login View
+# def login_view(request):
+#     if request.method == 'POST':
+#         username = request.POST['username']
+#         password = request.POST['password']
+        
+#         user = authenticate(request, username=username, password=password)
+#         if user is not None:
+#             login(request, user)
+#             return redirect('home_page')  # Redirect to home page after login
+#         else:
+#             error = 'Invalid credentials'
+#             return render(request, 'login.html', {'error': error})
+#     return render(request, 'login.html')
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render, redirect
+from datetime import timedelta
+from django.utils.timezone import now
+
+# Login View
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-        
+        remember_me = request.POST.get('remember_me')  # Get remember me value
+
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('home_page')  # Redirect to home page after login
+
+            response = redirect('home_page')  # Redirect to home page
+
+            if remember_me:  
+                # Set session expiry to 30 days
+                request.session.set_expiry(30 * 24 * 60 * 60)  
+                response.set_cookie('remember_me', 'yes', max_age=30 * 24 * 60 * 60)  # 30 days
+            else:
+                request.session.set_expiry(0)  # Expires on browser close
+            
+            return response
         else:
             error = 'Invalid credentials'
             return render(request, 'login.html', {'error': error})
+    
     return render(request, 'login.html')
+
 
 
 # Forget Password View
@@ -455,9 +410,14 @@ def home_page(request):
 
 
 # Logout View
+# def logout_view(request):
+#     logout(request)
+#     return redirect("/")
 def logout_view(request):
+    response = redirect('login')  # Redirect to login page
+    response.delete_cookie('remember_me')  # Delete remember_me cookie
     logout(request)
-    return redirect("/")
+    return response
 
 
 from django.shortcuts import render

@@ -1,0 +1,327 @@
+{% load static %}
+
+
+
+<!-- ************************************************************************************************************************************************************************************************************************************************** -->
+<!-- ************************************************************************************************************************************************************************************************************************************************** -->
+<!-- ************************************************************************************************************************************************************************************************************************************************** -->
+<!-- ************************************************************************************************************************************************************************************************************************************************** -->
+<!-- ************************************************************************************************************************************************************************************************************************************************** -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if user_form.instance.pk %}Update{% else %}Create{% endif %} Profile</title>
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Google Fonts & Favicon -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
+    <style>
+        /* Example CSS from your previous code (sidebar, form, media queries, etc.) */
+        h1 {
+            text-align: center;
+            color: #000000 !important;
+            text-decoration: underline;
+            margin: 10px 10px 40px;
+            font-size: 1.5rem;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            font-weight: bold;
+            padding: 5px;
+            margin: 0 20px;
+        }
+        input, select, textarea {
+            font-family: 'Poppins', sans-serif;
+            margin-top: 5px !important;
+            width: 90%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            padding: 10px;
+            margin: 0 20px;
+            background-color: white;
+        }
+        .btn {
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #ffcc00;
+            color: white !important;
+            font-weight: bold;
+            font-size: 0.8rem;
+            min-width: 70px;
+            padding: 10px;
+        }
+        .btn:hover {
+            opacity: 0.8;
+        }
+        .sidebar {
+            width: 11.325rem; 
+            min-width: 180px; 
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            z-index: 1;
+            background-color: #4e9b5f;
+            font-weight: bold;
+            padding-left: 20px;
+        }
+        .sidebar h2 {
+            font-size: 1.3rem;
+            color: white; 
+            text-align: center;
+            margin: 40px 0;
+        }
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            color: #fff;
+            padding: 5px;
+            margin: 10px 0;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 0.7rem;
+            margin-left: 20px;
+        }
+        .sidebar a:hover {
+            background-color: #ffcc00;
+            margin-right: 30px !important;
+        }
+        .main-content {
+            margin-left: calc(11.325rem + 50px); 
+            padding: 20px;
+            flex-grow: 1;
+        }
+        .form-container {
+            margin: 0 181.2px;
+            padding: 20px;
+            background-color: #e3fced;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        /* Additional styles for responsive design, hamburger, overlay, etc. */
+        .hamburger {
+            display: none;
+        }
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); 
+            display: none; 
+            z-index: 999;
+        }
+        @media (max-width: 1024px) {
+            .sidebar { display: none; }
+            .hamburger { display: block; position: fixed; top: 20px; left: 20px; font-size: 24px; cursor: pointer; }
+            .main-content { margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hamburger Button -->
+    <div class="hamburger" onclick="toggleSidebar()">
+        <i class="fa fa-bars"></i>
+    </div>
+    
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <h2>Dashboard</h2>
+        <a class="abc" href="{% url 'default' %}"><i class="fas fa-home" style="padding-right: 10px;"></i>Home page</a>
+        <a class="abc" href="{% url 'job_list' %}"><i class="fas fa-clipboard-list" style="padding-right: 10px;"></i> Job Tracker</a>
+        <a class="abc" href="{% url 'job_create_or_update' %}"><i class="fas fa-plus-square" style="padding-right: 10px;"></i> Add Application</a>
+        <a class="abc" href="{% url 'feedback' %}"><i class="fas fa-comment" style="padding-right: 10px;"></i>Your Thoughts</a>
+        <a class="abc" href="{% url 'simple_analytics' %}"><i class="fas fa-chart-bar" style="padding-right: 10px;"></i>Application Stats</a>
+        <a class="abc" href="{% url 'logout' %}"><i class="fas fa-power-off" style="padding-right: 10px;"></i> Logout</a>
+    </div>
+    
+    <!-- Overlay -->
+    <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="form-container">
+            <form method="post" enctype="multipart/form-data">
+                <h1>{% if user_form.instance.pk %}Update{% else %}Create{% endif %} Profile</h1>
+                {% csrf_token %}
+                
+                {{ UserProfile_form.as_p }}
+                {{ social_form.as_p }} 
+                {{ skill_form.as_p }} 
+                {{ project_form.as_p }} 
+                {{ social_profiles.as_p }} 
+                {{ skills.as_p }} 
+                {{ projects.as_p }} 
+
+                <!-- {{ userprofile.as_p }} -->
+
+                <!-- Other profile fields would go here -->
+                <!-- {% if socialmedia_form %}
+                <div class="socialmedia-container">
+                    <div class="socialmedia-form">
+                        <div class="form-group">
+                            <label for="platform_name">Platform Name :</label>
+                            {{ socialmedia_form.platform_name }}
+                        </div>
+
+                        <div class="socialmedia-form">
+                            <label for="profile_link">Profile Link :</label>
+                            {{ socialmedia_form.profile_link }}
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+                    <p>No social profile found. Please create one.</p>
+                {% endif %} -->
+                
+                <!-- {{ socialprofile_form.as_p}} -->
+
+
+                <!-- Other profile fields would go here -->
+                <!-- <div class="socialmedia-container">
+                    <div class="socialmedia-form">
+                        <div class="form-group">
+                            <label for="platform_name">Platform Name :</label>
+                            {{ socialmedia_form.platform_name }}
+                        </div>
+
+                        <div class="socialmedia-form">
+                            <label for="profile_link">Profile Link :</label>
+                            {{ socialmedia_form.profile_link }}
+                        </div>
+                    </div>
+                </div> -->
+                <!-- {{ socialmedia_form.as_p }} -->
+
+<!-- ------------------------------------------------------------------------------------------------------------------- -->
+<!-- <br>
+                Skill Section
+                <div id="skill-container">
+                    Original Skill block
+                    <div class="skill-form">
+                        <div class="form-group">
+                            <label for="skill_name">Skill Name :</label>
+                            {{ skill_form.skill_name }}
+                        </div>
+                        <div class="form-group">
+                            <label for="skill_status">Proficiency :</label>
+                            {{ skill_form.proficiency }} 
+                        </div>
+                    </div>
+                </div> -->
+                <!-- {{ skill_form.as_p }} -->
+
+                {% if messages %}
+                    <div class="messages">
+                        {% for message in messages %}
+                            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+<!-- -------------------------------------------------------------- -->
+                <!-- Projects Section -->
+                <!-- <div id="projects-container"> -->
+                    <!-- Original project block -->
+                    <!-- <div class="project-form">
+                        <div class="form-group">
+                            <label for="project_name">Project Name :</label>
+                            {{ project_form.project_name }}
+                        </div>
+                        <div class="form-group">
+                            <label for="project_status">Project Status :</label>
+                            {{ project_form.project_status }}
+                        </div>
+                    </div>
+                </div>
+                {% if messages %}
+                    <div class="messages">
+                        {% for message in messages %}
+                            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %} -->
+
+
+                <!-- + Button to add more projects -->
+                <button type="button" id="add-project" class="btn">+</button>
+                
+                <br><br>
+                <button type="submit" class="btn">Submit</button>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // Sidebar toggling for mobile
+        function toggleSidebar() {
+            var sidebar = document.getElementById('sidebar');
+            var overlay = document.getElementById('overlay');
+            if (sidebar.style.display === 'block') {
+                sidebar.style.display = 'none';
+                overlay.style.display = 'none';
+            } else {
+                sidebar.style.display = 'block';
+                overlay.style.display = 'block';
+            }
+        }
+        function closeSidebar() {
+            document.getElementById('sidebar').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+        
+        // Dynamic addition of project blocks
+        document.addEventListener("DOMContentLoaded", function() {
+            var addBtn = document.getElementById("add-project");
+            var container = document.getElementById("projects-container");
+            var maxProjects = 3;
+            var projectCount = container.getElementsByClassName("project-form").length;
+            
+            addBtn.addEventListener("click", function() {
+                if (projectCount < maxProjects) {
+                    // Clone the first project block
+                    var clone = container.querySelector(".project-form").cloneNode(true);
+                    // Optionally, clear the cloned inputs
+                    var inputs = clone.querySelectorAll("input, select");
+                    inputs.forEach(function(input) {
+                        input.value = "";
+                    });
+                    container.appendChild(clone);
+                    projectCount++;
+                } else {
+                    alert("You can add up to 3 projects only!");
+                }
+            });
+        });
+    </script>
+    
+    <style>
+        /* Overlay styling (if needed separately) */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2;
+            display: none;
+        }
+    </style>
+</body>
+</html>

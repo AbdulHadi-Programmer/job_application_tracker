@@ -17,6 +17,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
         <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
     </head> 
+
 <!-- For Job List Page -->
     <style>
 body {
@@ -492,33 +493,64 @@ td a {
 }
 
 .cta-container {
-    text-align: center;
-    margin-top: 20px;
-}
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-top: 50px;
+            width: 90%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
-.cta-button {
-    background-color: #4e9b5f; /* Button color */
-    color: white;
-    padding: 12px 30px;
-    font-size: 1.2rem;
-    border-radius: 5px;
-    text-decoration: none;
-    display: inline-block;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
+        .cta-button {
+            display: inline-block;
+            background-color: #4e9b5f;
+            color: white;
+            padding: 15px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            transition: background-color 0.3s;
+        }
 
-.cta-button:hover {
-    background-color: #ffcc00; /* Hover color */
-    transform: scale(1.05);
-}
+        .cta-button:hover {
+            background-color: #00C2D1; /* Secondary accent color */
+        }
 
-.cta-button:focus {
-    outline: none;
-}
+        .no-jobs-message {
+            text-align: center;
+            color: #0A1045;
+            font-size: 18px;
+            padding: 15px;
+            margin-top: 20px;
+            background-color: #F6AF65; /* Soft Orange for warning or info */
+            border-radius: 5px;
+        }
 
-.cta-button:active {
-    background-color: #ffcc00; /* Active state color */
-}
+        /* Responsive Design */
+        @media screen and (max-width: 600px) {
+            .cta-container {
+                padding: 15px;
+                width: 100%;
+            }
+
+            .cta-button {
+                width: 100%;
+                font-size: 14px;
+            }
+
+            .no-jobs-message {
+                font-size: 16px;
+            }
+        }
 
 /* Media Query for mobile devices */
 @media only screen and (max-width: 768px) {
@@ -542,51 +574,20 @@ td {
     height: auto; 
     max-height: 10px !important; 
   }
+
   
-
-table th:nth-child(1), table td:nth-child(1) { width: 10%; }
-    table th:nth-child(2), table td:nth-child(2) { width: 8%; }
-    table th:nth-child(3), table td:nth-child(3) { width: 12%; }
-    table th:nth-child(4), table td:nth-child(4) { width: 8%; }
-    table th:nth-child(5), table td:nth-child(5) { width: 10%; }
-    table th:nth-child(6), table td:nth-child(6) { width: 8%; }
-    table th:nth-child(7), table td:nth-child(7) { width: 10%; }
-    table th:nth-child(8), table td:nth-child(8) { width: 6%; }
-
-    /* ---------------------------------------------------------------------------------------------------------------------------------------- */
-    /* ---------------------------------------------------------------------------------------------------------------------------------------- */
-    /* ---------------------------------------------------------------------------------------------------------------------------------------- */
-    /* ---------------------------------------------------------------------------------------------------------------------------------------- */
-    
-    /* ONLY THIS PAGE CSS IS PERFECTLY WORKING BECAUSE I AM COMMENTED AS ON EACH PAGE IT CAUSE ISSUE DIFF TYPE */
-    
-    /* .abc a:hover{
-        text-decoration: none !important;
-    }
-    .sidebar .abc:hover {
-        background-color: #ffcc00;
-        margin-right: 30px!important;
-    }
-        .logo {
-            font-size: 1rem;
-            font-weight: bold;
-        }
-        .logo {
-            width: 50px;
-            height: auto;
-            margin-right: 10px;
-            object-fit: contain;
-            color: black;
-        }
-        @media (max-width: 768px) {
-        .logo {
-            width: 40px; 
-            margin-right: 8px;
-        }
-    } */
-
-
     </style>
+
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-JZ5EM6ZP04"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', 'G-JZ5EM6ZP04');
+        </script>
+    
 </head>
 <body> 
     
@@ -603,14 +604,15 @@ table th:nth-child(1), table td:nth-child(1) { width: 10%; }
         <h2 style="text-decoration: none;">Dashboard</h2>
         
         <a class="abc" href="{% url 'default' %}"><i class="fas fa-home" style="padding-right: 10px;"></i>Home page</a>
+        <a class="abc" href="{% url 'job_profile' %}"><i class="fas fa-user-circle"  style="padding-right: 10px"></i>Profile</a>
         <a class="abc" href="{% url 'job_list' %}"> <i class="fas fa-clipboard-list" style="padding-right: 10px;"></i> Job Tracker</a>
-        <a class="abc" href="{% url 'job_create' %}"> <i class="fas fa-plus-square" style="padding-right: 10px;"></i> Add Application</a>
-        <a class="abc" href="{% url 'feedback' %}"> <i class="fas fa-comment" style="padding-right: 10px;"></i>Your Thoughts</a>
+        <a class="abc" href="{% url 'job_create_or_update' %}"> <i class="fas fa-plus-square" style="padding-right: 10px;"></i> Add Application</a>
         <a class="abc" href="{% url 'simple_analytics' %}"> <i class="fas fa-chart-bar" style="padding-right: 10px;"></i>Application Stats</a>
+        <a class="abc" href="{% url 'feedback' %}"> <i class="fas fa-comment" style="padding-right: 10px;"></i>Your Thoughts</a>
         <a class="abc" href="{% url 'logout' %}"> <i class="fas fa-power-off" style="padding-right: 10px;"></i> Logout</a>
-
+ 
     </div>
-    
+
     <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
     <div class="main-content">
     <!-- Job list CSS below -->
@@ -704,19 +706,19 @@ table th:nth-child(1), table td:nth-child(1) { width: 10%; }
             window.onload = checkScreenWidth;
             window.onresize = checkScreenWidth;
             
-            function toggleSidebar() {
-                const sidebar = document.getElementById('sidebar');
-                const overlay = document.getElementById('overlay');
-    
-                if (sidebar.style.display === 'block') {
-                    sidebar.style.display = 'none';
-                    overlay.style.display = 'none'; // Hide overlay
-    
-                } else {
-                    sidebar.style.display = 'block';
-                    overlay.style.display = 'block'; // Show overlay
-                }
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+
+            if (sidebar.style.display === 'block') {
+                sidebar.style.display = 'none';
+                overlay.style.display = 'none'; // Hide overlay
+
+            } else {
+                sidebar.style.display = 'block';
+                overlay.style.display = 'block'; // Show overlay
             }
+        }
             function closeSidebar() {
                 const sidebar = document.getElementById('sidebar');
                 const overlay = document.getElementById('overlay');
@@ -724,8 +726,8 @@ table th:nth-child(1), table td:nth-child(1) { width: 10%; }
                 sidebar.style.display = 'none'; // Hide sidebar
                 overlay.style.display = 'none'; // Hide overlay
             }
-    
-        </script>
+            </script>
+
     </body>
     </html>
     

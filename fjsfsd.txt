@@ -1,0 +1,9 @@
+Today 25 Jan Top Priority Task :
+
+1. Register at Navttc program in Django + React Course
+2. Learn Django queries and ORM  (1 hour)
+3. Learn SQL db  (20 min)
+4. Work on MVP, add a profile creation feature,
+   the view of profile is ready but form of add/edit 
+   is remaining. (2 hours)
+5. 

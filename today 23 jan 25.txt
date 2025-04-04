@@ -1,0 +1,11 @@
+Today 23 January 2025 -- Tasks:
+
+1. Mysql -- Database 15 min video
+2. Django -- Learn about Advanced Queries 
+3. Create a Django School Management System
+4. Git Github, English Learning
+5. Mentor Startup Pending Task.
+6. Creating a School Management System to deploy it
+
+
+

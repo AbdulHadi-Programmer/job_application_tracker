@@ -1,0 +1,637 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Profile</title>
+    <!-- Link to Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Link to Bootstrap Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+        <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
+    </head> 
+
+    <style>
+        
+body {
+    margin: 0;
+    background-color: #e3fced; /* Soft Beige for overall background */
+    font-family: 'Poppins', sans-serif;
+}
+
+
+.sidebar {
+    width: 11.325rem; /* 20% of the viewport width */
+    min-width: 180px; /* Ensure a minimum width for readability */
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    z-index: 1; 
+    background-color: #4e9b5f ; 
+    font-weight: bold;
+}
+
+.sidebar h2 { 
+    font-size: 1.3rem;
+    color: white;
+    
+    text-align: center;
+    margin-bottom: 40px;
+    margin-top: 40px;
+    text-decoration: underline;
+}
+
+.sidebar a {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    padding: 5px;
+    margin: 10px 0;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 0.7rem;
+}
+
+.hamburger {
+    display: none;  
+    cursor: pointer;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    display: none; 
+    z-index: 999; 
+}
+
+
+
+/* Main Content */
+.main-content {
+    margin-left: calc(11.325rem + 20px); /* Dynamic adjustment */
+    padding: 20px;
+    margin-right: 80px !important;
+    flex-grow: 1;
+}
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            background: #e3fced;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .main-row {
+            display: flex;
+            gap: 20px;
+            align-items: stretch;
+        }
+
+        .profile-card {
+            text-align: center;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .profile-picture .picture-space {
+            width: 150px;
+            height: 150px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            margin: 0 auto;
+        }
+
+        .profile-card h2 {
+            margin: 10px 0;
+            font-size: 20px;
+        }
+
+        .profile-card p {
+            color: #666;
+            margin: 5px 0;
+        }
+
+        .social-links {
+            margin-top: 10px;
+        }
+
+        .social-links h4 {
+            margin-bottom: 10px;
+        }
+
+        .social-links a {
+            text-decoration: none;
+            color: #007bff;
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        .details {
+            margin: 0;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 10px;
+            margin-right: 20px;
+            background-color: #f9f9f9;
+        }
+
+        .details p {
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .details .edit {
+            padding: 10px 20px;
+            background: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .skills-section {
+            margin-right: 10px !important; /* Adjust as needed */
+        }
+
+        .skills-section, .projects-section {
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            width: 45%;
+        }
+        /* .skills-section, .projects-section {
+            border: 1px solid #ddd;
+            padding: 15px; Reduced padding
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            width: 42%; Reduced width
+        } */
+
+        .skills-section h4, .projects-section h4 {
+            margin-bottom: 15px;
+        }
+
+        .progress-bar-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar-container span {
+            margin-left: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .project-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .status-label {
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .status-pending {
+            background-color: #ffc107;
+        }
+
+        .status-completed {
+            background-color: #28a745;
+        }
+
+        .status-in-progress {
+            background-color: #17a2b8;
+        }
+
+        /* Ensure left and right sections align */
+        .profile-card {
+            height: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .main-row {
+                flex-direction: column;
+            }
+
+            .skills-project-row {
+                flex-direction: column;
+            }
+
+            .skills-section, .projects-section {
+                width: 100%;
+            }
+
+            .progress-bar-container .progress {
+                width: 100%;
+            }
+
+            .project-status span:first-child {
+                font-size: 14px;
+                /* margin-right: 15px; */
+            }
+            .details{
+              margin-right: 0px;
+            }
+        }
+
+        .skills-project-row {
+            display: flex;
+            gap: 20px;
+        }
+        @media (max-width: 768px) {
+    body{
+        background-color: #e3fced;
+    }
+
+    
+    .hamburger {
+        display: block;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        font-size: 24px;
+    }
+    .main-content {
+        margin-right: 15px !important;
+    }
+    .sidebar {
+        display: none;
+    }
+}
+@media (max-width: 1024px) {
+    .job-card .btn-delete {
+        font-size: 1.2 rem;
+    }
+
+    .main-content{
+        margin: 10px;
+    }
+
+    h1 {
+        text-align: center;
+        color: #000000;
+        margin-top: 0px;
+        margin-bottom: 30px;
+    }
+
+    .sidebar {
+        display: none; 
+        width: 60%; 
+        top: 0; 
+        left: 0;
+        position: fixed; 
+        height: 100vh; 
+        z-index: 1000; 
+        overflow-y: auto;
+    }
+
+    .sidebar a {
+        margin-right: 20px;
+        padding: 10px;
+        padding-right: 20px;
+        font-size: 15px;
+    }
+
+    .hamburger {
+        display: block; 
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        font-size: 24px; 
+    }
+
+    .main-content {
+        margin: 10px;
+    }
+}
+.picture-space {
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3); /* Grey-black soft shadow */
+    border-radius: 8px; /* Optional: Adjust for rounded corners */
+}
+
+    </style>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-JZ5EM6ZP04"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            
+            gtag('config', 'G-JZ5EM6ZP04');
+            </script>
+</head>
+
+<body>
+    <div class="hamburger" onclick="toggleSidebar()">
+        <i class="fa fa-bars"></i>
+    </div>
+    <div class="sidebar" id="sidebar" style="padding-left: 20px; margin-right: 15px !important; ">
+        
+       <h2 style="text-decoration: none;">Dashboard</h2>
+       
+       <a class="abc" href="{% url 'default' %}"><i class="fas fa-home" style="padding-right: 10px;"></i>Home page</a>
+       <a class="abc" href="{% url 'job_profile' %}"><i class="fas fa-user-circle"  style="padding-right: 10px"></i>Profile</a>
+       <a class="abc" href="{% url 'job_list' %}"> <i class="fas fa-clipboard-list" style="padding-right: 10px;"></i> Job Tracker</a>
+       <a class="abc" href="{% url 'job_create_or_update' %}"> <i class="fas fa-plus-square" style="padding-right: 10px;"></i> Add Application</a>
+       <a class="abc" href="{% url 'feedback' %}"> <i class="fas fa-comment" style="padding-right: 10px;"></i>Your Thoughts</a>
+       <a class="abc" href="{% url 'simple_analytics' %}"> <i class="fas fa-chart-bar" style="padding-right: 10px;"></i>Application Stats</a>
+       <a class="abc" href="{% url 'logout' %}"> <i class="fas fa-power-off" style="padding-right: 10px;"></i> Logout</a>
+   </div>
+   
+   <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+    <div class="main-content">
+        
+         <div class="main-row">
+            <div class="col-12 col-md-4">
+                <div class="profile-card h-100">
+                    <div class="profile-picture">
+                        {% comment %}
+                            {{% if user_profile.image %}}
+                        {% endcomment %}
+
+                        {% if user_profile.image  %}
+                            <img class="picture-space" src="{{ user_profile.image.url }}" alt="" class="img-fluid">
+                        {% else %}
+                            <div class="picture-space"></div> 
+                        {% endif %}
+                        
+                    </div>
+                    
+                   <br>
+                    <!-- <img src="{{ user_profile.image }}"> -->
+                    <!-- <h2>{{ user_profile.full_name }}</h2>
+                    <p>{{ user_profile.job_title }}</p>
+                    <p>{{ user_profile.region }}</p> -->
+
+                    <!-- <h2>{{ user_profile.full_name|default:"Anonymous User" }}</h2>
+                    <p>{{ user_profile.job_title|default:"No Job Title Available" }}</p>
+                    <p>{{ user_profile.region|default:"Location Not Specified" }}</p> -->
+
+                    <h2>{{ user_profile.full_name|default:"Anonymous" }}</h2>
+                    <p>{{ user_profile.job_title|default:"Not Available" }}</p>
+                    <p>{{ user_profile.region|default:"Unknown" }}</p>
+
+                    <br> 
+                    <div class="social-links">
+                        <h4>Profiles</h4>
+                        
+                        {% for social in social_profiles %}
+                        <p>
+                            {% if social.platform_name|lower == "github" %}
+                                <i class="bi bi-github" style="color: black;"></i>
+                                <span style="color: black;">GitHub</span>
+                            
+                            {% elif social.platform_name|lower == "linkedin" %}
+                                <i class="bi bi-linkedin" style="color: #0077b5;"></i>
+                                <span style="color: #0077b5;">LinkedIn</span>
+                        
+                            {% elif social.platform_name|lower == "youtube" %}
+                                <i class="bi bi-youtube" style="color: #ff0000;"></i>
+                                <span style="color: #ff0000;">YouTube</span>
+                    
+                            {% elif social.platform_name|lower == "facebook" %}
+                                <i class="bi bi-facebook" style="color: #1877f2;"></i>
+                                <span style="color: #1877f2;">Facebook</span>
+                
+                            {% elif social.platform_name|lower == "twitter" or social.platform_name|lower == "x" %}
+                                <i class="bi bi-twitter" style="color: #1da1f2;"></i>
+                                <span style="color: #1da1f2;">Twitter</span>
+                    
+                            {% elif social.platform_name|lower == "instagram" %}
+                                <i class="bi bi-instagram" style="color: #e4405f;"></i>
+                                <span style="color: #e4405f;">Instagram</span>
+            
+                            {% elif social.platform_name|lower == "discord" %}
+                                <i class="bi bi-discord" style="color: #5865f2;"></i>
+                                <span style="color: #5865f2;">Discord</span>
+        
+                            {% elif social.platform_name|lower == "pinterest" %}
+                                <i class="bi bi-pinterest" style="color: #bd081c;"></i>
+                                <span style="color: #bd081c;">Pinterest</span>
+                        
+                            {% elif social.platform_name|lower == "tik tok" %}
+                                <i class="bi bi-tiktok" style="color: #000000;"></i>
+                                <span style="color: #000000;">TikTok</span>
+                    
+                            {% elif social.platform_name|lower == "gitlab" %}
+                                <!-- <i class="bi bi-gitlab" style="color: #fc6d26;"></i> -->
+                                <i class="fab fa-gitlab" style="color: #fc6d26;"></i>
+                                <span style="color: #fc6d26;">GitLab</span>
+            
+                            {% elif social.platform_name|lower == "reddit" %}
+                                <i class="bi bi-reddit" style="color: #ff4500;"></i>
+                                <span style="color: #ff4500;">Reddit</span>
+                        
+                            {% elif social.platform_name|lower == "snapchat" %}
+                                <i class="bi bi-snapchat" style="color: #fffc00;"></i>
+                                <span style="color: #fffc00;">Snapchat</span>
+                        
+                            {% elif social.platform_name|lower == "portfolio" %}
+                                <i class="bi bi-globe" style="color: #00ff55;"></i>
+                                <span style="color: #00ff55;">Portfolio</span>
+                    
+                            {% else %}
+                                <i class="bi bi-{{ social.platform_name|lower }}"></i>
+                                <span>{{ social.platform_name }}</span>
+                                {% endif %}
+                        </p>
+                        {% empty %}
+                            <span>No Profiles Added</span>        
+                        {% endfor %}
+                        
+                    </div>
+                </div>
+            </div>
+            <br>
+            <!-- Right Section -->
+            <div class="col-12 col-md-8">
+                <div class="details mb-4">
+
+                    <a href="{% url 'profile_edit' %}" class="btn btn-outline-warning btn-sm" style="float: right; " > 
+                        <i class="bi bi-pencil"></i> Edit 
+                      </a>
+                      <style>
+                        .skeleton {
+                            background: linear-gradient(90deg, #f3f3f3 25%, #ecebeb 50%, #f3f3f3 75%);
+                            background-size: 200% 100%;
+                            animation: shimmer 1.5s infinite;
+                            height: 20px;
+                            width: 80%;
+                            margin: 10px auto;
+                            border-radius: 5px;
+                        }
+                        @keyframes shimmer {
+                            0% { background-position: -200% 0; }
+                            100% { background-position: 200% 0; }
+                        }
+                    </style>
+                    <h4>Contact Information</h4>
+                    <hr>
+                    {% if user_profile.full_name or user_profile.email or user_profile.phone or user_profile.location %}
+                        {% if user_profile.full_name %} <p><strong>Full Name:</strong> {{ user_profile.full_name }}</p> {% endif %}
+                        {% if user_profile.email %} <p><strong>Email:</strong> {{ user_profile.email }}</p> {% endif %}
+                        {% if user_profile.phone %} <p><strong>Phone:</strong> {{ user_profile.phone }}</p> {% endif %}
+                        {% if user_profile.location %} <p><strong>Address:</strong> {{ user_profile.location }}</p> {% endif %}
+                    {% else %}
+                        <p style="color: grey; text-align: center;">No profile details available yet. Update your profile to personalize your experience!</p>
+                        <div class="skeleton"></div>
+                        <div class="skeleton"></div>
+                        <div class="skeleton"></div>
+                    {% endif %}
+
+                    <!-- <p><strong>Full Name:</strong> {{ user_profile.full_name }}</p>
+                    <p><strong>Email:</strong> {{ user_profile.email }}</p>
+                    <p><strong>Phone:</strong> {{ user_profile.phone|default:"" }}</p>
+                    <p><strong>Address:</strong> {{ user_profile.location|default:"" }}</p> -->
+                </div>
+
+                <div class="skills-project-row">
+                    <!-- <div class="skills-section mb-4 col-12 col-md-6">
+                        <h4>Skills</h4>
+                        <hr>
+                        
+                        {% for skill in skills %}
+                        <div class="progress-bar-container d-flex align-items-center justify-content-between">
+                            <p class="mb-0 me-3" style="white-space: nowrap; min-width: 120px;">{{ skill.skill_name }}</p>
+                            <div class="progress w-75">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: {{ skill.proficiency }}%; font-weight: bold;" 
+                                     aria-valuenow="{{ skill.proficiency }}" aria-valuemin="0" aria-valuemax="100">
+                                    {{ skill.proficiency }}%
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                            <p>No skills added.</p>
+                        {% endfor %}
+                    </div> -->
+                    <div class="skills-section mb-4 col-12 col-md-6">
+                        <h4>Skills</h4>
+                        <hr>
+                        
+                        {% for skill in skills %}
+                        <div class="progress-bar-container d-flex align-items-center justify-content-between">
+                            <!-- Skill name with wrapping enabled -->
+                            <p class="mb-0 me-3 skill-name">{{ skill.skill_name }}</p>
+                            <div class="progress w-75">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: {{ skill.proficiency }}%; font-weight: bold;" 
+                                     aria-valuenow="{{ skill.proficiency }}" aria-valuemin="0" aria-valuemax="100">
+                                    {{ skill.proficiency }}%
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                            <p class="center-both" style="text-align: center;">No skills added.</p>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="projects-section col-12 col-md-6">
+                        <h4>Projects</h4>
+                        <hr>
+                        {% for project in projects %}
+                        <div class="project-status d-flex justify-content-between">
+                            <span>{{ project.project_name }}</span>
+                            <!-- <span class="status-label status-{{ project.project_status | lower }}">{{ project.project_status }}</span> -->
+                            <span class="status-label status-{{ project.project_status | lower }}" 
+                                style="{% if project.project_status|lower == 'ongoing' %}background-color: #ffcc00;{% endif %}">
+                                {{ project.project_status }}
+                            </span>
+                            
+                        </div>
+                        
+                        {% empty %}
+                            <p class="center-both" style="text-align: center;">No Project Added</p>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                
+        </div>
+    </div>
+    <script>
+        
+        // JavaScript logic to detect screen width and toggle display
+        function checkScreenWidth() {
+            const width = window.innerWidth; // Get the screen width
+            const jobTable = document.getElementById('jobTable');
+            const jobCards = document.getElementById('jobCards');
+
+            if (width > 768) {
+                jobTable.style.display = 'table';  // Show table for larger screens
+                jobCards.style.display = 'none';   // Hide cards on larger screens
+            } else {
+                jobTable.style.display = 'none';   // Hide table on smaller screens
+                jobCards.style.display = 'block';  // Show cards for smaller screens
+            }
+        }
+
+        // Run checkScreenWidth on load and when window is resized
+        window.onload = checkScreenWidth;
+        window.onresize = checkScreenWidth;
+        
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+
+            if (sidebar.style.display === 'block') {
+                sidebar.style.display = 'none';
+                overlay.style.display = 'none'; // Hide overlay
+
+            } else {
+                sidebar.style.display = 'block';
+                overlay.style.display = 'block'; // Show overlay
+            }
+        }
+        function closeSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+
+            sidebar.style.display = 'none'; // Hide sidebar
+            overlay.style.display = 'none'; // Hide overlay
+        }
+
+    </script>
+
+    <!-- Link to Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+                        <!-- <a href="#"><i class="bi bi-github" style="color: black"></i><span style="color: black">  Github</span> </a><br>
+                        <a href="#"><i class="bi bi-linkedin"></i> LinkedIn</a><br>
+                        <a href="#" style="color: #17b82c;"><i class="bi bi-globe" ></i> Website</a> -->
+                        
+                        <!-- <a href="{% url 'profile_edit' %}" style="text-decoration: none; "> 
+                        <button class="btn btn-outline-warning btn-sm" style="float: right; " > 
+                            <i class="bi bi-pencil"></i> Edit 
+                        </button>  </a> -->

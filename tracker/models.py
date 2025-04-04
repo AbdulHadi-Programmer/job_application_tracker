@@ -124,3 +124,217 @@ class Feedback(models.Model):
 
     def __str__(self):
         return f"Feedback by {self.name} - Rating: {self.rating}"
+
+
+# class Profile(models.Model):
+#     # personal detail 
+#     image = models.ImageField(upload_to="", null=True)
+#     name = models.CharField(max_length=50)
+#     short_address = models.CharField(max_length=60)  # city and country 
+#     # Online Profile:
+#     # All social media include : github, linkedin, fb, insta, twitter, stackoverflow, etc
+#     # Add a dynamic fields so the user can add as much as he want 
+#     # Contact Information : 
+#     full_name = models.CharField(max_length=200, null=True, blank=True)
+#     email = models.EmailField(max_length=100)
+#     phone = models.CharField(max_length=15)
+#     address = models.CharField(max_length=200)
+#     # Skills:
+# #     Python      90%
+# #     Django      70%
+# #     HTML & CSS  50%
+#     # Also as i am confused for writing a skill fields as it is shown in progress bar form so that why each skill has percentage to show so how to store both of them and also how to take input
+#     skill1 = models.CharField(max_length=120, null=True, blank=True)
+#     percentage1 = models.PositiveIntegerField()
+#     # Add a dynamic field to add more field as skills 
+#     skill2 = models.CharField(max_length=120, null=True, blank=True)
+#     percentage2 = models.PositiveIntegerField()
+#     skill3 = models.CharField(max_length=120, null=True, blank=True)
+#     percentage3 = models.PositiveIntegerField()
+#     skill4 = models.CharField(max_length=120, null=True, blank=True)
+#     percentage4 = models.PositiveIntegerField()
+#     skill5 = models.CharField(max_length=120, null=True, blank=True)
+#     percentage5 = models.PositiveIntegerField()
+#     # Projects with Status :
+#     # In this projects added, maximum 5 and minimum zero, status should be 'completed', 'in progress' and 'pending'
+#     # also each project must be associated with the status
+
+############################################################################################################################################################################################################################################################################################################################################################
+# from django.core.exceptions import ValidationError
+# from django.db import models
+
+# class UserProfile(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)
+#     image = models.ImageField(upload_to="user_images/", blank=True, null=True)
+#     full_name = models.CharField(max_length=100, blank=True, null=True)
+#     job_title = models.CharField(max_length=120, blank=True, null=True)
+#     region = models.CharField(max_length=150, blank=True, null=True)
+
+#     # Contact Information
+#     email = models.EmailField(blank=True, null=True)
+#     phone = models.CharField(max_length=15, blank=True, null=True)
+#     location = models.CharField(max_length=100, blank=True, null=True)
+
+#     def __str__(self):
+#         return self.user.username  # Display the username instead of "UserProfile object (1)"
+   
+   
+
+# class SocialProfile(models.Model):
+#     profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='social_profiles')
+#     platform_name = models.CharField(max_length=255)
+#     profile_link = models.URLField()
+
+#     def clean(self):
+#         # if SocialProfile.objects.filter(user=self.user).count() >= 3:
+#         if SocialProfile.objects.filter(profile=self.profile).count() >= 3:
+#             raise ValidationError("You can only have up to 3 social profiles.")
+
+#     def save(self, *args, **kwargs):
+#         self.clean()
+#         super().save(*args, **kwargs)
+
+
+# class Skill(models.Model):
+#     profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+#     name = models.CharField(max_length=100)
+#     proficiency = models.IntegerField()
+
+#     def clean(self):
+#         if Skill.objects.filter(profile=self.profile).count() >= 3:
+#             raise ValidationError("You can only have up to 3 skills.")
+
+#     def save(self, *args, **kwargs):
+#         self.clean()  # Ensure validation runs before saving
+#         super().save(*args, **kwargs)
+
+
+
+# class Project(models.Model):
+#     profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name="projects")
+#     project_name = models.CharField(max_length=200)
+#     project_status = models.CharField(max_length=50, choices=[('Pending', 'Pending'), ('Ongoing', 'Ongoing'), ('Completed', 'Completed')])
+
+#     def __str__(self):
+#         return f"{self.project_name} - {self.project_status}"
+    
+#     def save(self, *args, **kwargs):
+#         if self.profile.projects.count() >= 3:
+#             raise ValidationError('You can add up to 3 projects.')
+#         super().save(*args, **kwargs)
+############################################################################################################################################################################################################################################################################
+
+# from django.core.exceptions import ValidationError
+# from django.db import models
+# from django.contrib.auth.models import User  # Ensure User is imported
+
+# class UserProfile(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE)  # Ensure one profile per user
+#     # user = models.OneToOneField(User, on_delete=models.CASCADE)
+#     image = models.ImageField(upload_to="user_images/", blank=True, null=True)
+#     full_name = models.CharField(max_length=100, blank=True, null=True)
+#     job_title = models.CharField(max_length=120, blank=True, null=True)
+#     region = models.CharField(max_length=150, blank=True, null=True)
+
+#     # Contact Information   
+#     email = models.EmailField(blank=True, null=True)
+#     phone = models.CharField(max_length=15, blank=True, null=True)
+#     location = models.CharField(max_length=100, blank=True, null=True)
+
+#     def __str__(self):
+#         return self.user.username  # Display the username instead of "UserProfile object (1)"
+
+# class SocialProfile(models.Model):
+#     profile = models.ForeignKey(User, on_delete=models.CASCADE, related_name='social_profiles')
+#     platform_name = models.CharField(max_length=255)
+#     profile_link = models.URLField()
+
+#     def clean(self):
+#         if not self.profile_id:  # Ensure profile is set before checking constraints
+#             return
+        
+#         if SocialProfile.objects.filter(profile=self.profile).count() >= 3:
+#             raise ValidationError("You can only have up to 3 social profiles.")
+
+#     def save(self, *args, **kwargs):
+#         if not self.profile_id:
+#             raise ValidationError("Profile must be set before saving a social profile.")
+        
+#         self.clean()
+#         super().save(*args, **kwargs)
+
+
+# class Skill(models.Model):
+#     profile = models.ForeignKey(User, on_delete=models.CASCADE, related_name="skills")  # Change `user` to `profile`
+#     skill_name = models.CharField(max_length=100)
+#     proficiency = models.IntegerField()
+
+#     def clean(self):
+#         if Skill.objects.filter(profile=self.profile).count() >= 3:  # Change `user` to `profile`
+#             raise ValidationError("You can only have up to 3 skills.")
+
+#     def save(self, *args, **kwargs):
+#         self.clean()  # Ensure validation runs before saving
+#         super().save(*args, **kwargs)
+
+# class Project(models.Model):
+#     profile = models.ForeignKey(User, on_delete=models.CASCADE, related_name="projects")
+#     project_name = models.CharField(max_length=200)
+#     project_status = models.CharField(max_length=50, choices=[('Pending', 'Pending'), ('Ongoing', 'Ongoing'), ('Completed', 'Completed')])
+
+#     def __str__(self):
+#         return f"{self.project_name} - {self.project_status}"
+
+#     def save(self, *args, **kwargs):
+#         if self.profile.projects.count() >= 3:
+#             raise ValidationError('You can add up to 3 projects.')
+#         super().save(*args, **kwargs)
+#################################################################################################################################################################################################################################################################################
+
+from django.db import models
+from django.contrib.auth.models import User
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=100)
+    job_title = models.CharField(max_length=100, blank=True, null=True)
+    region = models.CharField(max_length=100, blank=True, null=True)
+    
+    email = models.EmailField()
+    phone = models.CharField(max_length=15, blank=True, null=True)
+    location = models.CharField(max_length=255, blank=True, null=True)
+    image = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
+
+    def __str__(self):
+        return self.full_name
+
+
+class SocialProfile(models.Model):
+    user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='social_profiles')
+    platform_name = models.CharField(max_length=100)
+    profile_link = models.URLField()
+
+    def __str__(self):
+        return f"{self.platform_name} - {self.user_profile.full_name}"
+
+
+class Skill(models.Model):
+    user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='skills')
+    skill_name = models.CharField(max_length=100)
+    # proficiency = models.CharField(max_length=50, choices=[('Beginner', 'Beginner'), ('Intermediate', 'Intermediate'), ('Advanced', 'Advanced')])
+    proficiency = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.skill_name} - {self.user_profile.full_name}"
+
+
+
+class Project(models.Model):
+    user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='projects')
+    project_name = models.CharField(max_length=100)
+    project_status = models.CharField(max_length=50, choices=[('Ongoing', 'Ongoing'), ('Completed', 'Completed')])
+
+    def __str__(self):
+        return f"{self.project_name} - {self.user_profile.full_name}"
+
+

@@ -1,30 +1,5 @@
-db.sqlite3
-*.sqlite3
-*.db
+job_application_tracker/.gitignore
+
 db_backup.sqlite3
 db.sqlite3
-db.sqlite3
-*.sqlite3
-.gitignore
-.env
-.gitignore
-roadmap_mvp.txt
-readme.Md
-roadmap.Md
-requirements.txt
-pricing package.md
-Dockerfile
-suggestion.md
-readme_new/
-settings.py
-smiu_admission_list_student_imp.txt
-/job_application_tracker/.env/
-2025_year.txt
-mark.md 
-job_application_tracker/db.sqlite3
 
-db.sqlite3
-job_application_tracker/db_backup.sqlite3
-db_backup.sqlite3 
-db.sqlite3
-/readme_new/

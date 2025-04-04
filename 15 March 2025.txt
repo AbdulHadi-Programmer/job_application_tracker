@@ -1,0 +1,17 @@
+(*) Productivity App :
+
+1. Runtime Error when pomodoro timer is off
+2. Also add edit and Priority wise while adding new task in todo
+3. Also research for making the diff timer schedule 
+4. Light and Dark Theme Mode Add (because the previous is not workinng)
+
+
+
+
+
+
+
+
+
+
+

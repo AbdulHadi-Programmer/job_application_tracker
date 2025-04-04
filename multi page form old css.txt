@@ -1,0 +1,534 @@
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+            background-color: #ffffff !important;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 180px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            z-index: 1000;
+            background-color: #4e9b5f;
+            font-weight: bold;
+            display: none ; /* Hidden on small screens */
+        }
+
+        .sidebar h2 {
+            font-size: 1.3rem;
+            color: white;
+            text-align: center;
+            margin: 40px 0;
+            text-decoration: underline;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            color: #fff;
+            padding: 10px;
+            margin: 10px 0;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        /* Hamburger Icon */
+        .hamburger {
+            display: none;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1100;
+        }
+
+        /* Show hamburger only on small screens */
+        @media (max-width: 1024px) {
+            .hamburger {
+                display: block;
+            }
+        }
+
+        /* Hide hamburger when sidebar is open */
+        /* .sidebar.active ~ .hamburger {
+            display: none !important;
+        } */
+        .sidebar.active .hamburger {
+            display: none !important;
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 999;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 200px;
+            padding: 20px;
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                margin-left: 0;
+            }
+        }
+
+        /* Form Container (Centered) */
+        .form-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #e3fced;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center !important;
+        }
+        /* I want to make the label left align as when i apply textalign center in above to it make the fields good and  */
+        .step label {
+            text-align: left;
+        }
+        /* Input Styles */
+        input, select {
+            width: 90%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            padding: 8px;
+            box-sizing: border-box;
+            margin-top: 5px;
+            background-color: white;
+        }
+
+        /* Step Indicators */
+        .step-indicators {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .step-circle {
+            width: 30px;
+            height: 30px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            margin-right: 40px;
+        }
+
+        .step-circle.active {
+            background: #ffcc00;
+            color: white;
+        }
+
+        /* Form Steps */
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+
+        .btn-next {
+            background: #ffcc00;
+            color: white;
+        }
+
+        .btn-prev {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-submit {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Fade Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .form-container {
+                width: 90%;
+            }
+        }
+
+        h1 {
+    text-align: center;
+    color: #000000 !important;
+    text-decoration: underline;
+    margin: 10px 10px 40px;
+    font-size: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 5px;
+    margin: 0 20px;
+    text-align: left !important;
+}
+
+
+.btn {
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #ffcc00;
+    color: white !important;
+    font-weight: bold;
+    font-size: 0.8rem;
+    min-width: 70px;
+}
+
+.btn:hover {
+    opacity: 0.8;
+}
+
+/* For tablets and small screens (max-width: 1024px) */
+@media (max-width: 1024px) {
+    .form-container {
+        /* margin: 0 20px !important;
+        padding: 15px !important; */
+        box-shadow: none !important;
+    }
+
+    label {
+        font-size: 1rem !important;
+        margin: 0 10px !important;
+    }
+
+    .btn {
+        font-size: 1rem !important;
+        padding: 10px 14px !important;
+    }
+}
+
+/* For mobile devices (max-width: 768px) */
+@media (max-width: 768px) {
+    label {
+        font-size: 1rem !important;
+        margin: 0 15px !important;
+    }
+
+    .btn {
+        font-size: 1rem !important;
+        padding: 10px 14px;
+    }
+}
+
+/* For very small screens (max-width: 480px) */
+@media (max-width: 480px) {
+    label {
+        font-size: 0.9rem !important;
+        margin: 0 10px !important;
+        margin-left: 15px !important;
+    }
+
+    .btn {
+        font-size: 0.9rem !important;
+        padding: 10px 14px !important;
+    }
+}
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: #ffffff; 
+}
+
+.container {
+    display: flex;
+}
+
+.sidebar {
+    width: 11.325rem; 
+    min-width: 180px; 
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    z-index: 1;
+    background-color: #4e9b5f;
+    font-weight: bold;
+    display: block;
+}
+
+.sidebar a {
+    margin-left: 20px;
+    padding: 10px;
+}
+
+.sidebar h2 {
+    font-size: 1.3rem;
+    color: white; 
+    text-align: center;
+    margin-bottom: 40px;
+    margin-top: 40px;
+}
+
+.sidebar a {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    padding: 5px;
+    margin: 10px 0;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 0.7rem;
+}
+
+.sidebar a:hover {
+    background-color: #ffcc00;
+    margin-right: 30px !important;
+}
+
+.main-content {
+    margin-left: calc(11.325rem + 50px); 
+    padding: 20px;
+    margin-right: 40px !important;
+    flex-grow: 1;
+}
+
+.hamburger {
+    display: none;
+}
+
+.form-container {
+    margin: 0 181.2px;
+    padding: 20px;
+    background-color: #e3fced;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Poppins', sans-serif;
+    border-radius: 8px; 
+}
+
+input[type="text"], input[type="url"], input[type="date"], input[type="email"], select {
+    font-family: 'Poppins', sans-serif;
+    margin-top: 5px !important;
+    width: 90%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+    padding: 8px;
+    margin: 0 20px;
+    background-color: white;
+} 
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    display: none; 
+    z-index: 999; 
+}
+
+.btn_back-btn {
+    font-size: 0.8rem !important;
+}
+
+@media (max-width: 1024px) {
+    .main-content{
+        margin-right: 0px !important
+    }
+
+    h1 {
+        font-size: 1.6rem;
+    }
+
+    .sidebar a {
+        margin-right: 20px;
+        padding: 10px;
+        padding-right: 20px;
+        font-size: 15px;
+    }
+
+    .sidebar {
+        display: none; 
+        width: 60% !important; 
+        top: 0; 
+        left: 0;
+        position: fixed; 
+        height: 100vh; 
+        z-index: 1000; 
+        overflow-y: auto;
+    }
+
+    .hamburger {
+        display: block; 
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    .form-container {
+        margin: 10px;
+        padding: 15px;
+        box-shadow: none; 
+    }
+
+    .main-content {
+        margin: 0; 
+    }
+
+    input[type="text"],
+    input[type="url"],
+    input[type="date"],
+    input[type="email"],
+    select {
+        font-size: 1rem; 
+        padding: 8px;
+    }
+
+    .btn {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.4rem;
+    }
+
+    .sidebar {
+        display: none; 
+        position: fixed;
+        width: 70%;
+        top: 0;
+        left: 0;
+        height: 100%;
+        background-color: #4e9b5f;
+        z-index: 1000;
+    }
+
+    .hamburger {
+        display: block;
+        font-size: 22px;
+        position: fixed;
+        top: 10px;
+        left: 10px;
+    }
+
+    .form-container {
+        margin: 10px;
+        padding: 10px;
+    }
+    
+    label {
+        font-size: 0.8rem;
+    }
+
+    input[type="text"],
+    input[type="url"],
+    input[type="date"],
+    input[type="email"],
+    select {
+        margin-right: 15px !important;
+        font-size: 0.9rem !important;
+        padding: 5px;
+    }
+    
+    .btn {
+        font-size: 0.9rem;
+        /* padding: 6px 10px; */
+        padding: 5px !important;
+    }
+
+    .form-buttons {
+        font-size: 0.9rem;
+    }
+
+    .btn_back-btn {
+        font-size: 0.9rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .form-container {
+        margin: 5px;
+        padding: 8px;
+    }
+
+    label {
+        font-size: 0.7rem;
+    }
+
+    input[type="text"],
+    input[type="url"],
+    input[type="date"],
+    input[type="email"],
+    select {
+        font-size: 0.7rem;
+        padding: 7px;
+    }
+
+    .btn {
+        font-size: 0.7rem;
+        padding: 5px 8px;
+    }
+}
+
+.form-buttons {
+    align-items: center;
+    justify-content: center; 
+    font-size: 20px;
+}
+
+.btn_back-btn {
+    font-size: 14px;
+}
+
+    </style>

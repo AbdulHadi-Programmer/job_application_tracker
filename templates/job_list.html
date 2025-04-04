@@ -28,12 +28,18 @@
     
         <table id="jobTable" style="margin-top: 0px !important; border-radius: 10px; margin-left: 30px;">
             {% if jobs|length == 0 %}
-            <div class="cta-container">
+            <!-- <div class="cta-container">
                 <a href="{% url 'job_create' %}" class="cta-button">Add Application</a>
             </div>
     
             <div class="no-jobs-message">
                 <p>No application is added.</p>
+            </div> -->
+            <div class="cta-container">
+                <a href="{% url 'job_create' %}" class="cta-button">Add Application</a>
+                <div class="no-jobs-message">
+                    <p>No application is added.</p>
+                </div>
             </div>
             {% else %}
             <tr>
@@ -76,7 +82,7 @@
                     </td>
                 {% endif %}
                     <td>
-                    <a href="{% url 'job_update' job.id %}" title="Edit" class="btn" style="display:inline; font-size: 1.2rem !important; color: #ffc00c; width: 20px !important; padding: 0px !important;"> 
+                    <a href="{% url 'job_create_or_update' job_id=job.id %}" title="Edit" class="btn" style="display: inline; font-size: 1.2rem !important; color:#ffc00c ; width: 20px !important; padding: 0px !important;">
                         <i class="fa fa-pencil"></i>
                     </a>
                     
@@ -151,7 +157,7 @@
                     
     <!-- -------------------------------------------------------------------------------------------------------------- -->
                     <div class="actions">
-                        <a href="{% url 'job_update' job.id %}" class="btn btn-edit" style="text-decoration: underline; font-size: 1.2rem !important; padding: 8px 15px;">✏️</a>
+                        <a href="{% url 'job_create_or_update' job.id %}" class="btn btn-edit" style="text-decoration: underline; font-size: 1.2rem !important; padding: 8px 15px;">✏️</a>
                         
                         <!-- Redirect to the confirmation page -->
                         <a href="{% url 'job_delete_confirmation' job.id %}" class="btn btn-delete" style="background-color: red;">
@@ -206,4 +212,5 @@
         </style>
 
     </div>
+    
     {% endblock %}

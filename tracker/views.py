@@ -65,34 +65,56 @@ def job_list(request):
 
 
 
-@login_required # (with Foreign Key new code)
-def job_create(request):
-    if request.method == 'POST':
-        form = JobForm(request.POST)
-        if form.is_valid():
-            job = form.save(commit=False)
-            job.user = request.user  # Automatically assign the current user
-            job.save()
-            messages.success(request, 'Job created successfully!')
-            return redirect('job_list')
+# @login_required # (with Foreign Key new code)
+# def job_create(request):
+#     if request.method == 'POST':
+#         form = JobForm(request.POST)
+#         if form.is_valid():
+#             job = form.save(commit=False)
+#             job.user = request.user  # Automatically assign the current user
+#             job.save()
+#             messages.success(request, 'Job created successfully!')
+#             return redirect('job_list')
+#     else:
+#         form = JobForm()
+#     return render(request, 'job_form.html', {'form': form})
+
+
+# @login_required # (with Foreign Key new code)
+# def job_update(request, job_id):
+#     job = get_object_or_404(Add_Job, id=job_id, user=request.user)  # Ensure the job belongs to the current user
+#     if request.method == 'POST':
+#         form = JobForm(request.POST, instance=job)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, 'Job updated successfully!')
+#             return redirect('job_list')
+#     else:
+#         form = JobForm(instance=job)
+#     return render(request, 'job_update.html', {'form': form, 'job': job})
+
+@login_required
+def job_create_or_update(request, job_id=None):
+    if job_id:
+        # Edit existing job
+        job = get_object_or_404(Add_Job, id=job_id, user=request.user)
+        form = JobForm(request.POST or None, instance=job)
+        action = 'Update'
     else:
-        form = JobForm()
-    return render(request, 'job_form.html', {'form': form})
-
-
-
-@login_required # (with Foreign Key new code)
-def job_update(request, job_id):
-    job = get_object_or_404(Add_Job, id=job_id, user=request.user)  # Ensure the job belongs to the current user
+        # Create new job
+        job = None
+        form = JobForm(request.POST or None)
+        action = 'Add'
+    
     if request.method == 'POST':
-        form = JobForm(request.POST, instance=job)
         if form.is_valid():
-            form.save()
-            messages.success(request, 'Job updated successfully!')
+            job_instance = form.save(commit=False)
+            job_instance.user = request.user  # Automatically assign the current user
+            job_instance.save()
+            messages.success(request, f'Job {action.lower()}d successfully!')
             return redirect('job_list')
-    else:
-        form = JobForm(instance=job)
-    return render(request, 'job_update.html', {'form': form, 'job': job})
+    
+    return render(request, 'job_form.html', {'form': form, 'job': job, 'action': action})
 
 
 @login_required
@@ -126,6 +148,7 @@ def job_delete_confirmation(request, id):
 def logout_view(request):
     logout(request)             
     return redirect('login')  
+
 
 
 
@@ -166,62 +189,11 @@ def search(request):
 ###########################################################################################################
 
 def profile(request):
-    return render(request, "user_profile.html")
+    return render(request, "profile.html") 
 
-
-
-
-# @login_required
-# def feedback(request):
-#     if request.method == 'POST':
-#         form = FeedbackForm(request.POST)
-#         if form.is_valid():
-#             form.save()  # Save the feedback to the database
-#             return redirect('job_list')  # Redirect after saving
-#     else:
-#         form = FeedbackForm()
-
-#     return render(request, 'feedback.html', {'form': form})
-############################################
-# @login_required
-# def feedback(request):
-#     if request.method == 'POST':
-#         form = FeedbackForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('job_list')
-#         else:
-#             print(form.errors)  # Print errors in the console for debugging
-#     else:
-#         form = FeedbackForm()
-#     return render(request, 'feedback.html', {'form': form})
 
 from django.http import HttpResponse
 
-# @login_required
-# def feedback(request):
-#     if request.method == "POST":
-#         name = request.POST.get("name")
-#         email = request.POST.get("email")
-#         rating = request.POST.get("rating")
-#         discovery = request.POST.get("discovery")
-#         features = request.POST.get("features", "")
-#         navigation = request.POST.get("navigation")
-#         recommendation = request.POST.get("recommendation", "")
-        
-#         # Save data to the database
-#         Feedback.objects.create(
-#             name=name,
-#             email=email,
-#             rating=rating,
-#             discovery=discovery,
-#             features=features,
-#             navigation=navigation,
-#             recommendation=recommendation
-#         )
-#         # return render(request, 'job_list')
-#         return render(request, 'job_list.html')  # If you meant a template file
-#     return render(request, "feedback.html")
 from django.shortcuts import render, redirect
 from .models import Feedback
 from django.contrib.auth.decorators import login_required
@@ -280,4 +252,137 @@ def analytics_view(request):
 
 def cards(request):
     return render(request, "card.html")
+
+
+def profile_view(request):
+    user = request.user  # Or however you're fetching the user
+    return render(request, "profile.html", {'user': user})
+
+
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from django.forms import inlineformset_factory, modelformset_factory
+from django.db import transaction
+from .models import UserProfile, SocialProfile, Skill, Project
+from .forms import UserProfileForm, SocialProfileForm, SkillForm, ProjectForm
+
+@login_required
+def profile_form_add(request):
+    user = request.user  
+    user_profile, created = UserProfile.objects.get_or_create(user=user)
+
+    SocialProfileFormSet = inlineformset_factory(UserProfile, SocialProfile, form=SocialProfileForm, extra=3, max_num=3, can_delete=False)
+    SkillFormSet = inlineformset_factory(UserProfile, Skill, form=SkillForm, extra=3, max_num=3 , can_delete=False)
+    ProjectFormSet = inlineformset_factory(UserProfile, Project, form=ProjectForm, extra=3, max_num=3 , can_delete=False)
+
+    if request.method == 'POST':
+        profile_form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
+        social_formset = SocialProfileFormSet(request.POST, instance=user_profile)
+        skill_formset = SkillFormSet(request.POST, instance=user_profile)
+        project_formset = ProjectFormSet(request.POST, instance=user_profile)
+
+        # 🔥 Exclude completely empty forms before validation
+        def filter_valid_forms(formset):
+            return [form for form in formset if form.has_changed()]  # Only keep changed forms
+
+        valid_projects = filter_valid_forms(project_formset)
+
+        # ✅ Check that valid forms don't exceed the max limit
+        if len(valid_projects) > 3:
+            for form in project_formset:
+                form.add_error(None, "You can only have up to 3 projects.")
+
+        # Print all the forms with error if occurs : 
+        if not (profile_form.is_valid() and social_formset.is_valid() and skill_formset.is_valid() and project_formset.is_valid()):
+            print("Form errors:", profile_form.errors)
+            print("Social Form errors:", social_formset.errors)
+            print("Skill Form errors:", skill_formset.errors)
+            print("Project Form errors:", project_formset.errors)
+
+        # if (profile_form.is_valid() and social_formset.is_valid() and 
+        #     skill_formset.is_valid() and project_formset.is_valid()):
+        #     with transaction.atomic():  # Ensures all or nothing is saved
+        #         profile_form.save()
+        #         social_formset.save()
+        #         skill_formset.save()
+        #         project_formset.save()
+        #     return redirect('job_profile')  # Redirect to profile page after success
+        if (profile_form.is_valid() and social_formset.is_valid() and 
+            skill_formset.is_valid() and project_formset.is_valid()):
+            
+            print("✅ All forms are valid, entering transaction.atomic()")
+
+            with transaction.atomic():  # Ensures all or nothing is saved
+                profile_form.save()
+                print("Profile form saved ✅")
+
+                social_formset.save()
+                print("Social formset saved ✅")
+
+                skill_formset.save()
+                print("Skill formset saved ✅")
+
+                project_formset.save()
+                print("Project formset saved ✅")
+
+            print("✅ All forms saved successfully!")
+            return redirect('job_profile')  # Redirect to profile page after success
+
+
+    else:
+        profile_form = UserProfileForm(instance=user_profile)
+        social_formset = SocialProfileFormSet(instance=user_profile)
+        skill_formset = SkillFormSet(instance=user_profile)
+        project_formset = ProjectFormSet(instance=user_profile)
+
+    return render(request, 'profile_form_add.html', {
+        'profile_form': profile_form,
+        'social_formset': social_formset,
+        'skill_formset': skill_formset,
+        'project_formset': project_formset
+    })
+
+
+
+## Profile View :
+@login_required
+def profile_view(request):
+    user = request.user
+    user_profile = get_object_or_404(UserProfile, user=user)
     
+    social_profiles = SocialProfile.objects.filter(user_profile=user_profile)
+    skills = Skill.objects.filter(user_profile=user_profile)
+    projects = Project.objects.filter(user_profile=user_profile)
+
+    return render(request, 'profile_view.html', {
+        'user_profile': user_profile,
+        'social_profiles': social_profiles,
+        'skills': skills,
+        'projects': projects,
+    })
+
+## Profile View :
+@login_required
+def job_profile_view(request):
+    user = request.user
+    user_profile = get_object_or_404(UserProfile, user=user)
+    
+    social_profiles = SocialProfile.objects.filter(user_profile=user_profile)
+    skills = Skill.objects.filter(user_profile=user_profile)
+    projects = Project.objects.filter(user_profile=user_profile)
+    social_profiles = SocialProfile.objects.filter(user_profile=user_profile)
+    
+#     social_profiles = [
+#     {"platform_name": "Github"},
+#     {"platform_name": "Linkedin"},
+#     {"platform_name": "Youtube"}
+# ]
+
+
+    return render(request, 'job_profile.html', {
+        'user_profile': user_profile,
+        'social_profiles': social_profiles,
+        'skills': skills,
+        'projects': projects,
+        "social_profiles": social_profiles, 
+    })
