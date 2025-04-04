@@ -3,6 +3,8 @@ from .views import *
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth import views as auth_views
 from authentication.views import * 
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', home_page, name='home'),  # uses the redirect logic for auth users
@@ -35,4 +37,4 @@ urlpatterns = [
     path('profile/add/', profile_form_add, name='profile_add'),  # Add Profile
     path('profile/edit/', profile_form_add, name='profile_edit'),  # Edit Profile (Same view)
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
