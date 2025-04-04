@@ -361,28 +361,49 @@ def profile_view(request):
         'projects': projects,
     })
 
-## Profile View :
+# ## Profile View :
+# @login_required
+# def job_profile_view(request):
+#     user = request.user
+#     user_profile = get_object_or_404(UserProfile, user=user)
+    
+#     social_profiles = SocialProfile.objects.filter(user_profile=user_profile)
+#     skills = Skill.objects.filter(user_profile=user_profile)
+#     projects = Project.objects.filter(user_profile=user_profile)
+#     social_profiles = SocialProfile.objects.filter(user_profile=user_profile)
+
+#     return render(request, 'job_profile.html', {
+#         'user_profile': user_profile,
+#         'social_profiles': social_profiles,
+#         'skills': skills,
+#         'projects': projects,
+#         "social_profiles": social_profiles, 
+#     })
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .models import UserProfile, SocialProfile, Skill, Project
+
 @login_required
 def job_profile_view(request):
     user = request.user
-    user_profile = get_object_or_404(UserProfile, user=user)
     
+    # Try to fetch the UserProfile for the current user
+    try:
+        user_profile = UserProfile.objects.get(user=user)
+    except UserProfile.DoesNotExist:
+        # If no profile is found, redirect to profile creation page
+        messages.error(request, "You do not have a profile. Please create one.")
+        return redirect('profile_add')  # Change to the appropriate URL for creating a profile
+    
+    # Get associated data
     social_profiles = SocialProfile.objects.filter(user_profile=user_profile)
     skills = Skill.objects.filter(user_profile=user_profile)
     projects = Project.objects.filter(user_profile=user_profile)
-    social_profiles = SocialProfile.objects.filter(user_profile=user_profile)
     
-#     social_profiles = [
-#     {"platform_name": "Github"},
-#     {"platform_name": "Linkedin"},
-#     {"platform_name": "Youtube"}
-# ]
-
-
     return render(request, 'job_profile.html', {
         'user_profile': user_profile,
         'social_profiles': social_profiles,
         'skills': skills,
         'projects': projects,
-        "social_profiles": social_profiles, 
     })
