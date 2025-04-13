@@ -119,7 +119,7 @@ class UserProfile(models.Model):
     email = models.EmailField()
     phone = models.CharField(max_length=15, blank=True, null=True)
     location = models.CharField(max_length=255, blank=True, null=True)
-    image = models.ImageField(upload_to='media/profile_pics/', blank=True, null=True)
+    image = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
 
     def __str__(self):
         return self.full_name

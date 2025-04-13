@@ -225,30 +225,76 @@ def feedback(request):
     return render(request, "feedback.html")
 
 
+# def analytics_view(request):
+#     user = request.user
+    
+#     # Count the total applications for the user
+#     total_applications = Add_Job.objects.filter(user=user).count()
+    
+#     # Group applications by application_status (not status) and count them
+#     applications_by_status = Add_Job.objects.filter(user=user).values('application_status').annotate(count=Count('application_status'))
+    
+#     # Group applications by job_category and count them
+#     job_categories = Add_Job.objects.filter(user=user).values('job_category').annotate(count=Count('job_category'))
+    
+#     # Filter upcoming interviews
+#     upcoming_interviews = Add_Job.objects.filter(user=user, interview_date__gte=timezone.now()).order_by('interview_date')
+
+#     # Prepare context data to pass to the template
+#     context = {
+#         'total_applications': total_applications,
+#         'applications_by_status': {item['application_status']: item['count'] for item in applications_by_status},
+#         'job_categories': {item['job_category']: item['count'] for item in job_categories},
+#         'upcoming_interviews': [{'interview_date': i.interview_date, 'company_name': i.company_name} for i in upcoming_interviews],
+#     }
+
+#     return render(request, 'analytics.html', context)
+from django.contrib.auth.decorators import login_required
+from django.utils.timezone import now
+from django.shortcuts import render
+from .models import Add_Job
+from django.db.models import Count
+
+@login_required(login_url='/login/')  # Redirect to login page if not logged in
 def analytics_view(request):
     user = request.user
-    
+
     # Count the total applications for the user
     total_applications = Add_Job.objects.filter(user=user).count()
-    
-    # Group applications by application_status (not status) and count them
-    applications_by_status = Add_Job.objects.filter(user=user).values('application_status').annotate(count=Count('application_status'))
-    
+
+    # Group applications by application_status and count them
+    applications_by_status = (
+        Add_Job.objects.filter(user=user)
+        .values('application_status')
+        .annotate(count=Count('application_status'))
+    )
+
     # Group applications by job_category and count them
-    job_categories = Add_Job.objects.filter(user=user).values('job_category').annotate(count=Count('job_category'))
-    
+    job_categories = (
+        Add_Job.objects.filter(user=user)
+        .values('job_category')
+        .annotate(count=Count('job_category'))
+    )
+
     # Filter upcoming interviews
-    upcoming_interviews = Add_Job.objects.filter(user=user, interview_date__gte=timezone.now()).order_by('interview_date')
+    upcoming_interviews = (
+        Add_Job.objects.filter(user=user, interview_date__gte=now())
+        .order_by('interview_date')
+    )
 
     # Prepare context data to pass to the template
     context = {
         'total_applications': total_applications,
         'applications_by_status': {item['application_status']: item['count'] for item in applications_by_status},
         'job_categories': {item['job_category']: item['count'] for item in job_categories},
-        'upcoming_interviews': [{'interview_date': i.interview_date, 'company_name': i.company_name} for i in upcoming_interviews],
+        'upcoming_interviews': [
+            {'interview_date': i.interview_date, 'company_name': i.company_name}
+            for i in upcoming_interviews
+        ],
     }
 
     return render(request, 'analytics.html', context)
+
 
 def cards(request):
     return render(request, "card.html")
