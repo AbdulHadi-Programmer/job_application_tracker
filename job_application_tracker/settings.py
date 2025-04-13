@@ -28,8 +28,12 @@ LOGIN_URL = '/login/'
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Default session engine
 SESSION_COOKIE_AGE = 1209600  # Two weeks (in seconds)
 
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# Media Files Configuration
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR / 'media'
+
 
 # AUTH_USER_MODEL = 'tracker.User'  # Adjust according to your app name and model name
 # AUTH_USER_MODEL = 'tracker.CustomUser'
