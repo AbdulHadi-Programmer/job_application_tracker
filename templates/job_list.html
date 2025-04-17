@@ -28,25 +28,16 @@
     
         <table id="jobTable" style="margin-top: 0px !important; border-radius: 10px; margin-left: 30px;">
             {% if jobs|length == 0 %}
-            <!-- <div class="cta-container">
-                <a href="{% url 'job_create' %}" class="cta-button">Add Application</a>
-            </div>
-    
-            <div class="no-jobs-message">
-                <p>No application is added.</p>
-            </div> -->
-            <div class="cta-container">
-                <a href="{% url 'job_create' %}" class="cta-button">Add Application</a>
-                <div class="no-jobs-message">
-                    <p>No application is added.</p>
-                </div>
+            
+            <div class="cta-container" style="background-color: #e3fced;">
+                <a href="{% url 'job_create_or_update' %}" class="cta-button">Add Application</a>
             </div>
             {% else %}
             <tr>
                 <th>Job Category</th>
                 <th>Job Level</th>
                 <th>Company Name</th>
-                <!-- <th>Company Email</th>  -->
+                
                 {% if not all_emails_empty %}
                     <th>Company Email</th> <!-- Conditionally show the Company Email column -->
                 {% endif %}
@@ -95,16 +86,17 @@
                 </td>
             </tr>
             {% endfor %}
+
             {% endif %}
         </table>
         
         <div id="jobCards" style="display: flex; flex-direction: row; flex-wrap: wrap;">
             {% if jobs|length == 0 %}
             <div class="no-jobs-message-other">
-                <p>No application is added.</p>
+                <!-- <p>No application is added.</p> -->
             </div>
             <div class="cta-container">
-                <a href="{% url 'job_create' %}" class="cta-button1">Add Application</a>
+                <a href="{% url 'job_create_or_update' %}" class="cta-button1">Add Application</a>
             </div>
             {% else %}
             
