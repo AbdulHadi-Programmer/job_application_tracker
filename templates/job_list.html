@@ -89,12 +89,52 @@
 
             {% endif %}
         </table>
-        
+        <style>
+            /* Responsive for tablets and smaller */
+@media screen and (max-width: 768px) {
+    .main-content {
+        margin: 10px;
+    }
+
+    .no-jobs-message {
+        display: none; /* Hide message if needed */
+    }
+
+    .cta-container {
+        align-items: center;
+        padding: 20px;
+        width: 90%;
+        margin-top: 30px;
+        background-color: #e3fced;
+    }
+    
+    .cta-button {
+        text-align: center;
+        width: 100%;        /* Make button full width */
+        font-size: 16px;     /* Slightly smaller text */
+        padding: 12px 20px;  /* Smaller padding */
+
+    }
+}
+
+/* Extra Responsive for small mobiles */
+@media screen and (max-width: 480px) {
+    .cta-button {
+        text-align: center;
+        font-size: 14px;    /* Even smaller text on very small screens */
+        padding: 10px 15px;
+    }
+
+    .cta-container {
+        align-items: center;
+        padding: 15px;
+        background-color: #e3fced;
+    }
+}
+
+        </style>
         <div id="jobCards" style="display: flex; flex-direction: row; flex-wrap: wrap;">
             {% if jobs|length == 0 %}
-            <div class="no-jobs-message-other">
-                <!-- <p>No application is added.</p> -->
-            </div>
             <div class="cta-container">
                 <a href="{% url 'job_create_or_update' %}" class="cta-button1">Add Application</a>
             </div>

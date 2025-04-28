@@ -533,6 +533,24 @@ canvas {
     width: 100%;
 }
 
+
+@media (max-width: 1024px) {
+        .main-content {
+            margin-left: 0;
+        }
+    }
+
+    /* Form Container (Centered) */
+    /* .form-container {
+        max-width: 600px;
+        margin: 50px auto;
+        background: #e3fced;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center !important;
+    } */
+
 </style>
 
   <!-- Google tag (gtag.js) -->
@@ -560,12 +578,6 @@ canvas {
     <div class="sidebar" id="sidebar" style="padding-left: 20px; margin-right: 15px !important; ">
         
         <h2>Dashboard</h2>
-        <!-- <a class="abc" href="{% url 'default' %}"><i class="fas fa-home" style="padding-right: 10px;"></i>Home page</a>
-        <a class="abc" href="{% url 'job_list' %}"> <i class="fas fa-clipboard-list" style="padding-right: 10px;"></i> Job Tracker</a>
-        <a class="abc" href="{% url 'job_create_or_update' %}"> <i class="fas fa-plus-square" style="padding-right: 10px;"></i> Add Application</a>
-        <a class="abc" href="{% url 'feedback' %}"> <i class="fas fa-comment" style="padding-right: 10px;"></i>Your Thoughts</a>
-        <a class="abc" href="{% url 'simple_analytics' %}"> <i class="fas fa-chart-bar" style="padding-right: 10px;"></i>Application Stats</a>
-        <a class="abc" href="{% url 'logout' %}"> <i class="fas fa-power-off" style="padding-right: 10px;"></i> Logout</a> -->
         <a class="abc" href="{% url 'default' %}"><i class="fas fa-home" style="padding-right: 10px;"></i>Home page</a>
         <a class="abc" href="{% url 'job_profile' %}"><i class="fas fa-user-circle"  style="padding-right: 10px"></i>Profile</a>
         <a class="abc" href="{% url 'job_list' %}"> <i class="fas fa-clipboard-list" style="padding-right: 10px;"></i> Job Tracker</a>
