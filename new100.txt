@@ -1,0 +1,5 @@
+Changes to make in Hadi Reflect:
+
+1. Make the Blog title page heading h2 or h1
+2. Add a time scheduler in blog model field to post blog when the time is greater
+3. Show True or False of is_published field in admin page
