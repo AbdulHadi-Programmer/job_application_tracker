@@ -2,663 +2,502 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Career Traces</title>
-    <head>
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-        <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
-    </head> 
-    <!-- <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon"> -->
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JZ5EM6ZP04"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-    
-      gtag('config', 'G-JZ5EM6ZP04');
-    </script>
-    <style>
-        body {
-            background-color: #e3fced;
-            color: #000;
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-        }
-    
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #e3fced; /* Updated navbar color */
-            padding: 10px 20px;
-            color: black;
-            position: relative;
-        }
-
-        .logo {
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        /* Default nav-links styling (hidden on small screens) */
-        .nav-links {
-            list-style: none;
-            display: flex;
-            margin-right: 20px;
-            margin-top: 10px;
-        }
-
-        .nav-links li {
-            display: inline-block;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: black;
-            padding: 10px;
-            transition: background-color 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            /* background-color: #ffcc00; */
-            color: #ffcc00;
-            border-radius: 4px;
-        }
-
-        .nav-links a.active {
-            background-color: #ffcc00;
-            color: white;
-            border-radius: 4px;
-        }
-        .nav-links a.active:hover {
-            color: black;
-        }
-        /* Hamburger menu */
-        .menu-toggle {
-            background: none;
-            border: none;
-            /* border: 1px solid salmon; */
-            font-size: 24px;
-            color: black;
-            cursor: pointer;
-            display: none; /* Hidden by default (for larger screens) */
-        }
-
-        /* Small screens styling */
-        @media (max-width: 768px) {
-            .menu-toggle {
-                display: block; /* Display hamburger menu on smaller screens */
-            }
-            .nav-links a.active {
-                background-color: #e3fced;
-                color: black;
-                border-radius: 4px;
-            }
-            .nav-links a.active:hover {
-                color: black;
-            }
-            .nav-links a:hover {
-                /* background-color: #ffcc00; */
-                color: black;
-                border-radius: 4px;
-            }
-            .nav-links {
-                display: none; /* Hidden by default on small screens */
-                flex-direction: column;
-                position: absolute;
-                top: 50px;
-                left: 0;
-                width: 100%;
-                padding: 0px;
-                background-color: #e3fced; /* Match navbar color */
-            }
-
-            .nav-links li {
-                border-bottom: 1px solid #555;
-                text-align: center;
-            }
-
-            .nav-links li:last-child {
-                border-bottom: none;
-            }
-
-            .nav-links a {
-                display: block;
-                padding: 10px;
-                padding-left: 0px;
-                margin-right: 10px;
-                color: black;
-            }
-        }
-
-        /* Medium to large screens styling */
-        @media (min-width: 769px) {
-            .nav-links {
-                display: flex; /* Always visible on larger screens */
-            }
-        }
-
-        .hero {
-            padding: 5rem 1rem;
-            text-align: center;
-            background: linear-gradient(180deg, rgba(78, 155, 95, 0.8) 30%, rgba(227, 252, 237, 0) 100%);
-            color: #000;
-        }
-
-        .hero h1 {
-            font-size: 2.8rem;
-            font-weight: bold;
-        }
-        
-        .hero p {
-            font-size: 1.25rem;
-            margin-top: 1rem;
-            color: #333;
-        }
-
-        .features {
-            padding: 3rem 1rem;
-        }
-
-        .features .card {
-            background-color: #fff; 
-            border: none;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 15px;
-            transition: transform 0.3s;
-        }
-
-        .features .card:hover {
-            transform: scale(1.05);
-            /* border: 1px solid #4e9b5f; */
-        }
-
-        .features .card-body {
-            text-align: center;
-        }
-
-        .features .card i {
-            font-size: 3rem;
-            color: #4e9b5f; 
-            margin-bottom: 1rem;
-        }
-
-
-        .btn-primary {
-            background-color: #4e9b5f; 
-            border: none;
-            transition: background-color 0.3s;
-        }
-
-        .btn-primary:hover {
-            background-color: #ffcc00; 
-            color: #000;
-        }
-
-/* Features Section Heading *//* Features Section Heading */
-.features-heading {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #4e9b5f;
-    margin-bottom: 1.5rem;
-    padding-left: 1rem;
-    border-left: 5px solid #4e9b5f;
-    border-bottom: 5px solid #4e9b5f;
-    display: inline-block;
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Career Traces — Track Every Application</title>
+<meta name="description" content="Track your job applications and career progress with analytics using Career Traces."/>
+<meta name="keywords" content="job tracker, career growth, skill development, job applications"/>
+<meta name="author" content="Career Traces Team"/>
+<meta name="robots" content="index, follow"/>
+<link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<!-- Google tag -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JZ5EM6ZP04"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-JZ5EM6ZP04');</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --g:#22c55e;--g2:#16a34a;--g-glow:rgba(34,197,94,0.18);
+  --dark:#080c09;--s1:#0e1410;--s2:#141a15;--s3:#1a221b;
+  --border:rgba(34,197,94,0.12);--border2:rgba(255,255,255,0.06);
+  --t:#f0f7f1;--t2:#a8bfab;--t3:#607064;
+  --f-head:'Plus Jakarta Sans',sans-serif;--f-serif:'Instrument Serif',serif;
 }
+html{scroll-behavior:smooth}
+body{background:var(--dark);color:var(--t);font-family:var(--f-head);overflow-x:hidden;cursor:none}
 
-/* FAQ Section Heading */
-.faq-heading {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 1.5rem;
-    padding-left: 1rem;
-    border-left: 5px solid #4e9b5f;
-    display: inline-block;
+/* CURSOR */
+#cursor{position:fixed;width:8px;height:8px;background:var(--g);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s}
+#cursor-ring{position:fixed;width:32px;height:32px;border:1.5px solid rgba(34,197,94,0.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .12s ease,top .12s ease,width .2s,height .2s}
+
+/* PARTICLES */
+#particles{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.5}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;padding:0 5%;height:64px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(8,12,9,0.75);backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
 }
+.nav-logo{font-size:1.05rem;font-weight:800;color:var(--g);display:flex;align-items:center;gap:0.5rem;text-decoration:none;letter-spacing:-0.3px}
+.nav-logo img{width:28px;height:28px;object-fit:contain;background:rgba(34,197,94,0.1);border-radius:6px;padding:3px}
+.logo-dot{width:7px;height:7px;border-radius:50%;background:var(--g);animation:blink 2.5s ease-in-out infinite;flex-shrink:0}
+@keyframes blink{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(34,197,94,0.4)}50%{opacity:0.5;box-shadow:0 0 0 5px rgba(34,197,94,0)}}
+.nav-center{display:flex;gap:2rem;list-style:none}
+.nav-center a{text-decoration:none;color:var(--t2);font-size:0.82rem;font-weight:500;transition:color .2s}
+.nav-center a:hover{color:var(--t)}
+.nav-right{display:flex;align-items:center;gap:0.75rem}
+.btn-nav-ghost{background:transparent;border:1px solid var(--border2);color:var(--t2);padding:0.45rem 1.1rem;border-radius:8px;font-size:0.82rem;font-weight:500;text-decoration:none;transition:all .2s;font-family:var(--f-head)}
+.btn-nav-ghost:hover{border-color:rgba(34,197,94,0.3);color:var(--t)}
+.btn-nav-cta{background:var(--g);color:#000;padding:0.45rem 1.2rem;border-radius:8px;font-size:0.82rem;font-weight:700;text-decoration:none;transition:all .2s;box-shadow:0 0 16px rgba(34,197,94,0.25)}
+.btn-nav-cta:hover{background:#16a34a;box-shadow:0 0 24px rgba(34,197,94,0.4);transform:translateY(-1px)}
+.menu-toggle{display:none;background:none;border:1px solid var(--border2);color:var(--t);padding:0.4rem 0.7rem;border-radius:6px;cursor:none;font-size:0.9rem}
+.mobile-nav{display:none;flex-direction:column;gap:0;position:fixed;top:64px;left:0;right:0;background:rgba(8,12,9,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border2);z-index:499;padding:1rem}
+.mobile-nav.open{display:flex}
+.mobile-nav a{text-decoration:none;color:var(--t2);font-size:0.9rem;padding:0.75rem 0.5rem;border-bottom:1px solid var(--border2)}
+.mobile-nav a:last-child{border-bottom:none;color:var(--g);font-weight:700}
 
-/* FAQ Item Style */
-.faq-item {
-    margin-bottom: 2rem;
-    transition: background-color 0.3s ease, border-left 0.3s ease;
-    padding-left: 1rem;
-    border-left: 5px solid transparent;
+/* HERO */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;padding:7rem 5% 4rem;overflow:hidden;z-index:1}
+.hero-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 60% 50% at 20% 50%,rgba(34,197,94,0.07),transparent 60%),radial-gradient(ellipse 40% 60% at 80% 20%,rgba(34,197,94,0.05),transparent 50%),radial-gradient(ellipse 50% 40% at 60% 80%,rgba(34,197,94,0.04),transparent 50%);animation:meshMove 12s ease-in-out infinite alternate}
+@keyframes meshMove{0%{opacity:0.8}100%{opacity:1}}
+.hero-grid{position:absolute;inset:0;z-index:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 70% 60% at 50% 30%,black,transparent);opacity:0.6}
+.hero-content{position:relative;z-index:1;max-width:600px}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:0.5rem;border:1px solid rgba(34,197,94,0.3);background:rgba(34,197,94,0.07);color:var(--g);padding:0.3rem 0.85rem;border-radius:999px;font-size:0.75rem;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;margin-bottom:1.6rem;animation:fadeUp .7s ease both}
+.hero h1{font-size:clamp(2rem,4vw,3rem);font-weight:800;line-height:1.12;letter-spacing:-1.2px;margin-bottom:1.3rem;animation:fadeUp .7s .1s ease both}
+.hero h1 .serif{font-family:var(--f-serif);font-style:italic;font-weight:400;color:var(--g);font-size:1.08em;letter-spacing:-0.5px}
+.hero-sub{font-size:0.95rem;color:var(--t2);line-height:1.75;max-width:460px;margin-bottom:2rem;animation:fadeUp .7s .2s ease both}
+.hero-actions{display:flex;gap:0.85rem;flex-wrap:wrap;animation:fadeUp .7s .3s ease both}
+.btn-primary-ct{background:var(--g);color:#000;padding:0.75rem 1.6rem;border-radius:10px;font-weight:700;font-size:0.88rem;text-decoration:none;transition:all .25s;display:inline-flex;align-items:center;gap:0.5rem;box-shadow:0 4px 20px rgba(34,197,94,0.3);font-family:var(--f-head)}
+.btn-primary-ct:hover{background:var(--g2);transform:translateY(-2px);box-shadow:0 8px 30px rgba(34,197,94,0.4);color:#000}
+.btn-ghost-ct{background:transparent;color:var(--t);padding:0.75rem 1.6rem;border-radius:10px;font-weight:500;font-size:0.88rem;text-decoration:none;transition:all .25s;display:inline-flex;align-items:center;gap:0.5rem;border:1px solid var(--border2);font-family:var(--f-head)}
+.btn-ghost-ct:hover{border-color:rgba(34,197,94,0.3);color:var(--g)}
+.hero-trust{display:flex;align-items:center;gap:1rem;margin-top:2rem;animation:fadeUp .7s .4s ease both}
+.trust-avatars{display:flex}
+.trust-avatars .av{width:28px;height:28px;border-radius:50%;border:2px solid var(--dark);margin-left:-8px;font-size:0.65rem;font-weight:700;display:flex;align-items:center;justify-content:center;color:#000}
+.trust-avatars .av:first-child{margin-left:0}
+.av1{background:#f97316}.av2{background:#8b5cf6}.av3{background:#06b6d4}.av4{background:#ec4899}
+.trust-text{font-size:0.78rem;color:var(--t2);line-height:1.4}
+.trust-text strong{color:var(--t)}
+
+/* DASHBOARD VISUAL */
+.hero-visual{position:absolute;right:-2%;top:50%;transform:translateY(-50%);width:52%;max-width:680px;z-index:2;animation:floatIn .9s .5s ease both;perspective:1000px}
+@keyframes floatIn{from{opacity:0;transform:translateY(-50%) translateX(60px) rotateY(-8deg)}to{opacity:1;transform:translateY(-50%) translateX(0) rotateY(-4deg)}}
+.dashboard-wrap{background:var(--s1);border:1px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 0 0 1px rgba(34,197,94,0.08),0 32px 80px rgba(0,0,0,0.6),0 0 80px rgba(34,197,94,0.06)}
+.dash-topbar{background:var(--s2);border-bottom:1px solid var(--border2);padding:0.65rem 1rem;display:flex;align-items:center;gap:0.5rem}
+.dash-dot{width:10px;height:10px;border-radius:50%}
+.dd-r{background:#ef4444}.dd-y{background:#f59e0b}.dd-g{background:var(--g)}
+.dash-title{margin-left:0.5rem;font-size:0.73rem;color:var(--t3);font-weight:500}
+.dash-body{display:flex;height:320px}
+.dash-sidebar{width:140px;background:var(--s1);border-right:1px solid var(--border2);padding:1rem 0.75rem;display:flex;flex-direction:column;gap:0.2rem}
+.dash-nav-item{padding:0.5rem 0.65rem;border-radius:7px;font-size:0.7rem;color:var(--t3);display:flex;align-items:center;gap:0.5rem;cursor:default;transition:all .2s}
+.dash-nav-item.active{background:rgba(34,197,94,0.12);color:var(--g)}
+.dash-nav-item i{font-size:0.75rem;width:14px;text-align:center}
+.dash-main{flex:1;padding:1rem;overflow:hidden;background:var(--dark)}
+.dash-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:0.6rem;margin-bottom:0.8rem}
+.metric-card{background:var(--s1);border:1px solid var(--border2);border-radius:10px;padding:0.65rem 0.75rem}
+.metric-card .m-val{font-size:1.3rem;font-weight:800;color:var(--t)}
+.metric-card .m-label{font-size:0.62rem;color:var(--t3);margin-top:1px}
+.metric-card .m-change{font-size:0.62rem;color:var(--g);margin-top:3px}
+.dash-table-wrap{background:var(--s1);border:1px solid var(--border2);border-radius:10px;overflow:hidden}
+.dash-table-head{display:grid;grid-template-columns:1fr .7fr .7fr .6fr;padding:0.45rem 0.75rem;border-bottom:1px solid var(--border2);font-size:0.6rem;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
+.dash-row{display:grid;grid-template-columns:1fr .7fr .7fr .6fr;padding:0.5rem 0.75rem;border-bottom:1px solid rgba(255,255,255,0.03);align-items:center;font-size:0.68rem;color:var(--t2)}
+.dash-row:last-child{border-bottom:none}
+.dash-row .company{font-weight:600;color:var(--t);font-size:0.72rem}
+.tag{display:inline-flex;padding:0.18rem 0.5rem;border-radius:999px;font-size:0.6rem;font-weight:600}
+.tag.interview{background:rgba(34,197,94,0.12);color:var(--g)}
+.tag.applied{background:rgba(96,165,250,0.12);color:#60a5fa}
+.tag.pending{background:rgba(251,191,36,0.12);color:#fbbf24}
+.tag.rejected{background:rgba(239,68,68,0.1);color:#f87171}
+.tag.offer{background:rgba(167,139,250,0.12);color:#a78bfa}
+
+/* LOGOS */
+.logos-strip{position:relative;z-index:1;padding:1.5rem 5%;border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);overflow:hidden}
+.logos-label{text-align:center;font-size:0.72rem;color:var(--t3);text-transform:uppercase;letter-spacing:2px;margin-bottom:1.2rem}
+.logos-track{display:flex;gap:3rem;align-items:center;animation:scroll 25s linear infinite;width:max-content}
+.logos-strip:hover .logos-track{animation-play-state:paused}
+@keyframes scroll{to{transform:translateX(-50%)}}
+.logo-item{font-size:0.85rem;font-weight:700;color:var(--t3);white-space:nowrap;opacity:0.45;letter-spacing:-0.3px;transition:opacity .2s}
+.logo-item:hover{opacity:0.85}
+
+/* SECTIONS */
+.ct-section{padding:5rem 5%;position:relative;z-index:1}
+.section-eyebrow{font-size:0.7rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--g);margin-bottom:0.7rem}
+.section-h{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;letter-spacing:-0.8px;line-height:1.18;margin-bottom:0.75rem}
+.section-sub{font-size:0.9rem;color:var(--t2);line-height:1.75;max-width:480px}
+
+/* STATS */
+.stats-section{background:var(--s1);border-top:1px solid var(--border2);border-bottom:1px solid var(--border2)}
+.stats-inner{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;text-align:center}
+.stat-item .s-num{font-family:var(--f-head);font-size:2rem;font-weight:800;color:var(--g);letter-spacing:-1px}
+.stat-item .s-label{font-size:0.78rem;color:var(--t2);margin-top:0.3rem}
+.stat-item .s-sub{font-size:0.7rem;color:var(--t3);margin-top:0.15rem}
+
+/* FEATURES */
+.features-section{background:var(--s1);border-top:1px solid var(--border2);border-bottom:1px solid var(--border2)}
+.features-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border2);border-radius:16px;overflow:hidden;border:1px solid var(--border2)}
+.feat-card{background:var(--s1);padding:2rem 1.75rem;transition:all .3s;position:relative;overflow:hidden}
+.feat-card::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 0% 0%,rgba(34,197,94,0.06),transparent 60%);opacity:0;transition:opacity .3s}
+.feat-card:hover{background:var(--s2)}
+.feat-card:hover::after{opacity:1}
+.feat-icon{width:42px;height:42px;border-radius:10px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);display:flex;align-items:center;justify-content:center;color:var(--g);font-size:1rem;margin-bottom:1.2rem;transition:all .3s}
+.feat-card:hover .feat-icon{background:rgba(34,197,94,0.18);box-shadow:0 0 20px rgba(34,197,94,0.2)}
+.feat-card h3{font-size:0.95rem;font-weight:700;margin-bottom:0.5rem;letter-spacing:-0.2px}
+.feat-card p{font-size:0.82rem;color:var(--t2);line-height:1.65}
+.feat-badge{display:inline-block;margin-top:0.8rem;font-size:0.65rem;font-weight:600;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);color:var(--g);padding:0.15rem 0.5rem;border-radius:4px;letter-spacing:0.5px}
+
+/* HOW IT WORKS */
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:3rem;position:relative}
+.how-grid::before{content:'';position:absolute;top:22px;left:11%;right:11%;height:1px;background:linear-gradient(90deg,var(--g),rgba(34,197,94,0.08))}
+.how-card{position:relative;padding:0 .5rem}
+.how-num{width:44px;height:44px;border-radius:50%;background:var(--dark);border:1.5px solid var(--g);color:var(--g);font-size:0.85rem;font-weight:800;display:flex;align-items:center;justify-content:center;margin-bottom:1.2rem;position:relative;z-index:1;transition:all .3s}
+.how-card:hover .how-num{background:var(--g);color:#000;box-shadow:0 0 20px rgba(34,197,94,0.4)}
+.how-card h4{font-size:0.88rem;font-weight:700;margin-bottom:.4rem;letter-spacing:-0.2px}
+.how-card p{font-size:0.78rem;color:var(--t2);line-height:1.6}
+
+/* TESTIMONIALS */
+.test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:2.5rem}
+.test-card{background:var(--s1);border:1px solid var(--border2);border-radius:16px;padding:1.5rem;transition:all .3s}
+.test-card:hover{border-color:rgba(34,197,94,0.2);transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,0.3)}
+.test-stars{display:flex;gap:2px;margin-bottom:0.85rem}
+.test-stars i{font-size:0.7rem;color:#f59e0b}
+.test-text{font-size:0.83rem;color:var(--t2);line-height:1.7;margin-bottom:1.1rem;font-style:italic}
+.test-author{display:flex;align-items:center;gap:0.65rem}
+.test-av{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;color:#000}
+.test-name{font-size:0.8rem;font-weight:600}
+.test-role{font-size:0.7rem;color:var(--t3)}
+
+/* FAQ */
+.faq-section-ct{background:var(--s1);border-top:1px solid var(--border2);border-bottom:1px solid var(--border2)}
+.faq-wrap{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.faq-highlight{background:rgba(34,197,94,0.07);border:1px solid rgba(34,197,94,0.15);border-radius:12px;padding:1.2rem;margin-top:1.5rem}
+.faq-highlight p{font-size:0.8rem;color:var(--t2);line-height:1.65}
+.faq-highlight strong{color:var(--g)}
+.faq-list{display:flex;flex-direction:column;gap:0.5rem}
+details.faq-item-ct{background:var(--s2);border:1px solid var(--border2);border-radius:10px;overflow:hidden;transition:border-color .2s}
+details.faq-item-ct[open]{border-color:rgba(34,197,94,0.2)}
+details.faq-item-ct summary{list-style:none;padding:1rem 1.1rem;display:flex;justify-content:space-between;align-items:center;font-size:0.85rem;font-weight:600;cursor:none;color:var(--t);transition:color .2s}
+details.faq-item-ct summary::-webkit-details-marker{display:none}
+details.faq-item-ct[open] summary{color:var(--g)}
+.faq-icon-ct{width:22px;height:22px;border-radius:50%;border:1px solid var(--border2);color:var(--t3);display:flex;align-items:center;justify-content:center;font-size:0.6rem;flex-shrink:0;transition:all .2s}
+details.faq-item-ct[open] .faq-icon-ct{border-color:rgba(34,197,94,0.3);color:var(--g);transform:rotate(45deg)}
+details.faq-item-ct .faq-ans{padding:0 1.1rem 1rem;font-size:0.8rem;color:var(--t2);line-height:1.7;border-top:1px solid var(--border2);padding-top:0.75rem}
+
+/* CTA */
+.cta-section-ct{padding:7rem 5%;text-align:center;position:relative;z-index:1;overflow:hidden}
+.cta-section-ct::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 90% at 50% 50%,rgba(34,197,94,0.07),transparent)}
+.cta-inner{position:relative;z-index:1;max-width:560px;margin:0 auto}
+.cta-inner .section-sub{margin:0 auto 2rem;text-align:center}
+.cta-inner .section-h{text-align:center}
+.cta-actions{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap}
+.cta-meta{margin-top:1.2rem;font-size:0.75rem;color:var(--t3)}
+.cta-meta span{margin:0 .5rem}
+
+/* FOOTER */
+footer.ct-footer{padding:2rem 5%;border-top:1px solid var(--border2);display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;color:var(--t3);position:relative;z-index:1}
+.foot-links{display:flex;gap:1.5rem}
+.foot-links a{color:var(--t3);text-decoration:none;transition:color .2s}
+.foot-links a:hover{color:var(--t)}
+
+/* SCROLL REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease}
+.reveal.visible{opacity:1;transform:none}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+
+/* RESPONSIVE */
+@media(max-width:1100px){.hero-visual{display:none}.hero-content{max-width:100%}}
+@media(max-width:768px){
+  .nav-center,.nav-right{display:none}
+  .menu-toggle{display:block}
+  .feat-grid{grid-template-columns:1fr 1fr}
+  .how-grid{grid-template-columns:1fr 1fr}.how-grid::before{display:none}
+  .stats-inner{grid-template-columns:repeat(2,1fr)}
+  .test-grid{grid-template-columns:1fr}
+  .faq-wrap{grid-template-columns:1fr}
+  footer.ct-footer{flex-direction:column;gap:1rem;text-align:center}
 }
-
-.faq-item:hover {
-    background-color: #e3fced;
-    border-left: 5px solid #4e9b5f;
+@media(max-width:480px){
+  .feat-grid{grid-template-columns:1fr}
+  .how-grid{grid-template-columns:1fr}
+  .stats-inner{grid-template-columns:1fr 1fr}
+  .hero h1{font-size:1.9rem}
+  #cursor,#cursor-ring{display:none}
+  body{cursor:auto}
 }
-
-/* FAQ Question Heading Style */
-.faq-item h3 {
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: #4e9b5f;
-    margin-bottom: 1rem;
-    transition: color 0.3s ease;
-}
-
-/* FAQ Answer Style */
-.faq-item p, .faq-item ul {
-    font-size: 1rem;
-    line-height: 1.6;
-    transition: color 0.3s ease;
-}
-
-.faq-item:hover p, .faq-item:hover ul {
-    color: #333;
-}
-
-/* Mobile Responsiveness */
-@media (max-width: 768px) {
-    /* Features Section Heading for Mobile */
-    .features-heading {
-        font-size: 1.5rem;  /* Adjust font size for smaller screens */
-        margin-bottom: 1rem;
-    }
-    
-    /* FAQ Section Heading for Mobile */
-    .faq-heading {
-        font-size: 1.5rem;  /* Adjust font size for smaller screens */
-        margin-bottom: 1rem;
-    }
-
-    /* FAQ Question Heading for Mobile */
-    .faq-item h3 {
-        font-size: 1.25rem; /* Smaller font size for mobile */
-        margin-bottom: 0.8rem;
-    }
-
-    /* FAQ Answer Style for Mobile */
-    .faq-item p, .faq-item ul {
-        font-size: 0.9rem;  /* Smaller font size for mobile */
-        line-height: 1.5;
-    }
-}
-
-@media (max-width: 480px) {
-    /* Features Section Heading for Mobile */
-    .hero h1 {
-        font-size: 2.4rem;
-        font-weight: bold;
-    }
-    .features-heading {
-        font-size: 1.25rem;  /* Adjust font size for very small screens */
-        margin-bottom: 0.8rem;
-    }
-
-    /* FAQ Section Heading for Mobile */
-    .faq-heading {
-        font-size: 1.25rem;  /* Adjust font size for very small screens */
-        margin-bottom: 0.8rem;
-        margin-bottom: 30px !important;
-    }
-
-    /* FAQ Question Heading for Mobile */
-    .faq-item h3 {
-        font-size: 1.1rem;  /* Even smaller font size for mobile */
-        margin-bottom: 0.6rem;
-    }
-
-    /* FAQ Answer Style for Mobile */
-    .faq-item p, .faq-item ul {
-        font-size: 0.85rem;  /* Even smaller font size for mobile */
-        line-height: 1.4;
-    }
-}
-
-@media (max-width: 480px) {
-            .navbar .btn {
-                padding: 0.5rem 0.8rem; /* Further adjust padding for very small screens */
-                font-size: 0.85rem; /* Even smaller font size for small screens */
-            }
-
-            .navbar-toggler {
-                background-color: #4e9b5f;
-            }
-
-            .navbar-collapse {
-                text-align: center;
-                padding-top: 10px;
-            }
-        }
-
-/* FAQ List Item Style */
-.faq-item .point {
-    font-size: 1rem;   /* Default font size */
-    line-height: 1.6;  /* Improves readability */
-    position: relative;
-    padding-left: 25px;  /* Adds space for custom bullet */
-    color: #555;   /* Text color */
-    margin-bottom: 10px;
-}
-
-/* Custom Bullet Style for FAQ List Items */
-.faq-item .point::before {
-    content: "✔";  /* Adds checkmark as the bullet point */
-    position: absolute;
-    left: 0;
-    color: #4e9b5f;  /* Green color for the bullet */
-    font-weight: bold;  /* Makes the checkmark bold */
-    font-size: 1.2rem;  /* Adjust bullet size */
-}
-
-/* Hover Effect for FAQ List Item */
-.faq-item .point:hover {
-    color: #333;   /* Darken text color on hover */
-}
-
-/* Mobile Responsiveness for FAQ List */
-@media (max-width: 768px) {
-    .faq-item .point {
-        margin-left: 0px;
-        font-size: 0.95rem;  /* Smaller font size for mobile */
-    }
-}
-
-@media (max-width: 480px) {
-    .faq-item .point {
-        font-size: 0.85rem;  /* Even smaller font size for very small screens */
-    }
-}
-
-/* Current Card Style */
-.features .card {
-    background-color: #fff;
-    border: none;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 15px;
-    transition: transform 0.3s;
-    display: flex; /* Ensure card uses flexbox layout */
-    flex-direction: column; /* Stack elements vertically */
-    height: 100%; /* Ensure card takes up available space */
-}
-
-.features .card:hover {
-    transform: scale(1.05);
-    /* border: 1px solid #4e9b5f; */
-}
-
-.features .card-body {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; 
-    flex-grow: 1;  
-}
-
-/* Icon Styling */
-.features .card i {
-    font-size: 3rem;
-    color: #4e9b5f;
-    margin-bottom: 1rem;
-}
-
-/* Make sure card size remains the same even with different content */
-.features .card-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-top: 1rem;
-}
-
-.features .card-text {
-    font-size: 1rem;
-    color: #555;
-}
-
-/* Ensure consistent height for card on large screens */
-@media (min-width: 768px) {
-    .features .card {
-        height: 100%; 
-    }
-
-    .features .col-md-4 {
-        display: flex;
-        justify-content: center;
-        align-items: stretch;
-    }
-}
-
-/* Mobile Responsiveness */
-@media (max-width: 768px) {
-    .features .card {
-        max-width: 100%;
-        margin: 10px 0;
-    }
-
-    .features .card-body {
-        padding: 15px;
-    }
-}
-
-@media (max-width: 480px) {
-    .features .card {
-        margin: 8px 0;
-    }
-
-    .features .card-body {
-        padding: 10px;
-    }
-
-}/* Main Features Heading Styling */
-.features-heading-main {
-    font-size: 2.2rem; 
-    font-weight: 700;  
-    color: black;
-    text-align: center; 
-    margin-bottom: 2.5rem; 
-    text-transform: uppercase; 
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .features-heading-main {
-        font-size: 2rem;
-        margin-bottom: 2rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .features-heading-main {
-        font-size: 1.75rem; 
-        margin-bottom: 1.5rem;
-    }
-}
-
-.navbar-logo {
-    width: 50px;
-    height: auto;
-    margin-right: 10px;
-    object-fit: contain;
-}
-
-/* For devices smaller than 768px (Tablets and below) */
-@media (max-width: 768px) {
-    .navbar-logo {
-        width: 40px; 
-        margin-right: 8px;
-    }
-}
-
-/* For devices smaller than 480px (Mobile phones and below) */
-@media (max-width: 480px) {
-    .navbar-logo {
-        width: 30px; 
-        margin-right: 5px;
-    }
-}
-span.unselectable {
-  user-select: none; 
-  -webkit-user-select: none; 
-  -moz-user-select: none; 
-  -ms-user-select: none; 
-}
-
-
-    </style>
+</style>
 </head>
 <body>
-    
 
-   <nav class="navbar">
-        <!-- Logo as Image -->
-        <div class="logo">
-            <img src="{% static 'img/logo.png' %}" alt="" class="navbar-logo">
-            <span class="unselectable">Career Traces </span>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<canvas id="particles"></canvas>
+
+<!-- NAV -->
+<nav>
+  <a href="{% url 'default' %}" class="nav-logo">
+    <img src="{% static 'img/logo.png' %}" alt="Career Traces"/>
+    Career Traces
+  </a>
+  <ul class="nav-center">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#how">How it Works</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <div class="nav-right">
+    {% if user.is_authenticated %}
+      <a href="{% url 'job_list' %}" class="btn-nav-ghost">My Applications</a>
+      <a href="{% url 'logout' %}" class="btn-nav-cta">Logout</a>
+    {% else %}
+      <a href="{% url 'login' %}" class="btn-nav-ghost">Login</a>
+      <a href="{% url 'signup' %}" class="btn-nav-cta">Get Started Free</a>
+    {% endif %}
+  </div>
+  <button class="menu-toggle" id="menuToggle"><i class="fa fa-bars"></i></button>
+</nav>
+
+<div class="mobile-nav" id="mobileNav">
+  <a href="#features">Features</a>
+  <a href="#how">How it Works</a>
+  <a href="#faq">FAQ</a>
+  {% if user.is_authenticated %}
+    <a href="{% url 'job_list' %}">My Applications</a>
+    <a href="{% url 'logout' %}">Logout →</a>
+  {% else %}
+    <a href="{% url 'login' %}">Login</a>
+    <a href="{% url 'signup' %}">Get Started Free →</a>
+  {% endif %}
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow"><i class="fas fa-circle" style="font-size:.45rem"></i> Free to use — No credit card required</div>
+    <h1>Your job search,<br/><span class="serif">finally organized.</span></h1>
+    <p class="hero-sub">Stop drowning in spreadsheets. Career Traces tracks every application, surfaces your interview dates, and shows you exactly where you stand — all in one clean dashboard.</p>
+    <div class="hero-actions">
+      {% if user.is_authenticated %}
+        <a href="{% url 'job_list' %}" class="btn-primary-ct">Go to Dashboard <i class="fas fa-arrow-right" style="font-size:.75rem"></i></a>
+        <a href="{% url 'job_create_or_update' %}" class="btn-ghost-ct"><i class="fas fa-plus" style="font-size:.75rem"></i> Add Application</a>
+      {% else %}
+        <a href="{% url 'signup' %}" class="btn-primary-ct">Start Tracking Free <i class="fas fa-arrow-right" style="font-size:.75rem"></i></a>
+        <a href="#features" class="btn-ghost-ct"><i class="fas fa-play" style="font-size:.7rem"></i> See how it works</a>
+      {% endif %}
+    </div>
+    <div class="hero-trust">
+      <div class="trust-avatars">
+        <div class="av av1">AK</div><div class="av av2">SR</div><div class="av av3">MJ</div><div class="av av4">FN</div>
+      </div>
+      <div class="trust-text"><strong>100+ job seekers</strong> already tracking<br/>their applications with Career Traces</div>
+    </div>
+  </div>
+
+  <!-- Dashboard mockup -->
+  <div class="hero-visual">
+    <div class="dashboard-wrap">
+      <div class="dash-topbar">
+        <div class="dash-dot dd-r"></div><div class="dash-dot dd-y"></div><div class="dash-dot dd-g"></div>
+        <span class="dash-title">careertraces.pythonanywhere.com — Dashboard</span>
+      </div>
+      <div class="dash-body">
+        <div class="dash-sidebar">
+          <div class="dash-nav-item active"><i class="fas fa-th-large"></i>Dashboard</div>
+          <div class="dash-nav-item"><i class="fas fa-clipboard-list"></i>Applications</div>
+          <div class="dash-nav-item"><i class="fas fa-calendar"></i>Interviews</div>
+          <div class="dash-nav-item"><i class="fas fa-chart-bar"></i>Analytics</div>
+          <div class="dash-nav-item"><i class="fas fa-cog"></i>Settings</div>
         </div>
-
-        <button class="menu-toggle" id="menu-toggle">
-            <i class="fa fa-bars"></i>
-        </button>
-       
-        <ul class="nav-links" id="nav-links">
-            {% if user.is_authenticated %}
-                <li><a href="{% url 'job_list' %}" class="active">Applications </a></li>
-                <li><a href="{% url 'logout' %}">Logout</a></li>
-            {% else %}
-                <li><a href="{% url 'signup' %}" class="active">Sign Up</a></li>
-                <li><a href="{% url 'login' %}">Login</a></li>
-            {% endif %}
-        </ul>
-        
-    </nav>
-    
-
-    <section class="hero">
-        <span class="unselectable">
-            <div class="container">
-                <h1>Seamless Job Application Tracking</h1>
-                <p>Keep your job search organized and progress in check with Career Traces.</p>
-                {% if user.is_authenticated %}
-                    <a href="{% url 'job_list' %}" class="btn btn-primary mt-4">Get Started</a>
-                {% else %}
-                    <a href="{% url 'signup' %}" class="btn btn-primary mt-4">Get Started</a>
-                {% endif %}
-            </div>
-        </span>
-    </section>
-
-    <section class="features">
-        <div class="container">
-            <h2 class="features-heading-main">Key Features</h2>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <i class="fas fa-clipboard-list"></i>
-                            <h5 class="card-title mt-3">Manual Job Tracking</h5>
-                            <p class="card-text">Effortlessly track your job applications and stay ahead.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <i class="fas fa-chart-bar"></i>
-                            <h5 class="card-title mt-3">Analytics</h5>
-                           
-                            <p class="card-text">Visualize your job application progress through insightful charts.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <i class="fas fa-calendar-alt"></i>
-                            <h5 class="card-title mt-3">Interview Scheduler</h5>
-                            <p class="card-text">Automatically display upcoming interview dates based on your application data.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="dash-main">
+          <div class="dash-metrics">
+            <div class="metric-card"><div class="m-val">28</div><div class="m-label">Total Applied</div><div class="m-change">↑ 4 this week</div></div>
+            <div class="metric-card"><div class="m-val">6</div><div class="m-label">Interviews</div><div class="m-change">↑ 21% rate</div></div>
+            <div class="metric-card"><div class="m-val">2</div><div class="m-label">Offers</div><div class="m-change" style="color:#a78bfa">↑ Pending</div></div>
+          </div>
+          <div class="dash-table-wrap">
+            <div class="dash-table-head"><span>Company</span><span>Role</span><span>Date</span><span>Status</span></div>
+            <div class="dash-row"><span class="company">Google</span><span>SWE Intern</span><span>Mar 28</span><span><span class="tag interview">Interview</span></span></div>
+            <div class="dash-row"><span class="company">Stripe</span><span>Backend Dev</span><span>Mar 25</span><span><span class="tag applied">Applied</span></span></div>
+            <div class="dash-row"><span class="company">Notion</span><span>Full Stack</span><span>Mar 22</span><span><span class="tag offer">Offer</span></span></div>
+            <div class="dash-row"><span class="company">Vercel</span><span>API Eng.</span><span>Mar 18</span><span><span class="tag pending">Pending</span></span></div>
+            <div class="dash-row"><span class="company">Figma</span><span>Platform</span><span>Mar 14</span><span><span class="tag rejected">Rejected</span></span></div>
+          </div>
         </div>
-    </section>
- <br> <br> <br>
-     <!-- FAQ Section (added below the features section) -->
-     <section class="faq-section">
-        <span class="unselectable">
-            <div class="container">
-                <h2 style="text-align: center; margin-bottom: 30px;">Frequently Asked Questions</h2>
-                <div class="faq-item" class="">
-                    <h3>What is Career Traces?</h3>
-                    <p><b> Career Traces</b> helps you track your job applications, stay organized, and view analytics on your application progress.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>How do I get started?</h3>
-                    <p>Click on the <b> "Get Started" </b> button and sign up to start tracking your job applications.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>What features does Career Traces currently offer?</h3>        
-                        <p class="point">Manual tracking of job applications.</p>
-                        <p class="point">Analytics display through charts</p>
-                        <p class="point">Interview Scheduler based on user data</p>
-                        <p class="point">A simple, user-friendly interface with free access to all current features.</p>
-                    
-                </div> 
-                <div class="faq-item">
-                    <h3>Is Career Traces free ?</h3>
-                    <p>Yes, <b>Career Traces is currently free</b>. We plan to introduce subscription-based advanced features in the future.
-                        .</p>
-                </div>
-                
-                <div class="faq-item">
-                    <h3>Can I use Career Traces to find job opportunities?</h3>
-                    <p> No, <b>Career Traces is not a job portal</b>. It focuses on helping users organize and track job applications they apply for externally.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>How do I reset my password if I forget it? </h3>
-                    <p>You can use the <b>Forgot Password</b> option on the login page, and a one-time password (OTP) will be sent to your registered email for verification.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>Will my data remain private?  </h3>
-                    <p>Yes, we value your privacy. <b> All your data is securely stored </b> and only accessible by you.</p>
-                </div>
-                <div class="faq-item">
-                    <h3> Can I export my job application data?</h3>
-                    <p>Export functionality is under consideration for future updates.</p>
-                </div>
-                <div class="faq-item">
-                    <h3>Is Career Traces mobile-friendly?</h3>
-                    <p>Yes, <b>Career Traces is Responsive</b> and work seamlessly on both desktop and mobile devices.</p>
-                </div>
-            </div>
-        </span>
-    </section>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- LOGOS -->
+<div class="logos-strip">
+  <div class="logos-label">Trusted by job seekers applying to</div>
+  <div class="logos-track">
+    <span class="logo-item">Google</span><span class="logo-item">Meta</span><span class="logo-item">Amazon</span>
+    <span class="logo-item">Stripe</span><span class="logo-item">Notion</span><span class="logo-item">Figma</span>
+    <span class="logo-item">Vercel</span><span class="logo-item">Linear</span><span class="logo-item">Shopify</span>
+    <span class="logo-item">Netflix</span><span class="logo-item">Airbnb</span><span class="logo-item">Spotify</span>
+    <span class="logo-item">Google</span><span class="logo-item">Meta</span><span class="logo-item">Amazon</span>
+    <span class="logo-item">Stripe</span><span class="logo-item">Notion</span><span class="logo-item">Figma</span>
+    <span class="logo-item">Vercel</span><span class="logo-item">Linear</span><span class="logo-item">Shopify</span>
+    <span class="logo-item">Netflix</span><span class="logo-item">Airbnb</span><span class="logo-item">Spotify</span>
+  </div>
+</div>
 
-    <br> <br> <br> <br> 
-    <!-- <footer>
-        <p>&copy; 2024 Career Traces. All Rights Reserved.</p>
-    </footer> -->
+<!-- STATS -->
+<section class="ct-section stats-section">
+  <div class="stats-inner">
+    <div class="stat-item reveal"><div class="s-num" data-target="100">0</div><div class="s-label">Job seekers onboard</div><div class="s-sub">and growing daily</div></div>
+    <div class="stat-item reveal reveal-delay-1"><div class="s-num">100%</div><div class="s-label">Free access</div><div class="s-sub">no hidden charges</div></div>
+    <div class="stat-item reveal reveal-delay-2"><div class="s-num">∞</div><div class="s-label">Applications trackable</div><div class="s-sub">no artificial limits</div></div>
+    <div class="stat-item reveal reveal-delay-3"><div class="s-num" data-target="3">0</div><div class="s-label">Core features</div><div class="s-sub">more coming soon</div></div>
+  </div>
+</section>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- FEATURES -->
+<section class="ct-section features-section" id="features">
+  <div class="features-header">
+    <div>
+      <div class="section-eyebrow reveal">What you get</div>
+      <h2 class="section-h reveal">Built for serious<br/>job seekers.</h2>
+    </div>
+    <p class="section-sub reveal" style="max-width:300px">Everything you need to stay on top of your hunt — without the chaos.</p>
+  </div>
+  <div class="feat-grid">
+    <div class="feat-card reveal"><div class="feat-icon"><i class="fas fa-clipboard-list"></i></div><h3>Manual Job Tracking</h3><p>Log every application — company, role, date, and current status. Your full history, always accessible.</p></div>
+    <div class="feat-card reveal reveal-delay-1"><div class="feat-icon"><i class="fas fa-chart-pie"></i></div><h3>Visual Analytics</h3><p>Charts that show your apply rate, interview conversion, and status breakdown at a glance.</p></div>
+    <div class="feat-card reveal reveal-delay-2"><div class="feat-icon"><i class="fas fa-calendar-check"></i></div><h3>Interview Scheduler</h3><p>Upcoming interviews are auto-surfaced from your data. Never miss a scheduled call again.</p></div>
+    <div class="feat-card reveal"><div class="feat-icon"><i class="fas fa-shield-alt"></i></div><h3>Private & Secure</h3><p>Your data is yours only. OTP-based recovery. No third-party sharing. Ever.</p></div>
+    <div class="feat-card reveal reveal-delay-1"><div class="feat-icon"><i class="fas fa-mobile-alt"></i></div><h3>Fully Responsive</h3><p>Works on desktop, tablet, and mobile. Log applications from anywhere, anytime.</p></div>
+    <div class="feat-card reveal reveal-delay-2"><div class="feat-icon"><i class="fas fa-file-export"></i></div><h3>Data Export<span class="feat-badge" style="margin-left:.5rem">Soon</span></h3><p>Export your full application history to CSV or PDF for offline analysis.</p></div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="ct-section" id="how">
+  <div style="text-align:center">
+    <div class="section-eyebrow reveal">Process</div>
+    <h2 class="section-h reveal">Up and running<br/>in under 2 minutes.</h2>
+  </div>
+  <div class="how-grid">
+    <div class="how-card reveal"><div class="how-num">01</div><h4>Sign Up Free</h4><p>Create your account in seconds. No credit card, no setup fee.</p></div>
+    <div class="how-card reveal reveal-delay-1"><div class="how-num">02</div><h4>Add Applications</h4><p>Log each job — company, role, date, status.</p></div>
+    <div class="how-card reveal reveal-delay-2"><div class="how-num">03</div><h4>Update as You Go</h4><p>Move statuses from Applied → Interview → Offer as you progress.</p></div>
+    <div class="how-card reveal reveal-delay-3"><div class="how-num">04</div><h4>Review Your Stats</h4><p>Check your dashboard for insights and never miss an interview.</p></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="ct-section" style="background:var(--s1);border-top:1px solid var(--border2);border-bottom:1px solid var(--border2)">
+  <div class="section-eyebrow reveal">Testimonials</div>
+  <h2 class="section-h reveal">What job seekers say.</h2>
+  <div class="test-grid">
+    <div class="test-card reveal">
+      <div class="test-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+      <p class="test-text">"I used to track everything in a messy Google Sheet. Career Traces completely replaced that — the interview scheduler alone is worth it."</p>
+      <div class="test-author"><div class="test-av" style="background:#f97316">AK</div><div><div class="test-name">Ayesha K.</div><div class="test-role">Final year CS student</div></div></div>
+    </div>
+    <div class="test-card reveal reveal-delay-1">
+      <div class="test-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+      <p class="test-text">"The analytics section gave me real insight into my rejection rate. Landed 3 interviews the week after I fixed my resume based on the data."</p>
+      <div class="test-author"><div class="test-av" style="background:#8b5cf6">SR</div><div><div class="test-name">Saad R.</div><div class="test-role">Backend dev, job hunting</div></div></div>
+    </div>
+    <div class="test-card reveal reveal-delay-2">
+      <div class="test-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+      <p class="test-text">"Clean interface, totally free, and actually works. Applied to 40+ companies last month and stayed on top of every single one."</p>
+      <div class="test-author"><div class="test-av" style="background:#06b6d4">MJ</div><div><div class="test-name">Mahnoor J.</div><div class="test-role">Fresh graduate</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="ct-section faq-section-ct" id="faq">
+  <div class="faq-wrap">
+    <div class="faq-left reveal">
+      <div class="section-eyebrow">FAQ</div>
+      <h2 class="section-h">Got questions?<br/>We've got answers.</h2>
+      <p class="section-sub">Everything you need to know about Career Traces.</p>
+      <div class="faq-highlight"><p>Still have questions? Reach out and we'll get back to you within 24 hours.<br/><strong>careertraces.contact@email.com</strong></p></div>
+    </div>
+    <div class="faq-list reveal reveal-delay-1">
+      <details class="faq-item-ct"><summary>What exactly is Career Traces?<span class="faq-icon-ct"><i class="fas fa-plus"></i></span></summary><div class="faq-ans">Career Traces is a job application tracker. You apply for jobs through LinkedIn, company portals, etc. — then log and manage those applications here. Your personal job search command center.</div></details>
+      <details class="faq-item-ct"><summary>Is it actually free? No catch?<span class="faq-icon-ct"><i class="fas fa-plus"></i></span></summary><div class="faq-ans">Yes, 100% free right now. All features — tracking, analytics, interview scheduler — are completely free. We may introduce premium features in the future, but existing access won't be taken away.</div></details>
+      <details class="faq-item-ct"><summary>Can I find job listings on Career Traces?<span class="faq-icon-ct"><i class="fas fa-plus"></i></span></summary><div class="faq-ans">No — Career Traces is not a job board. It's purely a tracker. You find jobs elsewhere and log them here to stay organized.</div></details>
+      <details class="faq-item-ct"><summary>How do I reset my password?<span class="faq-icon-ct"><i class="fas fa-plus"></i></span></summary><div class="faq-ans">Use the "Forgot Password" option on the login page. A one-time password (OTP) is sent to your registered email. Takes under a minute.</div></details>
+      <details class="faq-item-ct"><summary>Is my data private?<span class="faq-icon-ct"><i class="fas fa-plus"></i></span></summary><div class="faq-ans">Absolutely. Your data is securely stored and only accessible by you. We don't sell or share it with any third parties.</div></details>
+      <details class="faq-item-ct"><summary>Is Career Traces mobile-friendly?<span class="faq-icon-ct"><i class="fas fa-plus"></i></span></summary><div class="faq-ans">Yes — fully responsive and works seamlessly on desktop, tablet, and mobile devices.</div></details>
+      <details class="faq-item-ct"><summary>When will data export be available?<span class="faq-icon-ct"><i class="fas fa-plus"></i></span></summary><div class="faq-ans">Export to CSV and PDF is in active development. We'll notify all users when it launches.</div></details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section-ct">
+  <div class="cta-inner">
+    <div class="section-eyebrow reveal" style="text-align:center">Get started</div>
+    <h2 class="section-h reveal">Land your next job.<br/><span class="serif" style="font-family:var(--f-serif);font-style:italic;color:var(--g)">Stay organized doing it.</span></h2>
+    <p class="section-sub reveal">Free. No credit card. No chaos. Just a clean way to manage your entire job search.</p>
+    <div class="cta-actions reveal">
+      {% if user.is_authenticated %}
+        <a href="{% url 'job_list' %}" class="btn-primary-ct" style="padding:.85rem 2rem;font-size:.9rem">Go to Dashboard <i class="fas fa-arrow-right" style="font-size:.75rem"></i></a>
+      {% else %}
+        <a href="{% url 'signup' %}" class="btn-primary-ct" style="padding:.85rem 2rem;font-size:.9rem">Create Free Account <i class="fas fa-arrow-right" style="font-size:.75rem"></i></a>
+        <a href="{% url 'login' %}" class="btn-ghost-ct" style="padding:.85rem 2rem;font-size:.9rem">Login</a>
+      {% endif %}
+    </div>
+    <div class="cta-meta reveal"><span>✓ Always free</span><span>✓ No credit card</span><span>✓ Setup in 2 min</span></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="ct-footer">
+  <span>© 2025 Career Traces. All rights reserved.</span>
+  <div class="foot-links">
+    <a href="{% url 'login' %}">Login</a>
+    <a href="{% url 'signup' %}">Sign Up</a>
+  </div>
+</footer>
+
 <script>
-        const menuToggle = document.getElementById("menu-toggle");
-        const navLinks = document.getElementById("nav-links");
+// CURSOR
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
+function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing)}animRing();
+document.querySelectorAll('a,button,summary,.how-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cursor.style.width='14px';cursor.style.height='14px';ring.style.width='44px';ring.style.height='44px';ring.style.borderColor='rgba(34,197,94,0.7)'});
+  el.addEventListener('mouseleave',()=>{cursor.style.width='8px';cursor.style.height='8px';ring.style.width='32px';ring.style.height='32px';ring.style.borderColor='rgba(34,197,94,0.5)'});
+});
 
-        menuToggle.addEventListener("click", () => {
-            // Toggle display for nav-links
-            if (navLinks.style.display === "flex") {
-                navLinks.style.display = "none";
-            } else {
-                navLinks.style.display = "flex";
-            }
-        });
-    </script>
+// PARTICLES
+const canvas=document.getElementById('particles'),ctx=canvas.getContext('2d');
+let pts=[];
+function resize(){canvas.width=innerWidth;canvas.height=innerHeight}resize();window.addEventListener('resize',resize);
+for(let i=0;i<60;i++)pts.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,r:Math.random()*1.5+.5,o:Math.random()*.4+.1});
+function drawParticles(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=canvas.width;if(p.x>canvas.width)p.x=0;if(p.y<0)p.y=canvas.height;if(p.y>canvas.height)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(34,197,94,${p.o})`;ctx.fill()});
+  pts.forEach((a,i)=>pts.forEach((b,j)=>{if(i>=j)return;const d=Math.hypot(a.x-b.x,a.y-b.y);if(d<120){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=`rgba(34,197,94,${.06*(1-d/120)})`;ctx.stroke()}}));
+  requestAnimationFrame(drawParticles);
+}drawParticles();
 
-    
+// MOBILE NAV
+document.getElementById('menuToggle').addEventListener('click',()=>document.getElementById('mobileNav').classList.toggle('open'));
+
+// SCROLL REVEAL
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// COUNT UP
+function countUp(el,target){let s=0,step=target/60;const t=setInterval(()=>{s+=step;if(s>=target){el.textContent=target+'+';clearInterval(t)}else el.textContent=Math.floor(s)},1500/60)}
+const statObs=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting&&e.target.dataset.target){countUp(e.target,parseInt(e.target.dataset.target));statObs.unobserve(e.target)}}),{threshold:.5});
+document.querySelectorAll('[data-target]').forEach(el=>statObs.observe(el));
+</script>
 </body>
 </html>
-
-

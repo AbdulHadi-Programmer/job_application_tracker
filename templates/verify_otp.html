@@ -1,126 +1,184 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OTP Verification</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f4f4f9;
-        }
-        form {
-            background-color: #ffffff;
-            padding: 20px 30px;
-            border-radius: 8px;
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            width: 300px;
-        }
-        h1 {
-            color: #333333;
-            margin-bottom: 10px;
-        }
-        .error, .info {
-            color: #ffffff;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-        }
-        .error {
-            background-color: #d9534f;
-        }
-        .info {
-            background-color: #5bc0de;
-        }
-        .otp-container {
-            display: flex;
-            justify-content: center;
-            gap: 5px;
-            margin-bottom: 15px;
-        }
-        .otp-input {
-            width: 40px;
-            height: 40px;
-            font-size: 18px;
-            text-align: center;
-            border: 1px solid #cccccc;
-            border-radius: 4px;
-        }
-        button {
-            background-color: #4CAF50;
-            color: #ffffff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 15px;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .timer {
-            font-size: 16px;
-            color: #555555;
-        }
-    </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>OTP Verification — Career Traces</title>
+<link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--g:#22c55e;--g2:#16a34a;--dark:#080c09;--s1:#0e1410;--s2:#141a15;--border:rgba(34,197,94,0.12);--border2:rgba(255,255,255,0.06);--t:#f0f7f1;--t2:#a8bfab;--t3:#607064;--f:'Plus Jakarta Sans',sans-serif;}
+body{background:var(--dark);color:var(--t);font-family:var(--f);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1.5rem;overflow-x:hidden}
+#particles{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.4}
+.auth-bg{position:fixed;inset:0;z-index:0;background-image:linear-gradient(rgba(34,197,94,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(34,197,94,0.04) 1px,transparent 1px);background-size:55px 55px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black,transparent)}
+.auth-glow{position:fixed;top:20%;left:50%;transform:translateX(-50%);width:500px;height:400px;background:radial-gradient(ellipse,rgba(34,197,94,0.08),transparent 70%);pointer-events:none;z-index:0}
+.auth-card{position:relative;z-index:1;width:100%;max-width:400px;background:var(--s1);border:1px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 0 0 1px rgba(34,197,94,0.06),0 32px 80px rgba(0,0,0,0.5);animation:slideUp .5s ease both}
+@keyframes slideUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.auth-card-top{background:var(--s2);border-bottom:1px solid var(--border2);padding:1.75rem 2rem 1.5rem;text-align:center}
+.auth-icon-wrap{width:52px;height:52px;background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.2);border-radius:14px;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-size:1.3rem;color:var(--g)}
+.auth-brand{font-size:.75rem;color:var(--t3);font-weight:600;letter-spacing:.5px;margin-bottom:.3rem}
+.auth-title{font-size:1.3rem;font-weight:800;letter-spacing:-0.5px;color:var(--t);margin-bottom:.3rem}
+.auth-subtitle{font-size:.8rem;color:var(--t2);line-height:1.5}
+.auth-card-body{padding:1.75rem 2rem}
+.auth-alert{display:flex;align-items:flex-start;gap:.55rem;padding:.7rem .85rem;border-radius:8px;font-size:.78rem;line-height:1.5;margin-bottom:1.1rem}
+.auth-alert i{margin-top:1px;flex-shrink:0;font-size:.75rem}
+.auth-alert.error{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);color:#f87171}
+.auth-alert.info{background:rgba(96,165,250,0.08);border:1px solid rgba(96,165,250,0.2);color:#60a5fa}
+.auth-alert.success{background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);color:var(--g)}
+
+/* OTP inputs */
+.otp-label{font-size:.75rem;font-weight:600;color:var(--t2);text-align:center;margin-bottom:1rem;display:block;letter-spacing:.2px}
+.otp-row{display:flex;justify-content:center;gap:.5rem;margin-bottom:1.25rem}
+.otp-input{
+  width:46px;height:54px;
+  background:var(--s2);border:1.5px solid var(--border2);
+  border-radius:10px;color:var(--t);
+  font-size:1.3rem;font-weight:800;text-align:center;
+  font-family:var(--f);transition:all .2s;outline:none;
+  caret-color:var(--g);
+}
+.otp-input:focus{border-color:rgba(34,197,94,0.5);box-shadow:0 0 0 3px rgba(34,197,94,0.1);background:var(--s1)}
+.otp-input.filled{border-color:rgba(34,197,94,0.35);color:var(--g)}
+.otp-input:disabled{opacity:.4;cursor:not-allowed}
+
+/* timer */
+.timer-wrap{text-align:center;margin-bottom:1.25rem}
+.timer-ring{position:relative;width:52px;height:52px;margin:0 auto .6rem}
+.timer-ring svg{transform:rotate(-90deg)}
+.timer-ring .bg{fill:none;stroke:var(--border2);stroke-width:3}
+.timer-ring .progress{fill:none;stroke:var(--g);stroke-width:3;stroke-linecap:round;stroke-dasharray:138.2;stroke-dashoffset:0;transition:stroke-dashoffset 1s linear,stroke .5s}
+.timer-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:800;color:var(--g)}
+.timer-text{font-size:.75rem;color:var(--t2)}
+
+.btn-submit{width:100%;padding:.75rem;border-radius:9px;background:var(--g);color:#000;border:none;font-size:.88rem;font-weight:700;cursor:pointer;font-family:var(--f);transition:all .25s;display:flex;align-items:center;justify-content:center;gap:.5rem;box-shadow:0 4px 16px rgba(34,197,94,0.25)}
+.btn-submit:hover{background:var(--g2);transform:translateY(-1px);box-shadow:0 8px 24px rgba(34,197,94,0.35)}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+.btn-resend{width:100%;padding:.75rem;border-radius:9px;background:transparent;color:var(--g);border:1px solid rgba(34,197,94,0.3);font-size:.88rem;font-weight:700;cursor:pointer;font-family:var(--f);transition:all .25s;display:flex;align-items:center;justify-content:center;gap:.5rem}
+.btn-resend:hover{background:rgba(34,197,94,0.07)}
+.auth-card-footer{border-top:1px solid var(--border2);padding:.85rem 2rem;text-align:center;font-size:.72rem;color:var(--t3)}
+.auth-card-footer a{color:var(--t3);text-decoration:none;margin:0 .5rem;transition:color .2s}
+.auth-card-footer a:hover{color:var(--t)}
+</style>
 </head>
 <body>
+<canvas id="particles"></canvas>
+<div class="auth-bg"></div>
+<div class="auth-glow"></div>
+
+<div class="auth-card">
+  <div class="auth-card-top">
+    <div class="auth-icon-wrap"><i class="fas fa-shield-halved"></i></div>
+    <div class="auth-brand">Career Traces</div>
+    <h1 class="auth-title">Check your email</h1>
+    <p class="auth-subtitle">We sent a 6-digit verification code to your registered email address.</p>
+  </div>
+
+  <div class="auth-card-body">
     <form method="post">
-        {% csrf_token %}
-        <h1>OTP Verification</h1>
-        <p>Please check your email for the OTP and enter it below.</p>
+      {% csrf_token %}
 
-        {% if error %}
-            <p class="error">{{ error }}</p>
-        {% endif %}
-        {% if info %}
-            <p class="info">{{ info }}</p>
-        {% endif %}
+      {% if error %}
+      <div class="auth-alert error"><i class="fas fa-exclamation-circle"></i> {{ error }}</div>
+      {% endif %}
+      {% if info %}
+      <div class="auth-alert info"><i class="fas fa-info-circle"></i> {{ info }}</div>
+      {% endif %}
 
-        <div class="otp-container">
-            <input type="text" name="otp1" class="otp-input" maxlength="1" id="otp1" {% if remaining_time > 0 %} required {% endif %} oninput="moveToNext(this, 'otp2')">
-            <input type="text" name="otp2" class="otp-input" maxlength="1" id="otp2" {% if remaining_time > 0 %} required {% endif %} oninput="moveToNext(this, 'otp3')">
-            <input type="text" name="otp3" class="otp-input" maxlength="1" id="otp3" {% if remaining_time > 0 %} required {% endif %} oninput="moveToNext(this, 'otp4')">
-            <input type="text" name="otp4" class="otp-input" maxlength="1" id="otp4" {% if remaining_time > 0 %} required {% endif %} oninput="moveToNext(this, 'otp5')">
-            <input type="text" name="otp5" class="otp-input" maxlength="1" id="otp5" {% if remaining_time > 0 %} required {% endif %} oninput="moveToNext(this, 'otp6')">
-            <input type="text" name="otp6" class="otp-input" maxlength="1" id="otp6" {% if remaining_time > 0 %} required {% endif %}>
+      {% if remaining_time > 0 %}
+        <span class="otp-label">Enter the 6-digit code</span>
+        <div class="otp-row">
+          <input type="text" name="otp1" class="otp-input" maxlength="1" id="otp1" inputmode="numeric" pattern="[0-9]" required autocomplete="off" oninput="otpInput(this,'otp2')"/>
+          <input type="text" name="otp2" class="otp-input" maxlength="1" id="otp2" inputmode="numeric" pattern="[0-9]" required autocomplete="off" oninput="otpInput(this,'otp3')" onkeydown="otpBack(event,this,'otp1')"/>
+          <input type="text" name="otp3" class="otp-input" maxlength="1" id="otp3" inputmode="numeric" pattern="[0-9]" required autocomplete="off" oninput="otpInput(this,'otp4')" onkeydown="otpBack(event,this,'otp2')"/>
+          <input type="text" name="otp4" class="otp-input" maxlength="1" id="otp4" inputmode="numeric" pattern="[0-9]" required autocomplete="off" oninput="otpInput(this,'otp5')" onkeydown="otpBack(event,this,'otp3')"/>
+          <input type="text" name="otp5" class="otp-input" maxlength="1" id="otp5" inputmode="numeric" pattern="[0-9]" required autocomplete="off" oninput="otpInput(this,'otp6')" onkeydown="otpBack(event,this,'otp4')"/>
+          <input type="text" name="otp6" class="otp-input" maxlength="1" id="otp6" inputmode="numeric" pattern="[0-9]" required autocomplete="off" onkeydown="otpBack(event,this,'otp5')"/>
         </div>
 
-        {% if remaining_time > 0 %}
-            <p class="timer">Time remaining: <span id="timer">{{ remaining_time }}</span> seconds</p>
-            <button type="submit">Verify OTP</button>
-        {% else %}
-            <button type="submit" name="resend_otp">Resend OTP</button>
-        {% endif %}
+        <div class="timer-wrap">
+          <div class="timer-ring">
+            <svg width="52" height="52" viewBox="0 0 52 52">
+              <circle class="bg" cx="26" cy="26" r="22"/>
+              <circle class="progress" id="timerCircle" cx="26" cy="26" r="22"/>
+            </svg>
+            <div class="timer-num" id="timerNum">{{ remaining_time }}</div>
+          </div>
+          <p class="timer-text">seconds remaining</p>
+        </div>
+
+        <button type="submit" class="btn-submit" id="verifyBtn">
+          <i class="fas fa-check-circle" style="font-size:.8rem"></i> Verify Code
+        </button>
+
+      {% else %}
+        <div class="auth-alert info" style="margin-bottom:1.5rem"><i class="fas fa-clock"></i> Your OTP has expired. Request a new one below.</div>
+        <button type="submit" name="resend_otp" class="btn-resend">
+          <i class="fas fa-redo" style="font-size:.8rem"></i> Resend OTP
+        </button>
+      {% endif %}
     </form>
+  </div>
 
-    <script>
-        function moveToNext(current, nextFieldId) {
-            if (current.value.length >= 1) {
-                document.getElementsByName(nextFieldId)[0].focus();
-            }
-        }
+  <div class="auth-card-footer">
+    <a href="{% url 'login' %}">← Back to login</a>
+  </div>
+</div>
 
-        let timerElement = document.getElementById('timer');
-        if (timerElement) {
-            let remainingTime = parseInt(timerElement.textContent, 10);
-            let interval = setInterval(() => {
-                if (remainingTime <= 1) {
-                    clearInterval(interval);
-                    location.reload();
-                } else {
-                    remainingTime--;
-                    timerElement.textContent = remainingTime;
-                }
-            }, 1000);
-        }
-    </script>
+<script>
+// OTP navigation
+function otpInput(current, nextId){
+  current.value=current.value.replace(/[^0-9]/g,'');
+  if(current.value.length>=1&&nextId){
+    const next=document.getElementById(nextId);
+    if(next){next.focus()}
+  }
+  current.classList.toggle('filled',current.value.length>0);
+}
+function otpBack(e,current,prevId){
+  if(e.key==='Backspace'&&!current.value&&prevId){
+    const prev=document.getElementById(prevId);
+    if(prev){prev.focus();prev.value='';prev.classList.remove('filled')}
+  }
+}
+// paste handler — spread 6 digits across inputs
+document.getElementById('otp1').addEventListener('paste',e=>{
+  e.preventDefault();
+  const digits=(e.clipboardData.getData('text')||'').replace(/[^0-9]/g,'').split('');
+  ['otp1','otp2','otp3','otp4','otp5','otp6'].forEach((id,i)=>{
+    const el=document.getElementById(id);
+    if(el&&digits[i]){el.value=digits[i];el.classList.add('filled')}
+  });
+  document.getElementById('otp6').focus();
+});
+
+// circular timer
+const timerEl=document.getElementById('timerNum');
+const circle=document.getElementById('timerCircle');
+if(timerEl&&circle){
+  const FULL=138.2;
+  let t=parseInt(timerEl.textContent,10);
+  const total=t;
+  function tick(){
+    timerEl.textContent=t;
+    const pct=t/total;
+    circle.style.strokeDashoffset=FULL*(1-pct);
+    if(pct<0.33)circle.style.stroke='#ef4444';
+    else if(pct<0.6)circle.style.stroke='#f59e0b';
+    else circle.style.stroke='#22c55e';
+    if(t<=1){clearInterval(iv);location.reload()}else t--;
+  }
+  tick();
+  const iv=setInterval(tick,1000);
+}
+
+// particles
+const canvas=document.getElementById('particles'),ctx=canvas.getContext('2d');let pts=[];
+function resize(){canvas.width=innerWidth;canvas.height=innerHeight}resize();window.addEventListener('resize',resize);
+for(let i=0;i<45;i++)pts.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:Math.random()*1.2+.4,o:Math.random()*.3+.05});
+function draw(){ctx.clearRect(0,0,canvas.width,canvas.height);pts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=canvas.width;if(p.x>canvas.width)p.x=0;if(p.y<0)p.y=canvas.height;if(p.y>canvas.height)p.y=0;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(34,197,94,${p.o})`;ctx.fill()});pts.forEach((a,i)=>pts.forEach((b,j)=>{if(i>=j)return;const d=Math.hypot(a.x-b.x,a.y-b.y);if(d<100){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=`rgba(34,197,94,${.05*(1-d/100)})`;ctx.stroke()}}));requestAnimationFrame(draw)}draw();
+</script>
 </body>
 </html>
