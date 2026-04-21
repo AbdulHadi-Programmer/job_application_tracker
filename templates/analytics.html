@@ -1,788 +1,463 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Detailed Analytics</title>
-    <head>
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-        <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
-    </head> 
-  
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">  
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
 
-body {
-    margin: 0;
-    background-color: #fff; 
-    font-family: 'Poppins', sans-serif;
-}
+{% block title %}Analytics — Career Traces{% endblock %}
+{% block nav_analytics %}active{% endblock %}
 
-
-.sidebar {
-    width: 11.325rem; 
-    min-width: 180px; 
-    height: 100vh;
-    position: fixed;
-    left: 0;
-    z-index: 1; 
-    background-color: #4e9b5f ; 
-    font-weight: bold;
-}
-
-.sidebar h2 { 
-    font-size: 1.3rem;
-    color: white;
-    text-align: center;
-    margin-bottom: 40px;
-    margin-top: 40px;
-}
-
-.sidebar a {
-    display: flex;
-    align-items: center;
-    color: #fff;
-    padding: 5px;
-    margin: 10px 0;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 0.7rem;
-}
-
-.sidebar a:hover {
-    background-color: #ffcc00;
-    margin-right: 30px!important;
-}
-
-.main-content {
-    margin-left: calc(11.325rem + 20px); 
-    padding: 20px;
-    margin-right: 80px!important;
-    flex-grow: 1;
-    
-}
-
-
-h1 {
-    padding-top: 10px;
-    text-align: center;
-    color: #000000; 
-    margin-top: 0px;
-    margin: 10px 10px 40px;
-}
-
-h2 {
-    margin-bottom: 1.2rem;
-}
-
-h3 {
-    color: #4e9b5f;
-    font-size: 1.5em;
-    margin-bottom: 10px;
-}
-
-
-h1, h2, h3 {
-    text-align: center;
-    color: black;
-}
-.main-content .container {
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    margin-left: 150px !important;
-    margin-right: 50px !important;
-    padding-bottom: 40px !important;
-}
-
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); 
-    display: none; 
-    z-index: 999; 
-}
-
-@media (max-width: 768px) {
-    .main-content .container {
-        border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        margin-left: 0px !important;
-    }
-
-.hamburger {
-        display: block;
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        font-size: 24px;
-    }
-
-    h1 {
-        text-align: center;     
-        color: #000000;       
-        margin-top: 0;           
-        margin-bottom: 30px;    
-    }
-    
-    .main-content {
-        margin-right: 15px !important;
-    }
-    .sidebar {
-        display: none;
-    }
-    
-    .main-content {
-        margin-left: 0;
-        padding: 10px;
-        width: 100%;
-    }
-    
-
-    .sidebar {
-        display: none; 
-        width: 60% !important; 
-        top: 0; 
-        left: 0;
-        position: fixed; 
-        height: 100vh; 
-        z-index: 1000; 
-        overflow-y: auto;
-    }
-    .sidebar a {
-        padding: 10px;
-        padding-right: 20px;
-        font-size: 15px;
-    }
-
-    .sidebar h2 {
-        font-size: 1.3rem;
-    }
-    .total-applications {
-        font-size: 1.2rem;
-        margin-right: 0px;
-        padding-left: 30px !important;
-        padding-right: 30px !important;
-    }
-    .hamburger {
-        display: block;
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        font-size: 24px;
-    }
-    .upcoming-interviews ul {
-        font-size: 0.7rem;
-    } 
-    .upcoming-interviews li {
-        font-size: 0.8rem !important;
-        margin: 0px !important;
-        padding: 0px !important;
-    }
-}
-
-.total-applications {
-    background-color: #fff !important;
-    color: #ffcc00 !important;
-    padding: 0px;
-    text-align: center;
-    font-size: 1.2rem;
-    border-radius: 12px;
-    box-shadow: 1px solid #4e9b5f;
-    margin-left: 40px;
-    margin-right: 40px;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-.upcoming-interviews {
-    background-color: #e3fced;
-    color: #4e9b5f !important;
-    padding: 20px;
-    padding-inline-start: 0px !important;
-    margin: 20px 0;
-    border-radius: 12px;
-    margin-left: 40px;
-    margin-right: 40px;
-}
-
-.upcoming-interviews ul {
-    list-style-type: none;
-}
-
-.upcoming-interviews li {
-    padding: 10px !important;
-    background-color: #f4f9fc;
-    padding: 15px;
-    margin: 10px 10px;
-    margin-right: 30px;
-    padding-left: 10px;
-    padding-inline-end: 30px;
-    border-radius: 10px;
-    color: #333;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-}
-
-.upcoming-interviews h3 {
-    /* color: #4e9b5f !important; */
-    color: #000000 !important;
-    font-size: 1.2rem !important;
-    
-}
-.chart-container {
-    background-color: #e3fced !important;/* ************************************************ */
-    display: flex;
-    justify-content: center;
-    border-radius: 8px;
-    margin-left: 40px;
-    margin-right: 60px;
-}
-
-canvas {
-    max-width: 600px;
-    max-height: 300px;
-    width: 100%;
-}
-
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); 
-    display: none; 
-    z-index: 999; 
-} 
-
-
-
-h1, h2, h3 {
-    text-align: center;
-    color: black;
-}
-
-
-h2 {
-    margin-bottom: 15px;
-}
-
-h3 {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-}
-
-.hamburger {
-    display: none;  
-    cursor: pointer;
-}
-.main-content .container {
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    margin-left: 150px !important;
-    margin-right: 50px !important;
-}
-
-@media screen and (max-width: 768px) {
-    
-    canvas {
-        max-width: 750px !important;
-        max-height: 350px !important;
-        width: 100%;
-    }
-    
-    .hamburger {
-        display: block;
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        font-size: 24px;
-    }
-    .main-content .container {
-        border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        margin-left: 0px !important;
-    }
-    
-    .main-content {
-        margin-left: 0;
-        padding: 10px;
-        width: 100%;
-    }
-    
-    .hamburger {
-        display: block;
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        font-size: 24px;
-    }
-    
-    .sidebar {
-        display: none; 
-        width: 60% !important; 
-        top: 0; 
-        left: 0;
-        position: fixed; 
-        height: 100vh; 
-        z-index: 1000; 
-        overflow-y: auto;
-    }
-    .sidebar a {
-        padding: 10px;
-        padding-right: 20px;
-        font-size: 15px;
-    }
-    
-    .sidebar h2 {
-        font-size: 24px;
-    }
-    
-    .main-content .container {
-        border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        margin-left: 25px !important;
-        margin-right: 38px !important;
-    }
-    
-    .total-applications {
-        font-size: 20px;
-        margin: 15px 0;
-    }
-
-    .upcoming-interviews h3 {
-        font-size: 18px;
-    }
-    
-    .upcoming-interviews ul {
-        font-size: 16px;
-    }
-    
-    .upcoming-interviews li {
-        margin-bottom: 20px !important;
-        margin-right: 15px !important;
-    }
-
-    .chart-container {
-        flex-direction: column;
-        margin: 10px 0;
-        /* margin-right: 200px !important; */
-        margin-right: 40px !important;
-        margin-bottom: 20px !important;
-    }
-
-    .chart-box {
-        width: 350px !important;
-        height: auto;
-    }
-}
-
-/* Media Query for mobile devices (screens 480px or less) */
-@media screen and (max-width: 480px) {
-    .total-applications {
-        font-size: 18px;
-        margin: 10px 0;
-    }
-
-    .upcoming-interviews h3 {
-        font-size: 16px;
-    }
-
-    .upcoming-interviews ul {
-        font-size: 14px;
-    }
-
-    .chart-container {
-        margin: 0;
-        padding-right: 40px !important;
-    }
-    
-    .chart-box {
-        padding-right: 40px !important;
-        padding-bottom: 25px !important;
-        width: 100%;
-        max-width: 400px;
-        height: 330px !important;
-        padding-right: 20px !important;
-        padding-left: 0px !important;
-    }
-
-    canvas {
-        width: 100%;
-        height: auto;
-    }
-}
-
-/* Media Query for extra-small screens (360px or less) */
-@media screen and (max-width: 360px) {
-    .chart-container h3 {
-        margin-left: 45px;
-        padding-right: 60px !important;
-    }
-
-    .total-applications {
-        font-size: 16px;
-        margin: 8px 0;
-    }
-
-    .upcoming-interviews h3 {
-        font-size: 14px;
-    }
-
-    .upcoming-interviews ul {
-        font-size: 12px;
-    }
-/* ======================================================================================================================================================================================= */
-/* ======================================================================================================================================================================================= */
-/* ======================================================================================================================================================================================= */
-/* ======================================================================================================================================================================================= */
-/* ======================================================================================================================================================================================= */
-/* ======================================================================================================================================================================================= */
-    .chart-box {
-        width: 230px !important;
-        min-width: 270px !important;
-        height: 260px;
-        padding-bottom: 42px !important;
-        margin: 0 auto; 
-    }
-}
-
-.total-applications {
-    background-color: #e3fced;
-    color: #4e9b5f;
-    padding: 20px;
-    text-align: center;
-    font-size: 1.4rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-left: 40px;
-    margin-right: 40px;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-.total-applications p {
-    font-size: 1.3rem;
-    padding: 0px;
-    margin: 0px;
-    padding-top: 10px;    
-}
-
-.upcoming-interviews {
-    background-color: #fff;
-    color: #4e9b5f !important;
-    padding: 20px;
-    padding-inline-start: 0px !important;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 20px 0;
-    border-radius: 12px;
-    margin-left: 40px;
-    margin-right: 40px;
-}
-
-.upcoming-interviews ul {
-    list-style-type: none;
-}
-
-.upcoming-interviews li {
-    background-color: #e3fced;
-    padding: 15px;
-    margin: 10px 10px;
-    margin-right: 30px;
-    padding-left: 10px;
-    padding-inline-end: 30px;
-    border-radius: 10px;
-    color: #ffcc00;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-    font-size: 0.8rem ;
-}
-
-.upcoming-interviews h3 {
-    /* color: #4e9b5f !important; */
-    color: #000000 !important;
-}
-
-.chart-container {
-    /* background-color: #fff; */
-    background-color: #e3fced !important;  /* ************************************************ */
-    color: #4e9b5f !important;
-    padding: 20px;
-    padding-inline-start: 0px !important;
-    margin: 20px 0;
-    border-radius: 12px;
-
-    display: flex;
-    justify-content: center;
-    margin: 40px 0;
-    border-radius: 8px;
-    margin-left: 10px;
-    margin-right: 40px !important;
-    
-}
-
-canvas {
-    width: 350px;
-    max-width: 600px;
-    max-height: 300px;
-    width: 100%;
-}
-
-
-@media (max-width: 1024px) {
-        .main-content {
-            margin-left: 0;
-        }
-    }
-
-    /* Form Container (Centered) */
-    /* .form-container {
-        max-width: 600px;
-        margin: 50px auto;
-        background: #e3fced;
-        border-radius: 10px;
-        padding: 20px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        text-align: center !important;
-    } */
-
-</style>
-
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JZ5EM6ZP04"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-  
-    gtag('config', 'G-JZ5EM6ZP04');
-  </script>
-</head>
-<body>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    
-    <div class="hamburger" onclick="toggleSidebar()">
-        <i class="fa fa-bars"></i>
-    </div>
-    
-    <!-- Overlay for sidebar -->
-    <div id="overlay" class="overlay" onclick="closeSidebar()"></div>
-     
-
-    <div class="sidebar" id="sidebar" style="padding-left: 20px; margin-right: 15px !important; ">
-        
-        <h2>Dashboard</h2>
-        <a class="abc" href="{% url 'default' %}"><i class="fas fa-home" style="padding-right: 10px;"></i>Home page</a>
-        <a class="abc" href="{% url 'job_profile' %}"><i class="fas fa-user-circle"  style="padding-right: 10px"></i>Profile</a>
-        <a class="abc" href="{% url 'job_list' %}"> <i class="fas fa-clipboard-list" style="padding-right: 10px;"></i> Job Tracker</a>
-        <a class="abc" href="{% url 'job_create_or_update' %}"> <i class="fas fa-plus-square" style="padding-right: 10px;"></i> Add Application</a>
-        <a class="abc" href="{% url 'simple_analytics' %}"> <i class="fas fa-chart-bar" style="padding-right: 10px;"></i>Application Stats</a>
-        <a class="abc" href="{% url 'feedback' %}"> <i class="fas fa-comment" style="padding-right: 10px;"></i>Your Thoughts</a>
-        <a class="abc" href="{% url 'logout' %}"> <i class="fas fa-power-off" style="padding-right: 10px;"></i> Logout</a>
- 
-    </div>
-    
-    <style>
-        p{
-            font-size: 18px;
-        }
-        </style>
-
-<div class="main-content">
-    
-    <div class="container" style="background-color: #e3fced; margin-left: 20px; margin-right: 20px; ">
-        
-        <h1 style="margin-top: 20px; ">Analytics</h1>
-        <h2 class="total-applications">
-        <p style="color: #000000; padding-bottom: 10px;"> Total Applications: </p>
-        <p>
-            {% if total_applications > 1 %}
-                {{ total_applications }} Applications
-            {% else %}
-                {{ total_applications }} Application
-            {% endif %}
-        </p>        
-        </h2>
-
-        <div class="upcoming-interviews">
-            <h3 style="text-align: center;">Upcoming Interviews</h3>
-            <ul>
-                {% if upcoming_interviews %}
-                        {% for interview in upcoming_interviews %}
-                            <li style="text-align: center;"> <span style="color: #000000;"> Company:</span> {{ interview.company_name }}  <span style="color: black; padding: 0 20px;">|</span> <span style="color: #000000;">  Date:</span> {{ interview.interview_date }}</li>
-                        {% endfor %}
-                        {% else %}
-                            <li style="text-align: center;">No upcoming interviews.</li>
-                            <br> <br>
-                        {% endif %}
-            </ul>
-        </div>
-
-
-        <div class="chart-container">
-                {% if applications_by_status %}
-                <div class="chart-box">
-                    <h3>Applications by Status</h3>
-                    <canvas id="statusChart"></canvas>
-                </div>
-                {% else %}
-                    <p>No application status data available.</p>
-                {% endif %}
-        </div>
-        
-        
-        <div class="chart-container">
-            {% if job_categories %}
-            <div class="chart-box"> <!-- style="max-width: 300px !important; height: 400px !important; "> -->
-                <h3>Job Categories</h3>
-                <canvas id="categoryChart"></canvas>
-            </div>
-            {% else %}
-
+{% block extra_head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
-    /* Chart Container Styling */
-    .chart-container {
-        background-color: #e3fced;
-        color: #4e9b5f !important;
-        padding: 20px;
-        margin: 20px auto;
-        border-radius: 12px;
-        margin-left: 25px !important;
-        /* width: 90% !important; */
-        max-width: 1200px !important;
-        box-sizing: border-box;
-        /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
-    }
+.analytics-wrap {
+  width: 100%;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1.5rem 2rem 3rem;
+}
 
-    /* Paragraph Styling within Chart Container */
-    .chart-container p {
-        text-align: center;
-        background-color: #fff !important;
-        padding: 15px 30px;
-        margin: 10px 0;
-        border-radius: 10px;
-        color: #ffcc00;
-        font-weight: bold;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-        font-size: 16px;
-        line-height: 1.6;
-    }
+/* PAGE TITLE ROW */
+.analytics-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.75rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.analytics-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.analytics-title i { color: var(--g); font-size: .9rem; }
 
-    /* Responsive Styling for Larger Screens */
-    @media (min-width: 1024px) {
-        .chart-container {
-            width: 80%;
-            margin-left: 40px;  
-            margin-left: 100px !important;
-        }
-        
-        .chart-container p {
-            font-size: 18px;
-        }
-    }
-    @media (width: 663px) and (height: 1018px) {
-        .chart-container {
-            margin-left: 90px !important;
-        }
-    }
+/* TOP STATS STRIP */
+.analytics-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.a-stat {
+  background: var(--s1);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  transition: border-color .2s, transform .2s;
+}
+.a-stat:hover { border-color: rgba(34,197,94,0.2); transform: translateY(-2px); }
+.a-stat-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: .5rem;
+}
+.a-stat-icon {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .8rem;
+}
+.icon-green { background: rgba(34,197,94,0.1); color: var(--g); }
+.icon-blue  { background: rgba(96,165,250,0.1); color: #60a5fa; }
+.icon-yellow{ background: rgba(251,191,36,0.1); color: #fbbf24; }
+.icon-purple{ background: rgba(167,139,250,0.1); color: #a78bfa; }
+.a-stat-val {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--t);
+  letter-spacing: -1.5px;
+  line-height: 1;
+}
+.a-stat-label { font-size: .72rem; color: var(--t3); margin-top: .25rem; }
 
-    /* Responsive Styling for Tablets */
-    @media (max-width: 1024px) {
-        .chart-container {
-            width: 90%;
-            padding: 15px;
-            margin: 15px auto;
-        }
-        
-        .chart-container p {
-            font-size: 16px;
-            margin-left: 20px;
-            margin-right: 20px;
-            padding: 12px 20px;
-        }
-    }
+/* SECTION CARD */
+.a-card {
+  background: var(--s1);
+  border: 1px solid var(--border2);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+}
+.a-card-header {
+  background: var(--s2);
+  border-bottom: 1px solid var(--border2);
+  padding: .8rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: .82rem;
+  font-weight: 700;
+  color: var(--t);
+}
+.a-card-header i { color: var(--g); margin-right: .4rem; font-size: .75rem; }
+.a-card-body { padding: 1.25rem; }
 
-    /* Responsive Styling for Mobile Devices */
-    @media (max-width: 768px) {
-        
-        
-        .chart-container p {
-            font-size: 14px;
-            margin-left: 15px;
-            margin-right: 15px;
-            padding: 10px 15px;
-        }
-    }
+/* INTERVIEWS LIST */
+.interview-list { display: flex; flex-direction: column; gap: .6rem; }
+.interview-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: var(--s2);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  padding: .75rem 1rem;
+  transition: border-color .2s;
+  flex-wrap: wrap;
+}
+.interview-item:hover { border-color: rgba(34,197,94,0.2); }
+.interview-company {
+  font-size: .85rem;
+  font-weight: 700;
+  color: var(--t);
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.interview-company i { color: var(--g); font-size: .7rem; }
+.interview-date {
+  font-size: .75rem;
+  color: var(--g);
+  font-weight: 600;
+  background: rgba(34,197,94,0.08);
+  border: 1px solid rgba(34,197,94,0.15);
+  padding: .2rem .65rem;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: .3rem;
+  white-space: nowrap;
+}
+.interview-date i { font-size: .62rem; }
+.no-interviews {
+  text-align: center;
+  padding: 2rem;
+  color: var(--t3);
+  font-size: .82rem;
+}
+.no-interviews i { font-size: 1.5rem; display: block; margin-bottom: .5rem; opacity: .4; }
+
+/* CHARTS GRID */
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+.chart-card {
+  background: var(--s1);
+  border: 1px solid var(--border2);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.chart-card-header {
+  background: var(--s2);
+  border-bottom: 1px solid var(--border2);
+  padding: .8rem 1.25rem;
+  font-size: .82rem;
+  font-weight: 700;
+  color: var(--t);
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+}
+.chart-card-header i { color: var(--g); font-size: .75rem; }
+.chart-card-body {
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.chart-canvas-wrap {
+  width: 100%;
+  max-width: 340px;
+  position: relative;
+}
+
+/* empty chart state */
+.chart-empty {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: var(--t3);
+  font-size: .8rem;
+}
+.chart-empty i { font-size: 1.8rem; display: block; margin-bottom: .5rem; opacity: .3; }
+
+/* TOTAL APPLICATIONS HIGHLIGHT */
+.total-highlight {
+  background: linear-gradient(135deg, rgba(34,197,94,0.08) 0%, rgba(34,197,94,0.03) 100%);
+  border: 1px solid rgba(34,197,94,0.2);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.total-highlight-left { display: flex; align-items: center; gap: 1rem; }
+.total-num {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--g);
+  letter-spacing: -2px;
+  line-height: 1;
+}
+.total-label { font-size: .82rem; color: var(--t2); margin-top: .15rem; }
+.total-highlight-right { font-size: .78rem; color: var(--t3); text-align: right; }
+
+@media (max-width: 900px) {
+  .charts-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .analytics-wrap { padding: 1rem 1rem 2.5rem; }
+  .analytics-stats { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .analytics-stats { grid-template-columns: 1fr 1fr; }
+}
 </style>
-                <p>No job category data available.</p>
-            {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="analytics-wrap">
+
+  <!-- TITLE -->
+  <div class="analytics-title-row">
+    <div class="analytics-title">
+      <i class="fas fa-chart-bar"></i> Application Analytics
+    </div>
+    <a href="{% url 'job_create_or_update' %}" class="btn btn-primary btn-sm">
+      <i class="fas fa-plus" style="font-size:.7rem"></i> Add Application
+    </a>
+  </div>
+
+  <!-- TOTAL HIGHLIGHT -->
+  <div class="total-highlight">
+    <div class="total-highlight-left">
+      <div class="total-num">{{ total_applications }}</div>
+      <div>
+        <div style="font-size:.95rem;font-weight:700;color:var(--t)">
+          Total Application{{ total_applications|pluralize }}
         </div>
+        <div class="total-label">tracked across all statuses</div>
+      </div>
+    </div>
+    <div class="total-highlight-right">
+      <a href="{% url 'job_list' %}" style="color:var(--g);font-size:.78rem;font-weight:600">
+        View all <i class="fas fa-arrow-right" style="font-size:.65rem"></i>
+      </a>
+    </div>
+  </div>
 
-    
-    </div>        
-</div>
-    
-    <script>
+  <!-- QUICK STATS ROW -->
+  <div class="analytics-stats">
+    <div class="a-stat">
+      <div class="a-stat-top">
+        <div class="a-stat-icon icon-blue"><i class="fas fa-paper-plane"></i></div>
+      </div>
+      <div class="a-stat-val">{{ total_applications }}</div>
+      <div class="a-stat-label">Total Applied</div>
+    </div>
+    <div class="a-stat">
+      <div class="a-stat-top">
+        <div class="a-stat-icon icon-green"><i class="fas fa-comments"></i></div>
+      </div>
+      <div class="a-stat-val">{{ upcoming_interviews|length }}</div>
+      <div class="a-stat-label">Upcoming Interviews</div>
+    </div>
+    <div class="a-stat">
+      <div class="a-stat-top">
+        <div class="a-stat-icon icon-yellow"><i class="fas fa-layer-group"></i></div>
+      </div>
+      <div class="a-stat-val">{{ applications_by_status|length }}</div>
+      <div class="a-stat-label">Status Types</div>
+    </div>
+    <div class="a-stat">
+      <div class="a-stat-top">
+        <div class="a-stat-icon icon-purple"><i class="fas fa-tags"></i></div>
+      </div>
+      <div class="a-stat-val">{{ job_categories|length }}</div>
+      <div class="a-stat-label">Job Categories</div>
+    </div>
+  </div>
+
+  <!-- UPCOMING INTERVIEWS -->
+  <div class="a-card">
+    <div class="a-card-header">
+      <span><i class="fas fa-calendar-check"></i>Upcoming Interviews</span>
+      <span style="font-size:.7rem;color:var(--t3)">{{ upcoming_interviews|length }} scheduled</span>
+    </div>
+    <div class="a-card-body">
+      {% if upcoming_interviews %}
+      <div class="interview-list">
+        {% for interview in upcoming_interviews %}
+        <div class="interview-item">
+          <div class="interview-company">
+            <i class="fas fa-building"></i>
+            {{ interview.company_name }}
+          </div>
+          <div class="interview-date">
+            <i class="fas fa-calendar-alt"></i>
+            {{ interview.interview_date }}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="no-interviews">
+        <i class="fas fa-calendar-times"></i>
+        No upcoming interviews scheduled.
+        <div style="margin-top:.5rem">
+          <a href="{% url 'job_create_or_update' %}" style="color:var(--g);font-weight:600;font-size:.78rem">
+            Add an application with an interview date →
+          </a>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- CHARTS -->
+  <div class="charts-grid">
+
+    <!-- Status Chart -->
+    <div class="chart-card">
+      <div class="chart-card-header">
+        <i class="fas fa-chart-pie"></i> Applications by Status
+      </div>
+      <div class="chart-card-body">
         {% if applications_by_status %}
-        const statusCtx = document.getElementById('statusChart').getContext('2d');
-        const statusChart = new Chart(statusCtx, {
-            type: 'pie',
-            data: {
-                labels: [{% for status in applications_by_status.keys %} `{{ status }}`, {% endfor %}],
-                datasets: [{
-                    label: 'Applications by Status',
-                    data: [{% for count in applications_by_status.values %} `{{ count }}`, {% endfor %}],
-                    // backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF']
-                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#2ECC71', '#E74C3C', '#8E44AD', '#F1C40F', '#1ABC9C']
-                    }]
-                    }
-                    });
+        <div class="chart-canvas-wrap">
+          <canvas id="statusChart"></canvas>
+        </div>
+        {% else %}
+        <div class="chart-empty">
+          <i class="fas fa-chart-pie"></i>
+          No status data available yet.
+        </div>
         {% endif %}
-        
-        
-        // Doughnut Chart: Job Categories
+      </div>
+    </div>
+
+    <!-- Category Chart -->
+    <div class="chart-card">
+      <div class="chart-card-header">
+        <i class="fas fa-th-large"></i> Job Categories
+      </div>
+      <div class="chart-card-body">
         {% if job_categories %}
-        const categoryCtx = document.getElementById('categoryChart').getContext('2d');
-        const categoryChart = new Chart(categoryCtx, {
-            type: 'doughnut',
-            data: {
-                labels: [{% for category in job_categories.keys %} `{{ category }}`, {% endfor %}],
-                datasets: [{
-                    label: 'Job Categories',
-                    data: [{% for count in job_categories.values %} `{{ count }}`, {% endfor %}],
-                    // backgroundColor: ['#FF9F40', '#FF6384', '#4BC0C0', '#FFCE56', '#9966FF']
-                    backgroundColor: ['#FF9F40', '#FF6384', '#4BC0C0', '#FFCE56', '#9966FF', '#34495E', '#D35400', '#16A085', '#C0392B', '#7F8C8D']
-                    }]
-                    }
-                    });
+        <div class="chart-canvas-wrap">
+          <canvas id="categoryChart"></canvas>
+        </div>
+        {% else %}
+        <div class="chart-empty">
+          <i class="fas fa-th-large"></i>
+          No category data available yet.
+        </div>
         {% endif %}
+      </div>
+    </div>
 
-        
-        
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('overlay');
+  </div>
 
-            if (sidebar.style.display === 'block') {
-                sidebar.style.display = 'none';
-                overlay.style.display = 'none'; // Hide overlay
+</div>
 
-            } else {
-                sidebar.style.display = 'block';
-                overlay.style.display = 'block'; // Show overlay
-            }
+<script>
+// Chart.js global defaults — dark theme
+Chart.defaults.color = '#a8bfab';
+Chart.defaults.font.family = "'Plus Jakarta Sans', sans-serif";
+Chart.defaults.font.size = 11;
+
+const CHART_COLORS = [
+  '#22c55e','#60a5fa','#fbbf24','#a78bfa',
+  '#f87171','#34d399','#fb923c','#e879f9',
+  '#38bdf8','#facc15'
+];
+
+{% if applications_by_status %}
+const statusCtx = document.getElementById('statusChart').getContext('2d');
+new Chart(statusCtx, {
+  type: 'pie',
+  data: {
+    labels: [{% for status in applications_by_status.keys %}'{{ status }}',{% endfor %}],
+    datasets: [{
+      data: [{% for count in applications_by_status.values %}{{ count }},{% endfor %}],
+      backgroundColor: CHART_COLORS,
+      borderColor: '#0e1410',
+      borderWidth: 2,
+      hoverOffset: 6,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: {
+          padding: 12,
+          boxWidth: 10,
+          color: '#a8bfab',
+          font: { size: 11 }
         }
-        function closeSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('overlay');
+      },
+      tooltip: {
+        backgroundColor: '#141a15',
+        borderColor: 'rgba(34,197,94,0.2)',
+        borderWidth: 1,
+        titleColor: '#f0f7f1',
+        bodyColor: '#a8bfab',
+        padding: 10,
+      }
+    }
+  }
+});
+{% endif %}
 
-            sidebar.style.display = 'none'; // Hide sidebar
-            overlay.style.display = 'none'; // Hide overlay
+{% if job_categories %}
+const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+new Chart(categoryCtx, {
+  type: 'doughnut',
+  data: {
+    labels: [{% for cat in job_categories.keys %}'{{ cat }}',{% endfor %}],
+    datasets: [{
+      data: [{% for count in job_categories.values %}{{ count }},{% endfor %}],
+      backgroundColor: CHART_COLORS,
+      borderColor: '#0e1410',
+      borderWidth: 2,
+      hoverOffset: 6,
+    }]
+  },
+  options: {
+    responsive: true,
+    cutout: '62%',
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: {
+          padding: 12,
+          boxWidth: 10,
+          color: '#a8bfab',
+          font: { size: 11 }
         }
-    </script>
+      },
+      tooltip: {
+        backgroundColor: '#141a15',
+        borderColor: 'rgba(34,197,94,0.2)',
+        borderWidth: 1,
+        titleColor: '#f0f7f1',
+        bodyColor: '#a8bfab',
+        padding: 10,
+      }
+    }
+  }
+});
+{% endif %}
+</script>
+{% endblock %}

@@ -1,517 +1,275 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Job Application</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">  
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <head>
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-        <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
-    </head> 
-    <style>
-h1 {
-    text-align: center;
-    color: #000000 !important;
-    text-decoration: underline;
-    margin: 10px 10px 40px;
-    font-size: 1.5rem;
+
+{% block title %}{{ action }} Application — Career Traces{% endblock %}
+{% block nav_add %}active{% endblock %}
+
+{% block extra_head %}
+<style>
+.form-page-wrap {
+  width: 100%;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1.5rem 2rem 3rem;
+}
+.form-page-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+  margin-bottom: .25rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.form-page-title i { color: var(--g); font-size: .9rem; }
+.form-page-sub { font-size: .8rem; color: var(--t2); margin-bottom: 1.75rem; }
+
+.form-card {
+  background: var(--s1);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.form-card-header {
+  background: var(--s2);
+  border-bottom: 1px solid var(--border2);
+  padding: .85rem 1.5rem;
+  font-size: .82rem;
+  font-weight: 700;
+  color: var(--t);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.form-card-body { padding: 1.75rem 1.5rem; }
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.1rem 1.5rem;
+}
+.form-grid .span-2 { grid-column: span 2; }
+
+.fg { display: flex; flex-direction: column; }
+.fg label {
+  font-size: .72rem;
+  font-weight: 700;
+  color: var(--t2);
+  letter-spacing: .3px;
+  text-transform: uppercase;
+  margin-bottom: .35rem;
+}
+.fg .required { color: var(--g); margin-left: 2px; }
+
+.fg input,
+.fg select {
+  background: var(--s2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  color: var(--t);
+  font-size: .85rem;
+  font-family: var(--f-head);
+  padding: .6rem .85rem;
+  outline: none;
+  transition: all .2s;
+  width: 100%;
+}
+.fg input:focus,
+.fg select:focus {
+  border-color: rgba(34,197,94,0.4);
+  box-shadow: 0 0 0 3px rgba(34,197,94,0.08);
+}
+.fg input::placeholder { color: var(--t3); }
+.fg select option { background: var(--s2); color: var(--t); }
+.fg select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23607064' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right .85rem center;
+  padding-right: 2.2rem;
+}
+.fg input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.5);
+  cursor: pointer;
 }
 
-.form-group {
-    margin-bottom: 20px;
+.form-divider {
+  height: 1px;
+  background: var(--border2);
+  margin: 1.5rem 0;
 }
 
-label {
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.9rem;
-    font-weight: bold;
-    padding: 5px;
-    margin: 0 20px;
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 1rem;
+  flex-wrap: wrap;
 }
-
-
-.btn {
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color: #ffcc00;
-    color: white !important;
-    font-weight: bold;
-    font-size: 0.8rem;
-    min-width: 70px;
+.btn-submit-form {
+  background: var(--g);
+  color: #000;
+  padding: .7rem 1.75rem;
+  border-radius: 9px;
+  border: none;
+  font-size: .88rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: var(--f-head);
+  transition: all .25s;
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  box-shadow: 0 4px 16px rgba(34,197,94,0.25);
 }
-
-.btn:hover {
-    opacity: 0.8;
+.btn-submit-form:hover {
+  background: var(--g2);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(34,197,94,0.35);
 }
-
-/* For tablets and small screens (max-width: 1024px) */
-@media (max-width: 1024px) {
-    .form-container {
-        /* margin: 0 20px !important;
-        padding: 15px !important; */
-        box-shadow: none !important;
-    }
-
-    label {
-        font-size: 1rem !important;
-        margin: 0 10px !important;
-    }
-
-    .btn {
-        font-size: 1rem !important;
-        padding: 10px 14px !important;
-    }
+.btn-back-link {
+  font-size: .8rem;
+  color: var(--t2);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  transition: color .2s;
 }
+.btn-back-link:hover { color: var(--g); }
 
-/* For mobile devices (max-width: 768px) */
-@media (max-width: 768px) {
-    label {
-        font-size: 1rem !important;
-        margin: 0 15px !important;
-    }
-
-    .btn {
-        font-size: 1rem !important;
-        padding: 10px 14px;
-    }
-}
-
-/* For very small screens (max-width: 480px) */
-@media (max-width: 480px) {
-    label {
-        font-size: 0.9rem !important;
-        margin: 0 10px !important;
-        margin-left: 15px !important;
-    }
-
-    .btn {
-        font-size: 0.9rem !important;
-        padding: 10px 14px !important;
-    }
-}
-
-body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background-color: #ffffff; 
-}
-
-.container {
-    display: flex;
-}
-
-.sidebar {
-    width: 11.325rem; 
-    min-width: 180px; 
-    height: 100vh;
-    position: fixed;
-    left: 0;
-    z-index: 1;
-    background-color: #4e9b5f;
-    font-weight: bold;
-}
-
-.sidebar a {
-    margin-left: 20px;
-    padding: 10px;
-}
-
-.sidebar h2 {
-    font-size: 1.3rem;
-    color: white; 
-    text-align: center;
-    margin-bottom: 40px;
-    margin-top: 40px;
-}
-
-.sidebar a {
-    display: flex;
-    align-items: center;
-    color: #fff;
-    padding: 5px;
-    margin: 10px 0;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 0.7rem;
-}
-
-.sidebar a:hover {
-    background-color: #ffcc00;
-    margin-right: 30px !important;
-}
-
-.main-content {
-    margin-left: calc(11.325rem + 50px); 
-    padding: 20px;
-    margin-right: 40px !important;
-    flex-grow: 1;
-}
-
-.hamburger {
-    display: none;
-}
-
-.form-container {
-    margin: 0 181.2px;
-    padding: 20px;
-    background-color: #e3fced;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    font-family: 'Poppins', sans-serif;
-    border-radius: 8px; 
-}
-
-input[type="text"], input[type="url"], input[type="date"], input[type="email"], select {
-    font-family: 'Poppins', sans-serif;
-    margin-top: 5px !important;
-    width: 90%;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 0.9rem;
-    box-sizing: border-box;
-    padding: 8px;
-    margin: 0 20px;
-    background-color: white;
-} 
-
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); 
-    display: none; 
-    z-index: 999; 
-}
-
-.btn_back-btn {
-    font-size: 0.8rem !important;
-}
-
-@media (max-width: 1024px) {
-    .main-content{
-        margin-right: 0px !important
-    }
-
-    h1 {
-        font-size: 1.6rem;
-    }
-
-    .sidebar a {
-        margin-right: 20px;
-        padding: 10px;
-        padding-right: 20px;
-        font-size: 15px;
-    }
-
-    .sidebar {
-        display: none; 
-        width: 60% !important; 
-        top: 0; 
-        left: 0;
-        position: fixed; 
-        height: 100vh; 
-        z-index: 1000; 
-        overflow-y: auto;
-    }
-
-    .hamburger {
-        display: block; 
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        font-size: 24px;
-        cursor: pointer;
-    }
-
-    .form-container {
-        margin: 10px;
-        padding: 15px;
-        box-shadow: none; 
-    }
-
-    .main-content {
-        margin: 0; 
-    }
-
-    input[type="text"],
-    input[type="url"],
-    input[type="date"],
-    input[type="email"],
-    select {
-        font-size: 1rem; 
-        padding: 8px;
-    }
-
-    .btn {
-        font-size: 0.9rem;
-        padding: 8px 12px;
-    }
+/* optional note */
+.optional-note {
+  font-size: .68rem;
+  color: var(--t3);
+  margin-top: .25rem;
 }
 
 @media (max-width: 768px) {
-    h1 {
-        font-size: 1.4rem;
-    }
-
-    .sidebar {
-        display: none; 
-        position: fixed;
-        width: 70%;
-        top: 0;
-        left: 0;
-        height: 100%;
-        background-color: #4e9b5f;
-        z-index: 1000;
-    }
-
-    .hamburger {
-        display: block;
-        font-size: 22px;
-        position: fixed;
-        top: 10px;
-        left: 10px;
-    }
-
-    .form-container {
-        margin: 10px;
-        padding: 10px;
-    }
-    
-    label {
-        font-size: 0.8rem;
-    }
-
-    input[type="text"],
-    input[type="url"],
-    input[type="date"],
-    input[type="email"],
-    select {
-        margin-right: 15px !important;
-        font-size: 0.9rem !important;
-        padding: 5px;
-    }
-    
-    .btn {
-        font-size: 0.9rem;
-        /* padding: 6px 10px; */
-        padding: 5px !important;
-    }
-
-    .form-buttons {
-        font-size: 0.9rem;
-    }
-
-    .btn_back-btn {
-        font-size: 0.9rem !important;
-    }
+  .form-page-wrap { padding: 1rem 1rem 2.5rem; }
+  .form-card-body { padding: 1.25rem 1rem; }
+  .form-grid { grid-template-columns: 1fr; }
+  .form-grid .span-2 { grid-column: span 1; }
 }
+</style>
+{% endblock %}
 
-@media (max-width: 480px) {
-    h1 {
-        font-size: 1.5rem;
-    }
+{% block content %}
+<div class="form-page-wrap">
 
-    .form-container {
-        margin: 5px;
-        padding: 8px;
-    }
+  <div class="form-page-title">
+    <i class="fas fa-{% if action == 'Edit' %}pencil-alt{% else %}plus-circle{% endif %}"></i>
+    {{ action }} Application
+  </div>
+  <p class="form-page-sub">
+    {% if action == 'Edit' %}Update the details of your job application below.
+    {% else %}Fill in the details of the job you applied for.{% endif %}
+  </p>
 
-    label {
-        font-size: 0.7rem;
-    }
-
-    input[type="text"],
-    input[type="url"],
-    input[type="date"],
-    input[type="email"],
-    select {
-        font-size: 0.7rem;
-        padding: 7px;
-    }
-
-    .btn {
-        font-size: 0.7rem;
-        padding: 5px 8px;
-    }
-}
-
-.form-buttons {
-    align-items: center;
-    justify-content: center; 
-    font-size: 20px;
-}
-
-.btn_back-btn {
-    font-size: 14px;
-}
-
-
-    </style>
-        <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-JZ5EM6ZP04"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-        
-          gtag('config', 'G-JZ5EM6ZP04');
-        </script>
-</head>
-<body> 
-    <div class="hamburger" onclick="toggleSidebar()">
-        <i class="fa fa-bars"></i>
+  <div class="form-card">
+    <div class="form-card-header">
+      <span>Application Details</span>
+      <a href="{% url 'job_list' %}" class="btn-back-link">
+        <i class="fas fa-arrow-left" style="font-size:.65rem"></i> Back to list
+      </a>
     </div>
-    
-    <div class="sidebar" id="sidebar" style="padding-left: 20px; margin-right: 15px !important;">
-        <h2>Dashboard</h2>
-        <!-- <a class="abc" href="{% url 'default' %}"><i class="fas fa-home" style="padding-right: 10px;"></i>Home page</a>
-        <a class="abc" href="{% url 'job_profile' %}"><i class="fas fa-user-circle"  style="padding-right: 10px"></i>Profile</a>
-        <a class="abc" href="{% url 'job_list' %}"><i class="fas fa-clipboard-list" style="padding-right: 10px;"></i> Job Tracker</a>
-        <a class="abc" href="{% url 'job_create_or_update' %}"><i class="fas fa-plus-square" style="padding-right: 10px;"></i> Add Application</a>
-        <a class="abc" href="{% url 'feedback' %}"><i class="fas fa-comment" style="padding-right: 10px;"></i>Your Thoughts</a>
-        <a class="abc" href="{% url 'simple_analytics' %}"><i class="fas fa-chart-bar" style="padding-right: 10px;"></i>Application Stats</a>
-        <a class="abc" href="{% url 'logout' %}"><i class="fas fa-power-off" style="padding-right: 10px;"></i> Logout</a> -->
-        <a class="abc" href="{% url 'default' %}"><i class="fas fa-home" style="padding-right: 10px;"></i>Home page</a>
-        <a class="abc" href="{% url 'job_profile' %}"><i class="fas fa-user-circle"  style="padding-right: 10px"></i>Profile</a>
-        <a class="abc" href="{% url 'job_list' %}"> <i class="fas fa-clipboard-list" style="padding-right: 10px;"></i> Job Tracker</a>
-        <a class="abc" href="{% url 'job_create_or_update' %}"> <i class="fas fa-plus-square" style="padding-right: 10px;"></i> Add Application</a>
-        <a class="abc" href="{% url 'simple_analytics' %}"> <i class="fas fa-chart-bar" style="padding-right: 10px;"></i>Application Stats</a>
-        <a class="abc" href="{% url 'feedback' %}"> <i class="fas fa-comment" style="padding-right: 10px;"></i>Your Thoughts</a>
-        <a class="abc" href="{% url 'logout' %}"> <i class="fas fa-power-off" style="padding-right: 10px;"></i> Logout</a>
- 
+
+    <div class="form-card-body">
+      <form method="POST">
+        {% csrf_token %}
+        <div class="form-grid">
+
+          <!-- Job Category -->
+          <div class="fg">
+            <label>Job Category <span class="required">*</span></label>
+            <input type="text" name="job_category"
+              value="{{ form.job_category.value|default:'' }}"
+              placeholder="e.g. Backend Developer" required/>
+          </div>
+
+          <!-- Job Level -->
+          <div class="fg">
+            <label>Job Level <span class="required">*</span></label>
+            <select name="job_level" required>
+              <option value="">Select level</option>
+              {% for val, label in form.job_level.field.choices %}
+              <option value="{{ val }}" {% if form.job_level.value == val %}selected{% endif %}>{{ label }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <!-- Company Name -->
+          <div class="fg">
+            <label>Company Name <span class="required">*</span></label>
+            <input type="text" name="company_name"
+              value="{{ form.company_name.value|default:'' }}"
+              placeholder="e.g. Google" required/>
+          </div>
+
+          <!-- Company Email -->
+          <div class="fg">
+            <label>Company Email</label>
+            <input type="email" name="company_email"
+              value="{{ form.company_email.value|default:'' }}"
+              placeholder="hr@company.com"/>
+            <span class="optional-note">Optional</span>
+          </div>
+
+          <!-- Reference Link -->
+          <div class="fg span-2">
+            <label>Reference / Job Posting Link <span class="required">*</span></label>
+            <input type="url" name="reference_link"
+              value="{{ form.reference_link.value|default:'' }}"
+              placeholder="https://linkedin.com/jobs/..." required/>
+          </div>
+
+          <!-- Employment Type -->
+          <div class="fg">
+            <label>Employment Type <span class="required">*</span></label>
+            <select name="employment_type" required>
+              <option value="">Select type</option>
+              {% for val, label in form.employment_type.field.choices %}
+              <option value="{{ val }}" {% if form.employment_type.value == val %}selected{% endif %}>{{ label }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <!-- Application Status -->
+          <div class="fg">
+            <label>Application Status <span class="required">*</span></label>
+            <select name="application_status" required>
+              {% for val, label in form.application_status.field.choices %}
+              <option value="{{ val }}" {% if form.application_status.value == val %}selected{% endif %}>{{ label }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <!-- Interview Date -->
+          <div class="fg">
+            <label>Interview Date</label>
+            <input type="date" name="interview_date"
+              value="{{ form.interview_date.value|default:'' }}"/>
+            <span class="optional-note">Leave blank if not scheduled</span>
+          </div>
+
+        </div>
+
+        <div class="form-divider"></div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-submit-form">
+            <i class="fas fa-{% if action == 'Edit' %}save{% else %}plus{% endif %}" style="font-size:.78rem"></i>
+            {{ action }} Application
+          </button>
+          <a href="{% url 'job_list' %}" class="btn-back-link">
+            <i class="fas fa-times" style="font-size:.7rem"></i> Cancel
+          </a>
+        </div>
+
+      </form>
     </div>
-    
-    <div class="overlay" id="overlay" onclick="closeSidebar()" style="display: none;">
-        <i class="fa fa-bars"></i>
-    </div>
-    
-    <div class="main-content">
-        <form method="POST">
-            {% csrf_token %}
-            <div class="form-container">
-                <h1 style="text-decoration: none;">{{ action }} Application</h1>
-    
-                <div class="form-group">
-                    <label for="job_category">Job Category:</label>
-                    <input type="text" id="job_category" name="job_category" value="{{ form.job_category.value |default:'' }}" required>
-                </div>
-    
-                <div class="form-group">
-                    <label for="job_level">Job Level:</label>
-                    <select id="job_level" name="job_level" required>
-                        <option value="">Select Job Level</option>
-                        <option value="intern" {% if form.job_level.value == 'intern' %}selected{% endif %}>Intern</option>
-                        <option value="junior" {% if form.job_level.value == 'junior' %}selected{% endif %}>Junior</option>
-                        <option value="mid" {% if form.job_level.value == 'mid' %}selected{% endif %}>Mid-Level</option>
-                        <option value="senior" {% if form.job_level.value == 'senior' %}selected{% endif %}>Senior</option>
-                        <option value="lead" {% if form.job_level.value == 'lead' %}selected{% endif %}>Lead</option>
-                        <option value="manager" {% if form.job_level.value == 'manager' %}selected{% endif %}>Manager</option>
-                        <option value="director" {% if form.job_level.value == 'director' %}selected{% endif %}>Director</option>
-                        <option value="vp" {% if form.job_level.value == 'vp' %}selected{% endif %}>Vice President</option>
-                        <option value="c_level" {% if form.job_level.value == 'c_level' %}selected{% endif %}>C-Level</option>
-                    </select>
-                </div>
-    
-                <div class="form-group">
-                    <label for="company_name">Company Name:</label>
-                    <input type="text" id="company_name" name="company_name" value="{{ form.company_name.value |default:'' }}" required>
-                </div>
-    
-                <div class="form-group">
-                    <label for="company_email">Company Email:</label>
-                    <input type="email" id="company_email" name="company_email" value="{{ form.company_email.value |default:'' }}">
-                </div>
-    
-                <div class="form-group">
-                    <label for="reference_link">Reference Link:</label>
-                    <input type="url" id="reference_link" name="reference_link" value="{{ form.reference_link.value |default:'' }}" required>
-                </div>
-    
-                <div class="form-group">
-                    <label for="employment_type">Employment Type:</label>
-                    <select id="employment_type" name="employment_type" required>
-                        <option value="">Select Employment Type</option>
-                        <option value="full_time" {% if form.employment_type.value == 'full_time' %}selected{% endif %}>Full-Time</option>
-                        <option value="part_time" {% if form.employment_type.value == 'part_time' %}selected{% endif %}>Part-Time</option>
-                        <option value="contract" {% if form.employment_type.value == 'contract' %}selected{% endif %}>Contract</option>
-                        <option value="temporary" {% if form.employment_type.value == 'temporary' %}selected{% endif %}>Temporary</option>
-                        <option value="internship" {% if form.employment_type.value == 'internship' %}selected{% endif %}>Internship</option>
-                        <option value="freelance" {% if form.employment_type.value == 'freelance' %}selected{% endif %}>Freelance</option>
-                        <option value="remote" {% if form.employment_type.value == 'remote' %}selected{% endif %}>Remote</option>
-                        <option value="hybrid" {% if form.employment_type.value == 'hybrid' %}selected{% endif %}>Hybrid</option>
-                        <option value="apprenticeship" {% if form.employment_type.value == 'apprenticeship' %}selected{% endif %}>Apprenticeship</option>
-                    </select>
-                </div>
-    
-                <div class="form-group">
-                    <label for="application_status">Application Status:</label>
-                    <select id="application_status" name="application_status" required>
-                        <option value="pending" {% if form.application_status.value == 'pending' %}selected{% endif %}>Pending</option>
-                        <option value="applied" {% if form.application_status.value == 'applied' %}selected{% endif %}>Applied</option>
-                        <option value="interview" {% if form.application_status.value == 'interview' %}selected{% endif %}>Interview Scheduled</option>
-                        <option value="selected" {% if form.application_status.value == 'selected' %}selected{% endif %}>Selected</option>
-                        <option value="rejected" {% if form.application_status.value == 'rejected' %}selected{% endif %}>Rejected</option>
-                        <option value="offer_accepted" {% if form.application_status.value == 'offer_accepted' %}selected{% endif %}>Offer Accepted</option>
-                        <option value="offer_declined" {% if form.application_status.value == 'offer_declined' %}selected{% endif %}>Offer Declined</option>
-                    </select>
-                </div>
-    
-                <div class="form-group">
-                    <label for="interview_date">Interview Date:</label>
-                    <input type="date" id="interview_date" name="interview_date" value="{{ form.interview_date.value |default:'' }}">
-                </div>
-    
-                <div class="form-buttons" style="text-align: center;">
-                    <input type="submit" value="{{ action }} Application" class="btn" style="margin: 15px; padding: 5px 10px; color: #ffcc00; padding: 7px;">
-                    <br>
-                    <a href="{% url 'job_list' %}" class="btn_back-btn" style="text-decoration: none; font-weight: bold !important; color: black;">Back to Application List</a>
-                </div>
-            </div>
-        </form>
-    </div>
-    
-    <script>
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('overlay');
-    
-            if (sidebar.style.display === 'block') {
-                sidebar.style.display = 'none';
-                overlay.style.display = 'none'; // Hide overlay
-            } else {
-                sidebar.style.display = 'block';
-                overlay.style.display = 'block'; // Show overlay
-            }
-        }
-    
-        function closeSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('overlay');
-    
-            sidebar.style.display = 'none'; // Hide sidebar
-            overlay.style.display = 'none'; // Hide overlay
-        }
-    </script>
-        
-    <style>
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 2; 
-            display: none; 
-        }
-    
-    </style>
-   
-</body>
-</html>
+  </div>
+
+</div>
+{% endblock %}

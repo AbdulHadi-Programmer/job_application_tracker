@@ -1,544 +1,444 @@
-<!-- <div class="container">
-    <h2>User Profile</h2>
-    <hr>
+{% extends 'base.html' %}
+{% load static %}
 
-    <h3>Basic Information</h3>
-    <p><strong>Full Name:</strong> {{ user_profile.full_name }}</p>
-    <p><strong>Job Title:</strong> {{ user_profile.job_title }}</p>
-    <p><strong>Region:</strong> {{ user_profile.region }}</p>
-    <p><strong>Email:</strong> {{ user_profile.email }}</p>
-    <p><strong>Phone:</strong> {{ user_profile.phone }}</p>
-    <p><strong>Location:</strong> {{ user_profile.location }}</p>
-    
-    {% if user_profile.image %}
-        <p><strong>Profile Image:</strong></p>
-        <img src="{{ user_profile.image.url }}" alt="Profile Image" width="150">
-    {% endif %}
+{% block title %}Profile — Career Traces{% endblock %}
+{% block nav_profile %}active{% endblock %}
 
-    <hr>
+{% block extra_head %}
+<style>
+.profile-wrap {
+  padding: 1.5rem 2rem 3rem;
+}
+.profile-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.75rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.profile-top h1 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.profile-top h1 i { color: var(--g); font-size: .9rem; }
 
-    <h3>Social Profiles</h3>
-    {% for social in social_profiles %}
-        <p><strong>Platform:</strong> {{ social.platform_name }}</p>
-        <p><strong>Profile Link:</strong> <a href="{{ social.profile_link }}" target="_blank">{{ social.profile_link }}</a></p>
-    {% empty %}
-        <p>No social profiles added.</p>
-    {% endfor %}
+/* LAYOUT */
+.profile-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
 
-    <hr>
+/* LEFT CARD */
+.profile-left-card {
+  background: var(--s1);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  overflow: hidden;
+  position: sticky;
+  top: 80px;
+}
+.profile-avatar-wrap {
+  background: var(--s2);
+  padding: 2rem 1.5rem 1.5rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border2);
+}
+.profile-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(34,197,94,0.3);
+  box-shadow: 0 0 0 4px rgba(34,197,94,0.07);
+  margin-bottom: 1rem;
+}
+.profile-avatar-placeholder {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: rgba(34,197,94,0.08);
+  border: 2px dashed rgba(34,197,94,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  color: var(--t3);
+  font-size: 1.75rem;
+}
+.profile-name {
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  margin-bottom: .2rem;
+}
+.profile-title {
+  font-size: .78rem;
+  color: var(--t2);
+  margin-bottom: .2rem;
+}
+.profile-location {
+  font-size: .72rem;
+  color: var(--t3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .3rem;
+}
 
-    <h3>Skills</h3>
-    {% for skill in skills %}
-        <p><strong>Skill:</strong> {{ skill.name }}</p>
-        <p><strong>Proficiency:</strong> {{ skill.proficiency }}%</p>
-    {% empty %}
-        <p>No skills added.</p>
-    {% endfor %}
+/* social links */
+.social-list {
+  padding: 1.1rem 1.25rem;
+}
+.social-list-label {
+  font-size: .65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--t3);
+  margin-bottom: .75rem;
+}
+.social-item {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  padding: .45rem .5rem;
+  border-radius: 7px;
+  text-decoration: none;
+  transition: background .2s;
+  margin-bottom: .15rem;
+}
+.social-item:hover { background: var(--s2); }
+.social-item .si-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .8rem;
+  flex-shrink: 0;
+}
+.social-item span { font-size: .78rem; color: var(--t2); font-weight: 500; }
+.no-social { font-size: .78rem; color: var(--t3); padding: .25rem .5rem; }
 
-    <hr>
+/* RIGHT CONTENT */
+.profile-right { display: flex; flex-direction: column; gap: 1.25rem; }
 
-    <h3>Projects</h3>
-    {% for project in projects %}
-        <p><strong>Project Name:</strong> {{ project.project_name }}</p>
-        <p><strong>Status:</strong> {{ project.project_status }}</p>
-    {% empty %}
-        <p>No projects added.</p>
-    {% endfor %}
+.info-card {
+  background: var(--s1);
+  border: 1px solid var(--border2);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.info-card-header {
+  background: var(--s2);
+  border-bottom: 1px solid var(--border2);
+  padding: .75rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--t);
+}
+.info-card-header i { color: var(--g); margin-right: .4rem; font-size: .75rem; }
+.info-card-body { padding: 1.25rem; }
 
-    <hr>
-    <a href="{% url 'profile_edit' %}" class="btn btn-primary">Edit Profile</a>
-</div> -->
-<!-- ---------------------------------------------------------------------------------------------- -->
-<!-- ---------------------------------------------------------------------------------------------- -->
-<!-- ---------------------------------------------------------------------------------------------- -->
-<!-- ---------------------------------------------------------------------------------------------- -->
-<!-- ---------------------------------------------------------------------------------------------- -->
-<!-- ---------------------------------------------------------------------------------------------- -->
-<!-- ---------------------------------------------------------------------------------------------- -->
-<!-- ---------------------------------------------------------------------------------------------- -->
-<!-- ---------------------------------------------------------------------------------------------- -->
-<!-- ---------------------------------------------------------------------------------------------- -->
-<!-- ---------------------------------------------------------------------------------------------- -->
-<!-- ---------------------------------------------------------------------------------------------- -->
-<!-- ---------------------------------------------------------------------------------------------- -->
-<!-- ---------------------------------------------------------------------------------------------- -->
-<!-- ---------------------------------------------------------------------------------------------- -->
-<!-- ---------------------------------------------------------------------------------------------- -->
-<!-- ---------------------------------------------------------------------------------------------- -->
-<!-- ---------------------------------------------------------------------------------------------- -->
-<!-- The Profile is Perfect but Blue Color theme that is not Mine so that why i comment it  -->
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .75rem 1.5rem;
+}
+.contact-field label {
+  font-size: .65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--t3);
+  display: block;
+  margin-bottom: .2rem;
+}
+.contact-field span {
+  font-size: .82rem;
+  color: var(--t);
+  font-weight: 500;
+}
+.contact-field span.empty { color: var(--t3); font-style: italic; }
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+.no-profile-note {
+  text-align: center;
+  padding: 1.5rem;
+  font-size: .82rem;
+  color: var(--t2);
+}
+.no-profile-note i { font-size: 1.5rem; color: var(--t3); display: block; margin-bottom: .5rem; }
 
-</head>
-<body>
-    <div class="container mt-5">
-    <div class="card shadow-lg p-4">
-        <div class="text-center">
-            {% if user_profile.image %}
-                <img src="{{ user_profile.image.url }}" alt="Profile Image" class="rounded-circle shadow" width="150">
-            {% else %}
-                <img src="https://via.placeholder.com/150" alt="Default Profile" class="rounded-circle shadow">
-            {% endif %}
-            <h2 class="mt-3">{{ user_profile.full_name }}</h2>
-            <p class="text-muted">{{ user_profile.job_title }}</p>
+/* skills */
+.skills-grid {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+}
+.skill-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.skill-name {
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--t);
+  min-width: 120px;
+  flex-shrink: 0;
+}
+.skill-bar-wrap {
+  flex: 1;
+  height: 6px;
+  background: var(--border2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.skill-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--g), #86efac);
+  transition: width 1s ease;
+}
+.skill-pct {
+  font-size: .72rem;
+  color: var(--t3);
+  min-width: 32px;
+  text-align: right;
+}
+
+/* projects */
+.projects-list { display: flex; flex-direction: column; gap: .6rem; }
+.project-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .65rem .85rem;
+  background: var(--s2);
+  border-radius: 8px;
+  border: 1px solid var(--border2);
+  gap: 1rem;
+  transition: border-color .2s;
+}
+.project-row:hover { border-color: rgba(34,197,94,0.2); }
+.project-name { font-size: .82rem; font-weight: 600; color: var(--t); }
+.status-pill {
+  font-size: .65rem;
+  font-weight: 700;
+  padding: .2rem .55rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.pill-pending { background: rgba(251,191,36,0.12); color: #fbbf24; }
+.pill-completed { background: rgba(34,197,94,0.12); color: var(--g); }
+.pill-ongoing { background: rgba(96,165,250,0.12); color: #60a5fa; }
+.pill-default { background: rgba(255,255,255,0.06); color: var(--t2); }
+
+.empty-section {
+  font-size: .8rem;
+  color: var(--t3);
+  text-align: center;
+  padding: 1.5rem;
+  font-style: italic;
+}
+
+/* skeleton */
+.skeleton-line {
+  height: 14px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--s2) 25%, var(--s3) 50%, var(--s2) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  margin-bottom: .65rem;
+}
+.skeleton-line.w-60 { width: 60%; }
+.skeleton-line.w-40 { width: 40%; }
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+
+@media (max-width: 900px) {
+  .profile-grid { grid-template-columns: 1fr; }
+  .profile-left-card { position: static; }
+  .contact-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .profile-wrap { padding: 1rem 1rem 2.5rem; }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="profile-wrap">
+
+  <div class="profile-top">
+    <h1><i class="fas fa-user-circle"></i> My Profile</h1>
+    <a href="{% url 'profile_edit' %}" class="btn btn-primary btn-sm">
+      <i class="fas fa-pencil-alt" style="font-size:.7rem"></i> Edit Profile
+    </a>
+  </div>
+
+  <div class="profile-grid">
+
+    <!-- ── LEFT: Avatar + Socials ── -->
+    <div class="profile-left-card">
+      <div class="profile-avatar-wrap">
+        {% if user_profile.image %}
+          <img src="{{ user_profile.image.url }}" alt="Profile" class="profile-avatar"/>
+        {% else %}
+          <div class="profile-avatar-placeholder"><i class="fas fa-user"></i></div>
+        {% endif %}
+
+        <div class="profile-name">{{ user_profile.full_name|default:"Anonymous" }}</div>
+        <div class="profile-title">{{ user_profile.job_title|default:"No title set" }}</div>
+        {% if user_profile.region %}
+        <div class="profile-location">
+          <i class="fas fa-map-marker-alt" style="font-size:.6rem;color:var(--g)"></i>
+          {{ user_profile.region }}
         </div>
+        {% endif %}
+      </div>
 
-        <hr>
-
-        <div class="row">
-            <div class="col-md-6">
-                <h4><i class="fas fa-user-circle"></i> Basic Information</h4>
-                <p><strong>Region:</strong> {{ user_profile.region }}</p>
-                <p><strong>Email:</strong> <a href="mailto:{{ user_profile.email }}">{{ user_profile.email }}</a></p>
-                <p><strong>Phone:</strong> <a href="tel:{{ user_profile.phone }}">{{ user_profile.phone }}</a></p>
-                <p><strong>Location:</strong> {{ user_profile.location }}</p>
+      <div class="social-list">
+        <div class="social-list-label">Social Profiles</div>
+        {% for social in social_profiles %}
+          {% with p=social.platform_name|lower %}
+          <a href="{{ social.profile_url|default:'#' }}" class="social-item" target="_blank" rel="noopener">
+            <div class="si-icon"
+              style="background:{% if p == 'github' %}rgba(255,255,255,0.08){% elif p == 'linkedin' %}rgba(0,119,181,0.15){% elif p == 'youtube' %}rgba(255,0,0,0.12){% elif p == 'twitter' or p == 'x' %}rgba(29,161,242,0.12){% elif p == 'instagram' %}rgba(228,64,95,0.12){% else %}rgba(34,197,94,0.1){% endif %}">
+              <i class="{% if p == 'github' %}fab fa-github{% elif p == 'linkedin' %}fab fa-linkedin{% elif p == 'youtube' %}fab fa-youtube{% elif p == 'twitter' or p == 'x' %}fab fa-twitter{% elif p == 'instagram' %}fab fa-instagram{% elif p == 'discord' %}fab fa-discord{% elif p == 'gitlab' %}fab fa-gitlab{% elif p == 'reddit' %}fab fa-reddit{% else %}fas fa-globe{% endif %}"
+                style="color:{% if p == 'github' %}#fff{% elif p == 'linkedin' %}#0077b5{% elif p == 'youtube' %}#ff0000{% elif p == 'twitter' or p == 'x' %}#1da1f2{% elif p == 'instagram' %}#e4405f{% elif p == 'discord' %}#5865f2{% elif p == 'gitlab' %}#fc6d26{% elif p == 'reddit' %}#ff4500{% else %}var(--g){% endif %}">
+              </i>
             </div>
+            <span>{{ social.platform_name }}</span>
+          </a>
+          {% endwith %}
+        {% empty %}
+          <p class="no-social">No social profiles added.</p>
+        {% endfor %}
+      </div>
+    </div>
 
-            <div class="col-md-6">
-                <h4><i class="fas fa-share-alt"></i> Social Profiles</h4>
-                {% for social in social_profiles %}
-                    <p>
-                        <strong>{{ social.platform_name }}</strong>: 
-                        <a href="{{ social.profile_link }}" target="_blank">{{ social.profile_link }}</a>
-                    </p>
-                {% empty %}
-                    <p>No social profiles added.</p>
-                {% endfor %}
-            </div>
+    <!-- ── RIGHT: Details ── -->
+    <div class="profile-right">
+
+      <!-- Contact Info -->
+      <div class="info-card">
+        <div class="info-card-header">
+          <span><i class="fas fa-address-card"></i>Contact Information</span>
         </div>
+        <div class="info-card-body">
+          {% if user_profile.full_name or user_profile.email or user_profile.phone or user_profile.location %}
+          <div class="contact-grid">
+            <div class="contact-field">
+              <label>Full Name</label>
+              <span>{{ user_profile.full_name|default:"—" }}</span>
+            </div>
+            <div class="contact-field">
+              <label>Email</label>
+              <span>{{ user_profile.email|default:"—" }}</span>
+            </div>
+            <div class="contact-field">
+              <label>Phone</label>
+              <span>{% if user_profile.phone %}{{ user_profile.phone }}{% else %}<span class="empty">Not provided</span>{% endif %}</span>
+            </div>
+            <div class="contact-field">
+              <label>Address</label>
+              <span>{% if user_profile.location %}{{ user_profile.location }}{% else %}<span class="empty">Not provided</span>{% endif %}</span>
+            </div>
+          </div>
+          {% else %}
+          <div class="no-profile-note">
+            <i class="fas fa-user-slash"></i>
+            No profile details yet. <a href="{% url 'profile_edit' %}" style="color:var(--g);font-weight:600">Update your profile</a> to personalize your experience.
+          </div>
+          <div class="skeleton-line"></div>
+          <div class="skeleton-line w-60"></div>
+          <div class="skeleton-line w-40"></div>
+          {% endif %}
+        </div>
+      </div>
 
-        <hr>
-
-        <h4><i class="fas fa-lightbulb"></i> Skills</h4>
-        <div class="row">
+      <!-- Skills -->
+      <div class="info-card">
+        <div class="info-card-header">
+          <span><i class="fas fa-code"></i>Skills</span>
+          <span style="font-size:.72rem;color:var(--t3)">{{ skills|length }} skill{{ skills|length|pluralize }}</span>
+        </div>
+        <div class="info-card-body">
+          {% if skills %}
+          <div class="skills-grid">
             {% for skill in skills %}
-                <div class="col-md-4">
-                    <div class="p-3 bg-light rounded shadow-sm text-center">
-                        <h5>{{ skill.skill_name }}</h5>
-                        <div class="progress">
-                            <div class="progress-bar bg-primary" role="progressbar" style="width: {{ skill.proficiency }}%;" 
-                                aria-valuenow="{{ skill.proficiency }}" aria-valuemin="0" aria-valuemax="100">
-                                {{ skill.proficiency }}%
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% empty %}
-                <p>No skills added.</p>
+            <div class="skill-row">
+              <span class="skill-name">{{ skill.skill_name }}</span>
+              <div class="skill-bar-wrap">
+                <div class="skill-bar-fill" style="width:0%" data-width="{{ skill.proficiency }}%"></div>
+              </div>
+              <span class="skill-pct">{{ skill.proficiency }}%</span>
+            </div>
             {% endfor %}
+          </div>
+          {% else %}
+          <p class="empty-section">No skills added yet.</p>
+          {% endif %}
         </div>
+      </div>
 
-        <hr>
-
-        <h4><i class="fas fa-project-diagram"></i> Projects</h4>
-        <div class="row">
+      <!-- Projects -->
+      <div class="info-card">
+        <div class="info-card-header">
+          <span><i class="fas fa-folder-open"></i>Projects</span>
+          <span style="font-size:.72rem;color:var(--t3)">{{ projects|length }} project{{ projects|length|pluralize }}</span>
+        </div>
+        <div class="info-card-body">
+          {% if projects %}
+          <div class="projects-list">
             {% for project in projects %}
-                <div class="col-md-6">
-                    <div class="card mb-3 p-3 shadow-sm">
-                        <h5 class="card-title">{{ project.project_name }}</h5>
-                        <p class="card-text"><strong>Status:</strong> {{ project.project_status }}</p>
-                    </div>
-                </div>
-            {% empty %}
-                <p>No projects added.</p>
+            <div class="project-row">
+              <span class="project-name">{{ project.project_name }}</span>
+              {% with s=project.project_status|lower %}
+              <span class="status-pill
+                {% if 'complet' in s %}pill-completed
+                {% elif 'ongoing' in s or 'progress' in s %}pill-ongoing
+                {% elif 'pending' in s %}pill-pending
+                {% else %}pill-default{% endif %}">
+                {{ project.project_status }}
+              </span>
+              {% endwith %}
+            </div>
             {% endfor %}
+          </div>
+          {% else %}
+          <p class="empty-section">No projects added yet.</p>
+          {% endif %}
         </div>
+      </div>
 
-        <hr>
-
-        <div class="text-center">
-            <a href="{% url 'profile_edit' %}" class="btn btn-primary">
-                <i class="fas fa-edit"></i> Edit Profile
-            </a>
-        </div>
     </div>
+  </div>
+
 </div>
 
-</body>
-</html> -->
-
-<!-- =========================================================================================================================== -->
-<!-- =========================================================================================================================== -->
-<!-- =========================================================================================================================== -->
-<!-- =========================================================================================================================== -->
-<!-- =========================================================================================================================== -->
-<!-- =========================================================================================================================== -->
-<!-- =========================================================================================================================== -->
-<!-- =========================================================================================================================== -->
-<!-- =========================================================================================================================== -->
-<!-- =========================================================================================================================== -->
-<!-- =========================================================================================================================== -->
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile Page</title>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <style>
-        body {
-            background-color: #e3fced;
-            color: black;
-        }
-        .card {
-            background-color: white;
-            border: none;
-        }
-        .btn-primary {
-            background-color: #4e9b5f;
-            border-color: #4e9b5f;
-        }
-        .btn-primary:hover {
-            background-color: #ffcc00;
-            border-color: #ffcc00;
-        }
-        .progress-bar {
-            background-color: #4e9b5f;
-        }
-        .bg-light {
-            background-color: #e3fced !important;
-        }
-        hr {
-            border-top: 2px solid #4e9b5f;
-        }
-    </style>
-</head>
-<body>
-    <div class="container mt-5">
-        <div class="card shadow-lg p-4">
-            <div class="text-center">
-                {% if user_profile.image %}
-                    <img src="{{ user_profile.image.url }}" alt="Profile Image" class="rounded-circle shadow" width="150">
-                {% else %}
-                    <img src="https://via.placeholder.com/150" alt="Default Profile" class="rounded-circle shadow">
-                {% endif %}
-                <h2 class="mt-3">{{ user_profile.full_name }}</h2>
-                <p class="text-muted">{{ user_profile.job_title }}</p>
-            </div>
-
-            <hr>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <h4><i class="fas fa-user-circle"></i> Basic Information</h4>
-                    <p><strong>Region:</strong> {{ user_profile.region }}</p>
-                    <p><strong>Email:</strong> <a href="mailto:{{ user_profile.email }}">{{ user_profile.email }}</a></p>
-                    <p><strong>Phone:</strong> <a href="tel:{{ user_profile.phone }}">{{ user_profile.phone }}</a></p>
-                    <p><strong>Location:</strong> {{ user_profile.location }}</p>
-                </div>
-                <div class="col-md-6">
-                    <h4><i class="fas fa-share-alt"></i> Social Profiles</h4>
-                    {% for social in social_profiles %}
-                        <p>
-                            <strong>{{ social.platform_name }}</strong>: 
-                            <a href="{{ social.profile_link }}" target="_blank">{{ social.profile_link }}</a>
-                        </p>
-                    {% empty %}
-                        <p>No social profiles added.</p>
-                    {% endfor %}
-                </div>
-            </div>
-
-            <hr>
-
-            <h4><i class="fas fa-lightbulb"></i> Skills</h4>
-            <div class="row">
-                {% for skill in skills %}
-                    <div class="col-md-4">
-                        <div class="p-3 bg-light rounded shadow-sm text-center">
-                            <h5>{{ skill.skill_name }}</h5>
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width: {{ skill.proficiency }}%;" 
-                                    aria-valuenow="{{ skill.proficiency }}" aria-valuemin="0" aria-valuemax="100">
-                                    {{ skill.proficiency }}%
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                {% empty %}
-                    <p>No skills added.</p>
-                {% endfor %}
-            </div>
-
-            <hr>
-
-            <h4><i class="fas fa-project-diagram"></i> Projects</h4>
-            <div class="row">
-                {% for project in projects %}
-                    <div class="col-md-6">
-                        <div class="card mb-3 p-3 shadow-sm">
-                            <h5 class="card-title">{{ project.project_name }}</h5>
-                            <p class="card-text"><strong>Status:</strong> {{ project.project_status }}</p>
-                        </div>
-                    </div>
-                {% empty %}
-                    <p>No projects added.</p>
-                {% endfor %}
-            </div>
-
-            <hr>
-
-            <div class="text-center">
-                <a href="{% url 'profile_edit' %}" class="btn btn-primary">
-                    <i class="fas fa-edit"></i> Edit Profile
-                </a>
-            </div>
-        </div>
-    </div>
-</body>
-</html> -->
-<!-- ================================================================================================================================================================================== -->
-<!-- ================================================================================================================================================================================== -->
-<!-- ================================================================================================================================================================================== -->
-<!-- ================================================================================================================================================================================== -->
-<!-- ================================================================================================================================================================================== -->
-<!-- ================================================================================================================================================================================== -->
-<!-- ================================================================================================================================================================================== -->
-<!-- ================================================================================================================================================================================== -->
-<!-- ================================================================================================================================================================================== -->
-<!-- ================================================================================================================================================================================== -->
-<!-- ================================================================================================================================================================================== -->
-<!-- ================================================================================================================================================================================== -->
-<!-- ================================================================================================================================================================================== -->
-<!-- ================================================================================================================================================================================== -->
-<!-- ================================================================================================================================================================================== -->
-<!-- ================================================================================================================================================================================== -->
-<!-- ================================================================================================================================================================================== -->
-<!-- ================================================================================================================================================================================== -->
-
-
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile Dashboard</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <style>
-        body {
-            margin: 0;
-            background-color: #e3fced;
-            font-family: 'Poppins', sans-serif;
-        }
-        .sidebar {
-            width: 11.325rem;
-            min-width: 180px;
-            height: 100vh;
-            position: fixed;
-            left: 0;
-            z-index: 1;
-            background-color: #4e9b5f;
-            font-weight: bold;
-            padding-left: 20px;
-        }
-        .sidebar h2 {
-            font-size: 1.3rem;
-            color: white;
-            text-align: center;
-            margin: 40px 0;
-        }
-        .sidebar a {
-            display: flex;
-            align-items: center;
-            color: #fff;
-            padding: 5px;
-            margin: 10px 0;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 0.9rem;
-        }
-        .main-content {
-            margin-left: calc(11.325rem + 20px);
-            padding: 20px;
-        }
-        .card {
-            background-color: white;
-            border: none;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .progress-bar {
-            background-color: #ffcc00;
-        }
-        .btn-primary {
-            background-color: #4e9b5f;
-            border-color: #4e9b5f;
-        }
-    </style>
-</head>
-<body>
-    <div class="sidebar">
-        <h2>Dashboard</h2>
-        <a href="{% url 'default' %}"><i class="fas fa-home"></i> Home page</a>
-        <a href="{% url 'job_list' %}"><i class="fas fa-clipboard-list"></i> Job Tracker</a>
-        <a href="{% url 'job_create_or_update' %}"><i class="fas fa-plus-square"></i> Add Application</a>
-        <a href="{% url 'feedback' %}"><i class="fas fa-comment"></i> Your Thoughts</a>
-        <a href="{% url 'simple_analytics' %}"><i class="fas fa-chart-bar"></i> Application Stats</a>
-        <a href="{% url 'logout' %}"><i class="fas fa-power-off"></i> Logout</a>
-        <a href="{% url 'profile' %}"><i class="fa fa-chess"></i> Profile</a>
-    </div>
-    <div class="main-content">
-        <div class="container mt-5">
-            <div class="card shadow-lg p-4">
-                <div class="text-center">
-                    {% if user_profile.image %}
-                        <img src="{{ user_profile.image.url }}" alt="Profile Image" class="rounded-circle shadow" width="150">
-                    {% else %}
-                        <img src="https://via.placeholder.com/150" alt="Default Profile" class="rounded-circle shadow">
-                    {% endif %}
-                    <h2 class="mt-3">{{ user_profile.full_name }}</h2>
-                    <p class="text-muted">{{ user_profile.job_title }}</p>
-                </div>
-                
-                <hr>
-                <div class="row">
-                    <div class="col-md-6">
-                        <h4><i class="fas fa-user-circle"></i> Basic Information</h4>
-                        <p><strong>Region:</strong> {{ user_profile.region }}</p>
-                        <p><strong>Email:</strong> <a href="mailto:{{ user_profile.email }}">{{ user_profile.email }}</a></p>
-                        <p><strong>Phone:</strong> <a href="tel:{{ user_profile.phone }}">{{ user_profile.phone }}</a></p>
-                        <p><strong>Location:</strong> {{ user_profile.location }}</p>
-                    </div>
-                    <div class="col-md-6">
-                        <h4><i class="fas fa-share-alt"></i> Social Profiles</h4>
-                        {% for social in social_profiles %}
-                            <p><strong>{{ social.platform_name }}</strong>: 
-                                <a href="{{ social.profile_link }}" target="_blank">{{ social.profile_link }}</a>
-                            </p>
-                        {% empty %}
-                            <p>No social profiles added.</p>
-                        {% endfor %}
-                    </div>
-                </div>
-                <hr>
-                <h4><i class="fas fa-lightbulb"></i> Skills</h4>
-                <div class="row">
-                    {% for skill in skills %}
-                        <div class="col-md-4">
-                            <div class="p-3 bg-light rounded shadow-sm text-center">
-                                <h5>{{ skill.skill_name }}</h5>
-                                <div class="progress">
-                                    <div class="progress-bar" role="progressbar" style="width: {{ skill.proficiency }}%;"
-                                        aria-valuenow="{{ skill.proficiency }}" aria-valuemin="0" aria-valuemax="100">
-                                        {{ skill.proficiency }}%
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {% empty %}
-                        <p>No skills added.</p>
-                    {% endfor %}
-                </div>
-                <hr>
-                <h4><i class="fas fa-project-diagram"></i> Projects</h4>
-                <div class="row">
-                    {% for project in projects %}
-                        <div class="col-md-6">
-                            <div class="card mb-3 p-3 shadow-sm">
-                                <h5 class="card-title">{{ project.project_name }}</h5>
-                                <p class="card-text"><strong>Status:</strong> {{ project.project_status }}</p>
-                            </div>
-                        </div>
-                    {% empty %}
-                        <p>No projects added.</p>
-                    {% endfor %}
-                </div>
-                <hr>
-                <div class="text-center">
-                    <a href="{% url 'profile_edit' %}" class="btn btn-primary">
-                        <i class="fas fa-edit"></i> Edit Profile
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
-
-<!-- <div>
-    <h2>Dashboard</h2>
-    <a href="{% url 'default' %}">Home page</a>
-    <a href="{% url 'job_list' %}">Job Tracker</a>
-    <a href="{% url 'job_create_or_update' %}">Add Application</a>
-    <a href="{% url 'feedback' %}">Your Thoughts</a>
-    <a href="{% url 'simple_analytics' %}">Application Stats</a>
-    <a href="{% url 'logout' %}">Logout</a>
-    <a href="{% url 'profile' %}">Profile</a>
-</div>
-<div>
-    <div>
-        <div>
-            <div>
-                {% if user_profile.image %}
-                    <img src="{{ user_profile.image.url }}" alt="Profile Image" width="150">
-                {% else %}
-                    <img src="https://via.placeholder.com/150" alt="Default Profile">
-                {% endif %}
-                <h2>{{ user_profile.full_name }}</h2>
-                <p>{{ user_profile.job_title }}</p>
-            </div>
-            <hr>
-            <div>
-                <div>
-                    <h4>Basic Information</h4>
-                    <p><strong>Region:</strong> {{ user_profile.region }}</p>
-                    <p><strong>Email:</strong> <a href="mailto:{{ user_profile.email }}">{{ user_profile.email }}</a></p>
-                    <p><strong>Phone:</strong> <a href="tel:{{ user_profile.phone }}">{{ user_profile.phone }}</a></p>
-                    <p><strong>Location:</strong> {{ user_profile.location }}</p>
-                </div>
-                <div>
-                    <h4>Social Profiles</h4>
-                    {% for social in social_profiles %}
-                        <p><strong>{{ social.platform_name }}</strong>: 
-                            <a href="{{ social.profile_link }}" target="_blank">{{ social.profile_link }}</a>
-                        </p>
-                    {% empty %}
-                        <p>No social profiles added.</p>
-                    {% endfor %}
-                </div>
-            </div>
-            <hr>
-            <h4>Skills</h4>
-            <div>
-                {% for skill in skills %}
-                    <div>
-                        <h5>{{ skill.skill_name }}</h5>
-                        <p>{{ skill.proficiency }}%</p>
-                    </div>
-                {% empty %}
-                    <p>No skills added.</p>
-                {% endfor %}
-            </div>
-            <hr>
-            <h4>Projects</h4>
-            <div>
-                {% for project in projects %}
-                    <div>
-                        <h5>{{ project.project_name }}</h5>
-                        <p><strong>Status:</strong> {{ project.project_status }}</p>
-                    </div>
-                {% empty %}
-                    <p>No projects added.</p>
-                {% endfor %}
-            </div>
-            <hr>
-            <div>
-                <a href="{% url 'profile_edit' %}">Edit Profile</a>
-            </div>
-        </div>
-    </div>
-</div>
-</body>
-</html> -->
+<script>
+// animate skill bars on scroll
+const bars = document.querySelectorAll('.skill-bar-fill');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.width = e.target.dataset.width;
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+bars.forEach(b => obs.observe(b));
+</script>
+{% endblock %}

@@ -93,7 +93,7 @@ def job_list(request):
 #         form = JobForm(instance=job)
 #     return render(request, 'job_update.html', {'form': form, 'job': job})
 
-@login_required
+# @login_required
 def job_create_or_update(request, job_id=None):
     if job_id:
         # Edit existing job
@@ -198,7 +198,7 @@ from django.shortcuts import render, redirect
 from .models import Feedback
 from django.contrib.auth.decorators import login_required
 
-@login_required
+# @login_required
 def feedback(request):
     if request.method == "POST":
         name = request.POST.get("name")

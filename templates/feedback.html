@@ -1,662 +1,263 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Feedback Form</title>
-    <head>
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-        <link rel="icon" type="image/x-icon" href="{% static 'img/favicon.ico' %}">
-    </head> 
-    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+{% block title %}Your Thoughts — Career Traces{% endblock %}
+{% block nav_feedback %}active{% endblock %}
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">  
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-JZ5EM6ZP04"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-        
-          gtag('config', 'G-JZ5EM6ZP04');
-        </script>
+{% block extra_head %}
+<style>
+.feedback-wrap {
+  width: 100%;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1.5rem 2rem 3rem;
+}
+.feedback-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+  margin-bottom: .25rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.feedback-title i { color: var(--g); font-size: .9rem; }
+.feedback-sub { font-size: .8rem; color: var(--t2); margin-bottom: 1.75rem; }
 
-    <style>
-        body {
-            margin: 0;
-            background-color: #ffffff; 
-            font-family: 'Poppins', sans-serif;
-        }
-            
-        .container {
-            display: flex;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-                
-        .sidebar {
-            width: 11.325rem; /* 20% of the viewport width */
-            min-width: 180px; /* Ensure a minimum width for readability */
-            height: 100vh;
-            position: fixed;
-            left: 0;
-            z-index: 1; 
-            background-color: #4e9b5f ; 
-            font-weight: bold;
-        }
-        
-        .sidebar h2 { 
-            font-size: 1.3rem;
-            color: white; /* Soft White */
-            text-align: center;
-            margin-bottom: 40px;
-            margin-top: 40px;
-        }
+.feedback-card {
+  background: var(--s1);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.feedback-card-header {
+  background: var(--s2);
+  border-bottom: 1px solid var(--border2);
+  padding: .85rem 1.5rem;
+  font-size: .82rem;
+  font-weight: 700;
+  color: var(--t);
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.feedback-card-header i { color: var(--g); }
+.feedback-card-body { padding: 1.75rem 1.5rem; }
 
-        .sidebar a {
-            display: flex;
-            align-items: center;
-            color: #fff;
-            padding: 5px;
-            margin: 10px 0;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 0.7rem;
-        }
+.fg { display: flex; flex-direction: column; margin-bottom: 1.1rem; }
+.fg label {
+  font-size: .72rem;
+  font-weight: 700;
+  color: var(--t2);
+  letter-spacing: .3px;
+  text-transform: uppercase;
+  margin-bottom: .35rem;
+}
+.fg .required { color: var(--g); }
+.fg input,
+.fg select,
+.fg textarea {
+  background: var(--s2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  color: var(--t);
+  font-size: .85rem;
+  font-family: var(--f-head);
+  padding: .6rem .85rem;
+  outline: none;
+  transition: all .2s;
+  width: 100%;
+}
+.fg input:focus,
+.fg select:focus,
+.fg textarea:focus {
+  border-color: rgba(34,197,94,0.4);
+  box-shadow: 0 0 0 3px rgba(34,197,94,0.08);
+}
+.fg input::placeholder,
+.fg textarea::placeholder { color: var(--t3); }
+.fg select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23607064' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right .85rem center;
+  padding-right: 2.2rem;
+}
+.fg select option { background: var(--s2); color: var(--t); }
+.fg textarea { resize: vertical; min-height: 90px; }
 
-        .sidebar a:hover {
-            background-color: #ffcc00;
-            margin-right: 30px!important;
-        }
+.fg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem 1.5rem; }
 
-        /* Main Content */
-        .main-content {
-            margin-left: calc(11.325rem + 50px); /* Dynamic adjustment */
-            padding: 10px !important;
-            margin-right: 80px!important;
-            flex-grow: 1;
-        }
-
-        /* Heading */
-        h1 {
-            text-align: center;
-            color: #000000 !important;
-            text-decoration: underline;
-            margin-top: 0px;
-            margin: 10px 10px 40px;
-            font-size: 1.5rem;
-        }
-
-        .feedback-form button {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 10px;
-            cursor: pointer;
-            display: block;  
-            margin: 20px auto; 
-            font-weight: bold;
-        }
-        .btn {
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: #ffcc00;
-            color: white !important;
-            font-weight: bold;
-            font-size: 0.8rem;
-            min-width: 70px;
-        }
-        .card {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            flex: 1 1 calc(33.333% - 40px);
-            text-align: center;
-        }
-        
-        label{
-            margin-top: 20px !important;
-        } 
-
-        /* Overlay styles */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); 
-            display: none; 
-            z-index: 999; 
-        }
-
-        .error {
-            margin-top: 0px;
-            font-size: 0.7rem;
-        }
-        /* Tablet Styles (screens with width up to 768px) */
-@media screen and (max-width: 768px) {
-    label {
-        font-size: 1rem; /* Slightly bigger font on tablets */
-        margin-left: 15px;
-        margin-right: 15px;
-    }
-
-    .feedback-form input,
-    .feedback-form select,
-    .feedback-form textarea {
-        width: 100%; /* Full width for input fields */
-        margin: 0 15px; /* Adjust margin for smaller screens */
-        padding: 10px; /* Add some padding to make it look better */
-        font-size: 1rem; /* Adjust font size for readability */
-    }
+/* rating input */
+.rating-wrap { position: relative; }
+.rating-wrap input {
+  padding-right: 3rem;
+}
+.rating-hint {
+  position: absolute;
+  right: .85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: .72rem;
+  color: var(--t3);
+  pointer-events: none;
 }
 
-        /* Mobile Styles (screens with width up to 480px) */
-        @media screen and (max-width: 480px) {
-            label {
-                font-size: 1.3rem; /* Slightly bigger font for smaller screens */
-                margin-left: 10px;
-                margin-right: 10px;
-                margin-top: 10px; /* Reduce margin-top */
-            }
+/* star display */
+.star-display {
+  display: flex;
+  gap: .3rem;
+  margin-top: .4rem;
+}
+.star-display i { color: var(--border2); font-size: .85rem; transition: color .2s; }
+.star-display i.lit { color: #f59e0b; }
 
-            .feedback-form input,
-            .feedback-form select,
-            .feedback-form textarea {
-                width: 100%; /* Ensure full width on mobile */
-                margin: 0 10px; /* Adjust margin */
-                padding: 12px; /* Add padding for better mobile UI */
-                font-size: 1.1rem; /* Slightly larger font size for mobile */
-            }
-            
-        }
+.form-divider { height: 1px; background: var(--border2); margin: 1.25rem 0; }
 
-        @media (max-width: 768px) {
-            .btn {
-                font-size: 0.8rem;
-                padding: 6px 10px;
-            }
-            
-            
-            .feedback-form button {
-                background-color: #28a745;
-                color: white;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-                display: block;  
-                margin: 20px auto; 
-                font-weight: bold;
-            }
-
-
-            h1 {
-                text-align: center;
-                color: #000000;
-                text-decoration: underline;
-                margin-top: 20px !important;
-                margin-bottom: 30px;
-                font-size: 1.5rem;
-            }
-            
-            .sidebar {
-                display: none;
-                font-weight: bold;
-            }
-            
-            .main-content {
-                margin-right: 0px !important;
-                margin-left: 0px !important;
-                padding: 0px !important;
-            }
-            
-            .hamburger {
-                display: block; 
-                position: fixed;
-                top: 20px;
-                left: 20px;
-                font-size: 24px; 
-            }
-
-            .feedback-form{
-                margin-top: 15px ;
-                margin-left: 25px;
-                margin-right: 25px;
-            }
-            
-            label {
-                font-size: 0.9rem;
-            }
-        }
-        
-        @media (max-width: 1024px) {
-            .feedback-form-container {
-                /* margin: 0 20px !important; */
-                margin: 0 181.2px !important;
-                padding: 15px !important;
-                box-shadow: none !important;
-            }
-            h1 {
-                text-align: center;
-                color: #000000;
-                text-decoration: underline; 
-                margin: 10px 10px 40px 10px;
-            }
-            
-            .btn {
-                font-size: 0.9rem;
-                padding: 8px 12px;
-            }
-            
-            .sidebar {
-                display: none; 
-                width: 60%; 
-                top: 0; 
-                left: 0;
-                position: fixed; 
-                height: 100vh; 
-                z-index: 1000; 
-                overflow-y: auto;
-            }
-            .sidebar a {
-                margin-right: 20px;
-                padding: 10px;
-                padding-right: 20px;
-                font-size: 15px;
-            }
-
-            .feedback-form input,
-            .feedback-form select,
-            .feedback-form textarea {
-                font-family: 'Poppins', sans-serif;
-                margin-top: 5px !important;
-                width: 80%;
-                border: 1px solid #ddd;
-                border-radius: 5px;
-                font-size: 0.9rem;
-                box-sizing: border-box;
-                padding: 5px;
-                background-color: white;
-            }
-            .hamburger {
-                display: block; 
-                position: fixed;
-                top: 20px;
-                left: 20px;
-                font-size: 24px; 
-            }
-
-            .sidebar {
-                display: none;
-            }
-            .main-content{
-                padding: 0px !important;
-                margin-left: 0px !important;
-                margin-right: 0px !important;
-            }
-
-            .hamburger {
-                display: block;
-                position: fixed;
-                top: 20px;
-                left: 20px;
-                font-size: 24px;
-                cursor: pointer;
-            }
-
-            .main-content {
-                padding: 20px;
-            }
-        }
-        /* Container styling for the error messages */
-.error {
-    color: #D8000C; /* Red color for error text */
-    background-color: #FFD2D2; /* Light red background for better contrast */
-    border: 1px solid #D8000C; /* Red border to emphasize the error */
-    border-radius: 5px; /* Rounded corners */
-    padding: 5px 15px; /* Padding for spacing */
-    margin-top: 10px; /* Space above the error box */
-    font-family: 'Poppins', sans-serif; /* Clean and readable font */
-    font-size: 0.8rem; /* Slightly smaller font size */
-    width: 82%;
-    display: inline-block;
-    margin-left: 20px !important; 
+.btn-submit-feedback {
+  width: 100%;
+  background: var(--g);
+  color: #000;
+  padding: .75rem;
+  border-radius: 9px;
+  border: none;
+  font-size: .88rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: var(--f-head);
+  transition: all .25s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  box-shadow: 0 4px 16px rgba(34,197,94,0.25);
+  margin-top: .25rem;
+}
+.btn-submit-feedback:hover {
+  background: var(--g2);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(34,197,94,0.35);
 }
 
-/* Styling for individual error messages */
-.error p {
-    display: inline-block;
-    margin: 0; /* Remove default margin around paragraphs */
-    padding: 2px 0; /* Add some space between each error */
-}
-
-/* Add a subtle icon for error messages */
-.error:before {
-    content: '\26A0'; /* Warning symbol */
-    display: inline-block;
-    margin-right: 8px;
-    font-size: 16px;
-    color: #D8000C;
-}
-/* ============================================================================================================================ */
-/* ============================================================================================================================ */
-.feedback-form-container {
-            width: calc(100% - 362.4px);
-            margin: 0 181.2px !important;
-            margin-bottom: 10px !important;
-            padding: 20px;
-            background-color: #e3fced;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .feedback-form-container h2 {
-            text-decoration: underline;
-            text-align: center;
-            color: black;
-            margin-bottom: 20px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            font-weight: bold;
-            margin-bottom: 5px;
-            display: block;
-        }
-        .form-group input, .form-group textarea, .form-group select {
-            width: 100%;
-            padding: 8px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
-            
-        }
-        .form-group textarea {
-            height: 100px;
-            resize: vertical;
-        }
-        .form-group button {
-            background-color: #ffcc00;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            justify-content: center;
-            text-align: center;
-            font-weight: bold;
-            width: 100%;
-        }
-        .form-group button:hover {
-            opacity: 0.75;
-        }
-        /* Feedback Form Styles */
-@media (max-width: 1024px) {
-.feedback-form-container {
-    width: calc(100% - 362.4px); /* Adjust width for margin */
-    margin: 0 181.2px !important; /* Apply the side margins */
-    margin-bottom: 10px !important; /* Apply bottom margin */
-    padding: 20px;
-    background-color: #e3fced;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.feedback-form-container h2 {
-    text-decoration: underline;
-    text-align: center;
-    color: black;
-    margin-bottom: 20px;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    font-weight: bold;
-    margin-bottom: 5px;
-    display: block;
-}
-
-.form-group input, 
-.form-group textarea, 
-.form-group select {
-    width: 100%;
-    padding: 8px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-}
-
-.form-group textarea {
-    height: 100px;
-    resize: vertical;
-}
-
-.form-group button {
-    background-color: #ffcc00;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.8rem;
-    justify-content: center;
-    text-align: center;
-    font-weight: bold;
-    width: 100%;
-}
-
-.form-group button:hover {
-    opacity: 0.75;
-}
-}
-/* Media Queries for Feedback Form */
-@media (max-width: 768px) {
-    .feedback-form-container {
-        margin-left: 20px;
-        margin-right: 20px;
-        padding: 15px;
-        width: 100%;
-        max-width: 90%;
-    }
-
-    .feedback-form-container h2 {
-        font-size: 24px;
-    }
-
-    .form-group input, 
-    .form-group textarea, 
-    .form-group select {
-        padding: 10px;
-    }
-
-    .form-group button {
-        font-size: 14px;
-        padding: 12px 20px;
-    }
-}
-
+/* success message */
+{% comment %} .feedback-success { ... } {% endcomment %}
 
 @media (max-width: 768px) {
-    .feedback-form-container {
-        margin-left: 20px;
-        padding: 15px;
-        width: 100%;
-        max-width: 90%;
-    }
-    .feedback-form-container h2 {
-        font-size: 24px;
-    }
-    .form-group input, .form-group textarea, .form-group select {
-        padding: 10px;
-    }
-    .form-group button {
-        font-size: 14px;
-        padding: 12px 20px;
-    }
+  .feedback-wrap { padding: 1rem 1rem 2.5rem; }
+  .feedback-card-body { padding: 1.25rem 1rem; }
+  .fg-row { grid-template-columns: 1fr; }
 }
+</style>
+{% endblock %}
 
-@media (max-width: 480px) {
-    .feedback-form-container {
-        margin-left: 5px !important;
-        padding: 10px;
-        width: 90%;
-        max-width: 90%;
-    }
-    .feedback-form-container h2 {
-        font-size: 20px;
-    }
-    .form-group input, .form-group textarea, .form-group select {
-        padding: 8px;
-    }
-    .form-group button {
-        width: 50%;
-        font-size: 12px;
-        padding: 10px 15px;
-        margin-left: 75px !important;
-    }
-    
+{% block content %}
+<div class="feedback-wrap">
+
+  <div class="feedback-title">
+    <i class="fas fa-comment-alt"></i> Your Thoughts
+  </div>
+  <p class="feedback-sub">Help us improve Career Traces. Your feedback shapes what we build next.</p>
+
+  {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{% if message.tags == 'success' %}success{% else %}info{% endif %}" style="margin-bottom:1.25rem">
+      <i class="fas fa-check-circle"></i> {{ message }}
+    </div>
+    {% endfor %}
+  {% endif %}
+
+  <div class="feedback-card">
+    <div class="feedback-card-header">
+      <i class="fas fa-paper-plane"></i> Career Traces Feedback
+    </div>
+    <div class="feedback-card-body">
+      <form method="POST">
+        {% csrf_token %}
+
+        <!-- Name + Email row -->
+        <div class="fg-row">
+          <div class="fg">
+            <label>Full Name <span class="required">*</span></label>
+            <input type="text" name="name" placeholder="Your full name" required/>
+          </div>
+          <div class="fg">
+            <label>Email Address <span class="required">*</span></label>
+            <input type="email" name="email" placeholder="you@example.com" required/>
+          </div>
+        </div>
+
+        <!-- Rating + Discovery row -->
+        <div class="fg-row">
+          <div class="fg">
+            <label>Overall Rating (1–10) <span class="required">*</span></label>
+            <div class="rating-wrap">
+              <input type="number" name="rating" id="ratingInput" min="1" max="10"
+                placeholder="1 – 10" required oninput="updateStars(this.value)"/>
+              <span class="rating-hint">/ 10</span>
+            </div>
+            <div class="star-display" id="starDisplay">
+              <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+              <i class="fas fa-star"></i><i class="fas fa-star"></i>
+            </div>
+          </div>
+          <div class="fg">
+            <label>How did you find us? <span class="required">*</span></label>
+            <select name="discovery" required>
+              <option value="">Select source</option>
+              <option value="social_media">Social Media</option>
+              <option value="word_of_mouth">Word of Mouth</option>
+              <option value="search_engine">Search Engine</option>
+              <option value="friend">Friend / Colleague</option>
+              <option value="advertisement">Advertisement</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Navigation ease -->
+        <div class="fg">
+          <label>How easy was it to navigate the site? <span class="required">*</span></label>
+          <select name="navigation" required>
+            <option value="">Select...</option>
+            <option value="very_easy">Very Easy</option>
+            <option value="easy">Easy</option>
+            <option value="neutral">Neutral</option>
+            <option value="difficult">Difficult</option>
+            <option value="very_difficult">Very Difficult</option>
+          </select>
+        </div>
+
+        <div class="form-divider"></div>
+
+        <!-- Feature requests -->
+        <div class="fg">
+          <label>What features would you like to see?</label>
+          <textarea name="features"
+            placeholder="e.g. AI resume suggestions, email reminders, bulk import..."></textarea>
+        </div>
+
+        <!-- Recommendation -->
+        <div class="fg">
+          <label>Would you recommend Career Traces? Why?</label>
+          <textarea name="recommendation"
+            placeholder="Tell us your honest thoughts..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit-feedback">
+          <i class="fas fa-paper-plane" style="font-size:.8rem"></i> Submit Feedback
+        </button>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+function updateStars(val){
+  const stars=document.querySelectorAll('#starDisplay i');
+  const n=Math.min(Math.max(Math.ceil(parseInt(val)/2),0),5);
+  stars.forEach((s,i)=>s.classList.toggle('lit',i<n));
 }
-
-    </style>
-</head>
-
-<body>
-
-    <div class="sidebar" id="sidebar" style="padding-left: 20px; margin-right: 15px;"> 
-        <h2>Dashboard</h2>
-        
-        <!-- <a class="abc" href="{% url 'default' %}"><i class="fas fa-home" style="padding-right: 10px;"></i>Home page</a>
-        <a href="{% url 'job_list' %}"> <i class="fas fa-clipboard-list" style="padding-right: 10px;"></i> Job Tracker</a>
-        <a href="{% url 'job_create_or_update' %}"> <i class="fas fa-plus-square" style="padding-right: 10px;"></i> Add Application</a>
-        <a href="{% url 'feedback' %}"> <i class="fas fa-comment" style="padding-right: 10px;"></i>Your Thoughts</a>
-        <a href="{% url 'simple_analytics' %}"> <i class="fas fa-chart-bar" style="padding-right: 10px;"></i>Application Stats</a>
-        <a href="{% url 'logout' %}"> <i class="fas fa-power-off" style="padding-right: 10px;"></i> Logout</a> -->
-        <a class="abc" href="{% url 'default' %}"><i class="fas fa-home" style="padding-right: 10px;"></i>Home page</a>
-        <a class="abc" href="{% url 'job_profile' %}"><i class="fas fa-user-circle"  style="padding-right: 10px"></i>Profile</a>
-        <a class="abc" href="{% url 'job_list' %}"> <i class="fas fa-clipboard-list" style="padding-right: 10px;"></i> Job Tracker</a>
-        <a class="abc" href="{% url 'job_create_or_update' %}"> <i class="fas fa-plus-square" style="padding-right: 10px;"></i> Add Application</a>
-        <a class="abc" href="{% url 'simple_analytics' %}"> <i class="fas fa-chart-bar" style="padding-right: 10px;"></i>Application Stats</a>
-        <a class="abc" href="{% url 'feedback' %}"> <i class="fas fa-comment" style="padding-right: 10px;"></i>Your Thoughts</a>
-        <a class="abc" href="{% url 'logout' %}"> <i class="fas fa-power-off" style="padding-right: 10px;"></i> Logout</a>
- 
-    </div>
-   
-
-    <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
-    <div class="hamburger" onclick="toggleSidebar()">
-        <i class="fa fa-bars"></i>
-    </div>
-    <!-- <div class="hamburger" onclick="toggleSidebar()"><i class="fa fa-bars"></i></div> -->
-    
-    <div class="main-content" style="padding-top: 0px;">
- 
-        
-    <div class="feedback-form-container">
-        <h2>Career Traces Feedback</h2>
-        <form  method="POST">
-            {% csrf_token %}
-            <!-- Name Field -->
-            <div class="form-group">
-                <label for="name">Full Name</label>
-                <input type="text" id="name" name="name" required placeholder="Your Full Name">
-            </div>
-
-            <!-- Email Field -->
-            <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" required placeholder="Your Email Address">
-            </div>
-
-            <!-- Rating Field -->
-            <div class="form-group">
-                <label for="rating">Rate Your Overall Experience (1-10)</label>
-                <input type="number" id="rating" name="rating" required="" min="1" max="10" placeholder="Rate from 1 to 10">
-            </div>
-
-            <!-- How Did You Hear About Us -->
-            <div class="form-group">
-                <label for="discovery">How did you hear about Career Traces?</label>
-                <select id="discovery" name="discovery" required="">
-                    <option value="social_media">Social Media</option>
-                    <option value="word_of_mouth">Word of Mouth</option>
-                    <option value="search_engine">Search Engine</option>
-                    <option value="friend">Friend/Colleague</option>
-                    <option value="advertisement">Advertisement</option>
-                    <option value="other">Other</option>
-                </select>
-            </div>
-
-            <!-- Feature Requests -->
-            <div class="form-group">
-                <label for="features">What features would you like to see added to Career Traces in the future?</label>
-                <textarea id="features" name="features" placeholder="Describe any features you would like to see added."></textarea>
-            </div>
-
-            <!-- Navigation Experience -->
-            <div class="form-group">
-                <label for="navigation">How easy was it to navigate through the website?</label>
-                <select id="navigation" name="navigation" required="">
-                    <option value="very_easy">Very Easy</option>
-                    <option value="easy">Easy</option>
-                    <option value="neutral">Neutral</option>
-                    <option value="difficult">Difficult</option>
-                    <option value="very_difficult">Very Difficult</option>
-                </select>
-            </div>
-
-            <!-- Recommend to Others -->
-            <div class="form-group">
-                <label for="recommendation">Would you recommend Career Traces to others? Why or why not?</label>
-                <textarea id="recommendation" name="recommendation" placeholder="Your reasons for recommending or not recommending Career Traces."></textarea>
-            </div>
-
-            <!-- Submit Button -->
-            <div class="form-group">
-                <button type="submit">Submit Feedback</button>
-            </div>
-        </form>
-    </div>
-
-        
-    </div>
-
-    <script>
-
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('overlay');
-
-            if (sidebar.style.display === 'block') {
-                sidebar.style.display = 'none';
-                overlay.style.display = 'none'; // Hide overlay
-            } else {
-                sidebar.style.display = 'block';
-                overlay.style.display = 'block'; // Show overlay
-            }
-        }
-        function closeSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('overlay');
-
-            sidebar.style.display = 'none'; // Hide sidebar
-            overlay.style.display = 'none'; // Hide overlay
-        }
-    </script>
-
-</body>
-
-</html>
-
+</script>
+{% endblock %}
