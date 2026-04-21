@@ -1,248 +1,519 @@
 {% extends 'base.html' %}
-{% block content %}
 {% load static %}
 
+{% block title %}Job Tracker — Career Traces{% endblock %}
 
+{% block nav_tracker %}active{% endblock %}
 
-<h1  style="text-decoration: none;">My Job Applications</h1> 
-        
+{% block extra_head %}
+<style>
+/* ── PAGE HEADER ACTIONS ── */
+.page-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1.5rem 2rem 1rem;
+}
+.page-top h1 {
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: -0.4px;
+  color: var(--t);
+}
+.page-top-right {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  flex-wrap: wrap;
+}
 
-<!-- Only Update dashboard is not working on mobile devices -->
-<div class="search-container">
-    <form method="GET" action="/jobs/">
-        <input name="job_category" id="search" type="search" placeholder="Start typing to filter..." autocomplete="off">
-        <i class="fas fa-search search-icon"></i> 
+/* ── SEARCH ── */
+.search-wrap {
+  position: relative;
+}
+.search-wrap i {
+  position: absolute;
+  left: .75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--t3);
+  font-size: .75rem;
+  pointer-events: none;
+  transition: color .2s;
+}
+.search-wrap input {
+  width: 220px;
+  padding: .5rem .85rem .5rem 2.1rem;
+  background: var(--s2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  color: var(--t);
+  font-size: .8rem;
+  font-family: var(--f);
+  transition: all .2s;
+  outline: none;
+}
+.search-wrap input:focus {
+  border-color: rgba(34,197,94,0.35);
+  box-shadow: 0 0 0 3px rgba(34,197,94,0.07);
+  width: 260px;
+}
+.search-wrap input:focus ~ i,
+.search-wrap:focus-within i { color: var(--g); }
+.search-wrap input::placeholder { color: var(--t3); }
+
+/* ── STATS ROW ── */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  padding: 0 2rem 1.5rem;
+}
+.s-card {
+  background: var(--s1);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  padding: 1rem 1.15rem;
+  transition: border-color .2s, transform .2s;
+}
+.s-card:hover { border-color: rgba(34,197,94,0.2); transform: translateY(-2px); }
+.s-card .sc-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: .5rem; }
+.s-card .sc-icon {
+  width: 30px; height: 30px;
+  border-radius: 7px;
+  background: rgba(34,197,94,0.1);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--g); font-size: .75rem;
+}
+.s-card .sc-icon.blue { background: rgba(96,165,250,0.1); color: #60a5fa; }
+.s-card .sc-icon.yellow { background: rgba(251,191,36,0.1); color: #fbbf24; }
+.s-card .sc-icon.purple { background: rgba(167,139,250,0.1); color: #a78bfa; }
+.s-card .sc-icon.red { background: rgba(239,68,68,0.1); color: #f87171; }
+.s-card .sc-val { font-size: 1.6rem; font-weight: 800; letter-spacing: -1px; color: var(--t); }
+.s-card .sc-label { font-size: .72rem; color: var(--t3); margin-top: .1rem; }
+
+/* ── TABLE WRAPPER ── */
+.table-wrap {
+  margin: 0 2rem 2rem;
+  background: var(--s1);
+  border: 1px solid var(--border2);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.table-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .85rem 1.1rem;
+  border-bottom: 1px solid var(--border2);
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.table-toolbar-left {
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--t);
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.table-toolbar-left .count-badge {
+  background: rgba(34,197,94,0.12);
+  color: var(--g);
+  font-size: .65rem;
+  font-weight: 700;
+  padding: .15rem .5rem;
+  border-radius: 999px;
+}
+.table-scroll { overflow-x: auto; }
+
+/* ── TABLE ── */
+.ct-table { width: 100%; border-collapse: collapse; min-width: 700px; }
+.ct-table th {
+  padding: .6rem .9rem;
+  text-align: left;
+  font-size: .65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--t3);
+  background: var(--s2);
+  border-bottom: 1px solid var(--border2);
+  white-space: nowrap;
+}
+.ct-table td {
+  padding: .7rem .9rem;
+  font-size: .8rem;
+  color: var(--t2);
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  vertical-align: middle;
+}
+.ct-table tr:last-child td { border-bottom: none; }
+.ct-table tr:hover td { background: rgba(255,255,255,0.015); }
+.ct-table td .company-name { font-weight: 600; color: var(--t); font-size: .82rem; }
+
+/* status badges */
+.badge {
+  display: inline-flex;
+  padding: .2rem .55rem;
+  border-radius: 999px;
+  font-size: .65rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.b-interview { background: rgba(34,197,94,0.12); color: var(--g); }
+.b-applied { background: rgba(96,165,250,0.12); color: #60a5fa; }
+.b-pending { background: rgba(251,191,36,0.12); color: #fbbf24; }
+.b-rejected { background: rgba(239,68,68,0.1); color: #f87171; }
+.b-offer { background: rgba(167,139,250,0.12); color: #a78bfa; }
+.b-default { background: rgba(255,255,255,0.06); color: var(--t2); }
+
+/* action buttons */
+.action-btns { display: flex; align-items: center; gap: .4rem; }
+.btn-icon {
+  width: 30px; height: 30px;
+  border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .75rem;
+  text-decoration: none;
+  transition: all .2s;
+  border: 1px solid var(--border2);
+  color: var(--t2);
+  background: transparent;
+}
+.btn-icon:hover { border-color: rgba(34,197,94,0.3); color: var(--g); background: rgba(34,197,94,0.07); }
+.btn-icon.danger:hover { border-color: rgba(239,68,68,0.3); color: #f87171; background: rgba(239,68,68,0.07); }
+
+/* ref link */
+.ref-link {
+  display: inline-block;
+  max-width: 140px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #60a5fa;
+  font-size: .75rem;
+  text-decoration: none;
+  transition: color .2s;
+}
+.ref-link:hover { color: var(--g); }
+
+/* ── MOBILE CARDS ── */
+.cards-wrap {
+  display: none;
+  padding: 0 1rem 2rem;
+  flex-direction: column;
+  gap: .85rem;
+}
+.job-card-ct {
+  background: var(--s1);
+  border: 1px solid var(--border2);
+  border-radius: 14px;
+  padding: 1.1rem 1.2rem;
+  transition: border-color .2s;
+  animation: fadeCardIn .3s ease both;
+}
+@keyframes fadeCardIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.job-card-ct:hover { border-color: rgba(34,197,94,0.2); }
+.job-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: .85rem;
+  gap: .5rem;
+}
+.job-card-company { font-size: .9rem; font-weight: 700; color: var(--t); }
+.job-card-role { font-size: .75rem; color: var(--t2); margin-top: .1rem; }
+.job-card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .5rem .75rem;
+  margin-bottom: .85rem;
+}
+.job-field label {
+  display: block;
+  font-size: .62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  color: var(--t3);
+  margin-bottom: .15rem;
+}
+.job-field span { font-size: .78rem; color: var(--t2); }
+.job-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--border2);
+  padding-top: .85rem;
+  margin-top: .1rem;
+}
+.job-card-footer .card-actions { display: flex; gap: .5rem; }
+.card-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  padding: .4rem .85rem;
+  border-radius: 7px;
+  font-size: .75rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid var(--border2);
+  color: var(--t2);
+  transition: all .2s;
+  font-family: var(--f);
+}
+.card-btn:hover { border-color: rgba(34,197,94,0.3); color: var(--g); }
+.card-btn.danger:hover { border-color: rgba(239,68,68,0.3); color: #f87171; }
+
+/* ── EMPTY STATE ── */
+.empty-wrap {
+  padding: 4rem 2rem;
+  text-align: center;
+}
+.empty-icon {
+  width: 60px; height: 60px;
+  border-radius: 16px;
+  background: rgba(34,197,94,0.07);
+  border: 1px solid rgba(34,197,94,0.15);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1.1rem;
+  font-size: 1.4rem; color: var(--t3);
+}
+.empty-wrap h3 { font-size: .95rem; font-weight: 700; color: var(--t); margin-bottom: .4rem; }
+.empty-wrap p { font-size: .82rem; color: var(--t2); margin-bottom: 1.5rem; max-width: 320px; margin-left: auto; margin-right: auto; line-height: 1.6; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .page-top { padding: 1rem; }
+  .stats-row { padding: 0 1rem 1.25rem; }
+  .table-wrap { margin: 0 1rem 2rem; display: none; }
+  .cards-wrap { display: flex; }
+  .page-top-right .search-wrap input { width: 180px; }
+  .page-top-right .search-wrap input:focus { width: 200px; }
+}
+@media (max-width: 480px) {
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  .job-card-grid { grid-template-columns: 1fr; }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- ── PAGE TOP ── -->
+<div class="page-top">
+  <h1>
+    <i class="fas fa-clipboard-list" style="color:var(--g);font-size:.9rem;margin-right:.4rem"></i>
+    My Job Applications
+  </h1>
+  <div class="page-top-right">
+    <!-- search -->
+    <form method="GET" action="/jobs/" style="display:contents">
+      <div class="search-wrap">
+        <input name="job_category" id="search" type="search" placeholder="Filter applications..." autocomplete="off"/>
+        <i class="fas fa-search"></i>
+      </div>
     </form>
+    <!-- add btn -->
+    <a href="{% url 'job_create_or_update' %}" class="btn btn-primary">
+      <i class="fas fa-plus" style="font-size:.72rem"></i> Add Application
+    </a>
+  </div>
 </div>
-    
-    <style>
-        @media only screen and (max-width: 768px) {
-        .no-jobs-message {
-            display: none;
-        }
-        .cta-button1{
-            display: none;
-        }
-        }
-    </style>
-    
-        <table id="jobTable" style="margin-top: 0px !important; border-radius: 10px; margin-left: 30px;">
-            {% if jobs|length == 0 %}
-            
-            <div class="cta-container" style="background-color: #e3fced;">
-                <a href="{% url 'job_create_or_update' %}" class="cta-button">Add Application</a>
-            </div>
-            {% else %}
-            <tr>
-                <th>Job Category</th>
-                <th>Job Level</th>
-                <th>Company Name</th>
-                
-                {% if not all_emails_empty %}
-                    <th>Company Email</th> <!-- Conditionally show the Company Email column -->
-                {% endif %}
-                <th>Reference Link</th>
-                <th>Employment Type</th>
-                <th>Application Status</th>
-                <!-- If data occurs then it is display else heading remove  -->
-                {% if not all_dates_empty %}
-                    <th>Interview Date</th>
-                {% endif %}
-                <th>Actions</th>
-            </tr>
-            {% for job in jobs %}
-            <tr>
-                <td>{{ job.job_category }}</td>
-                <td>{{ job.job_level }}</td>
-                <td>{{ job.company_name }}</td>
-                {% if not all_emails_empty %}
-                    <td>
-                        {% if job.company_email %}
-                            {{ job.company_email }}
-                        {% endif %}
-                    </td>
-                {% endif %}
-                <td><a href="{{ job.reference_link }}" style="width: 150px !important; color: blue">{{ job.reference_link }}</a></td>
-                <td>{{ job.employment_type }}</td>
-                <td>{{ job.application_status }}</td>
-                {% if not all_dates_empty %}
-                <td>
-                    {% if job.interview_date %}
-                        {{ job.interview_date }}
-                        {% endif %}
-                    </td>
-                {% endif %}
-                    <td>
-                    <a href="{% url 'job_create_or_update' job_id=job.id %}" title="Edit" class="btn" style="display: inline; font-size: 1.2rem !important; color:#ffc00c ; width: 20px !important; padding: 0px !important;">
-                        <i class="fa fa-pencil"></i>
-                    </a>
-                    
-                    <!-- Redirect to the confirmation page -->
-                    <a href="{% url 'job_delete_confirmation' job.id %}" class="btn btn-delete" style="background-color: red;">
-                        <i class="fa fa-trash" style="padding: 8px 15px; color: red;"></i>
-                    </a>
-                    
-                    <!-- font-size:1.2rem !important;  -->
-                </td>
-            </tr>
-            {% endfor %}
 
-            {% endif %}
-        </table>
-        <style>
-            /* Responsive for tablets and smaller */
-@media screen and (max-width: 768px) {
-    .main-content {
-        margin: 10px;
-    }
-
-    .no-jobs-message {
-        display: none; /* Hide message if needed */
-    }
-
-    .cta-container {
-        align-items: center;
-        padding: 20px;
-        width: 90%;
-        margin-top: 30px;
-        background-color: #e3fced;
-    }
-    
-    .cta-button {
-        text-align: center;
-        width: 100%;        /* Make button full width */
-        font-size: 16px;     /* Slightly smaller text */
-        padding: 12px 20px;  /* Smaller padding */
-
-    }
-}
-
-/* Extra Responsive for small mobiles */
-@media screen and (max-width: 480px) {
-    .cta-button {
-        text-align: center;
-        font-size: 14px;    /* Even smaller text on very small screens */
-        padding: 10px 15px;
-    }
-
-    .cta-container {
-        align-items: center;
-        padding: 15px;
-        background-color: #e3fced;
-    }
-}
-
-        </style>
-        <div id="jobCards" style="display: flex; flex-direction: row; flex-wrap: wrap;">
-            {% if jobs|length == 0 %}
-            <div class="cta-container">
-                <a href="{% url 'job_create_or_update' %}" class="cta-button1">Add Application</a>
-            </div>
-            {% else %}
-            
-
-            {% for job in jobs %}
-            <div class="job-card">
-                    <div class="job-item">
-                        <label>Job Category:</label>
-                        <span>{{ job.job_category }}</span>
-                    </div>
-                    <div class="job-item">
-                        <label>Job Level:</label>
-                        <span>{{ job.job_level }}</span>
-                    </div>
-                    <div class="job-item">
-                        <label>Company Name:</label>
-                        <span>{{ job.company_name }}</span>
-                    </div>
-                    
-                    {% if not all_emails_empty %}
-                        <!-- Only display this block if there are some emails in the job list -->
-                        {% if job.company_email %}
-                            <div class="job-item">
-                                <label>Company Email:</label>
-                                <span>{{ job.company_email }}</span>
-                            </div>
-                        {% endif %}
-                    {% endif %}
-                    
-
-                    <div class="job-item">
-                        <label>Reference Link:</label>
-                        <span><a href="{{ job.reference_link }}" style="display: inline-block; width: 180px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; color: blue;">{{ job.reference_link }}</a></span>
-                    </div>
-                    <div class="job-item">
-                        <label>Employment Type:</label>
-                        <span>{{ job.employment_type }}</span>
-                    </div>
-                    <div class="job-item">
-                        <label>Application Status:</label>
-                        <span>{{ job.application_status }}</span>
-                    </div>
-                    
-                    {% if job.interview_date %}
-                    <div class="job-item">
-                        <label>Interview Date:</label>
-                        <span>{{ job.interview_date | date:"Y-m-d" }}</span>
-                    </div>
-                    {% endif %}
-                    
-    <!-- -------------------------------------------------------------------------------------------------------------- -->
-                    <div class="actions">
-                        <a href="{% url 'job_create_or_update' job.id %}" class="btn btn-edit" style="text-decoration: underline; font-size: 1.2rem !important; padding: 8px 15px;">✏️</a>
-                        
-                        <!-- Redirect to the confirmation page -->
-                        <a href="{% url 'job_delete_confirmation' job.id %}" class="btn btn-delete" style="background-color: red;">
-                            <i class="fa fa-trash-o" style="font-size:1.2rem !important; padding: 8px 15px;"></i>
-                        </a>
-                    </div>
-    <!---------------------------------------------------------------------------------------------------------------- -->
-            </div>
-
-                    
-            {% endfor %}
-            {% endif %}
-        </div>
-        </div>
-
-        <script>
-            // Show the confirmation dialog
-            function confirmDelete(event, jobId) {
-                event.preventDefault(); // Prevent immediate form submission
-                // Show the warning message
-                document.getElementById('delete-warning' + jobId).style.display = 'block';
-            }
-        
-            // Submit the form to delete the job when the user confirms
-            function confirmDeletion(jobId) {
-                document.getElementById('deleteForm' + jobId).submit(); // Submit the form for deletion
-            }
-        
-            // Hide the warning message if the user cancels
-            function cancelDeletion(jobId) {
-                document.getElementById('delete-warning' + jobId).style.display = 'none';
-            }
-        </script>
-        
-        <!-- CSS for the confirmation message -->
-        <style>
-            .delete-warning {
-                background-color: #ffeb3b;
-                color: #721c24;
-                padding: 15px;
-                border-radius: 8px;
-                margin-top: 20px;
-                text-align: center;
-                font-weight: bold;
-                font-size: 1rem;
-                border: 2px solid #721c24;
-            }
-        
-            .delete-warning p {
-                margin: 10px 0;
-            }
-        </style>
-
+<!-- ── STATS ROW ── -->
+{% if jobs %}
+<div class="stats-row">
+  <div class="s-card">
+    <div class="sc-top">
+      <div class="sc-icon blue"><i class="fas fa-paper-plane"></i></div>
     </div>
-    
-    {% endblock %}
+    <div class="sc-val">{{ jobs|length }}</div>
+    <div class="sc-label">Total Applications</div>
+  </div>
+  <div class="s-card">
+    <div class="sc-top">
+      <div class="sc-icon"><i class="fas fa-comments"></i></div>
+    </div>
+    <div class="sc-val">{{ interview_count|default:"—" }}</div>
+    <div class="sc-label">Interviews Scheduled</div>
+  </div>
+  <div class="s-card">
+    <div class="sc-top">
+      <div class="sc-icon yellow"><i class="fas fa-clock"></i></div>
+    </div>
+    <div class="sc-val">{{ pending_count|default:"—" }}</div>
+    <div class="sc-label">Pending Response</div>
+  </div>
+  <div class="s-card">
+    <div class="sc-top">
+      <div class="sc-icon purple"><i class="fas fa-trophy"></i></div>
+    </div>
+    <div class="sc-val">{{ offer_count|default:"—" }}</div>
+    <div class="sc-label">Offers Received</div>
+  </div>
+</div>
+{% endif %}
+
+{% if jobs|length == 0 %}
+<!-- ── EMPTY STATE ── -->
+<div class="empty-wrap">
+  <div class="empty-icon"><i class="fas fa-clipboard-list"></i></div>
+  <h3>No applications yet</h3>
+  <p>Start logging your job applications to track your progress, visualize your pipeline, and never miss an interview.</p>
+  <a href="{% url 'job_create_or_update' %}" class="btn btn-primary">
+    <i class="fas fa-plus" style="font-size:.75rem"></i> Add Your First Application
+  </a>
+</div>
+
+{% else %}
+
+<!-- ── DESKTOP TABLE ── -->
+<div class="table-wrap">
+  <div class="table-toolbar">
+    <div class="table-toolbar-left">
+      All Applications
+      <span class="count-badge">{{ jobs|length }}</span>
+    </div>
+    <a href="{% url 'job_create_or_update' %}" class="btn btn-primary btn-sm">
+      <i class="fas fa-plus" style="font-size:.7rem"></i> Add
+    </a>
+  </div>
+  <div class="table-scroll">
+    <table class="ct-table">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Level</th>
+          <th>Company</th>
+          {% if not all_emails_empty %}<th>Email</th>{% endif %}
+          <th>Reference</th>
+          <th>Type</th>
+          <th>Status</th>
+          {% if not all_dates_empty %}<th>Interview Date</th>{% endif %}
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for job in jobs %}
+        <tr>
+          <td>{{ job.job_category }}</td>
+          <td>{{ job.job_level }}</td>
+          <td><span class="company-name">{{ job.company_name }}</span></td>
+          {% if not all_emails_empty %}
+          <td>{% if job.company_email %}<span style="font-size:.75rem">{{ job.company_email }}</span>{% else %}<span style="color:var(--t3)">—</span>{% endif %}</td>
+          {% endif %}
+          <td>
+            {% if job.reference_link %}
+            <a href="{{ job.reference_link }}" class="ref-link" target="_blank" rel="noopener">
+              <i class="fas fa-external-link-alt" style="font-size:.6rem;margin-right:.25rem"></i>{{ job.reference_link }}
+            </a>
+            {% else %}<span style="color:var(--t3)">—</span>{% endif %}
+          </td>
+          <td>{{ job.employment_type }}</td>
+          <td>
+            {% with s=job.application_status|lower %}
+            {% if "interview" in s %}<span class="badge b-interview">{{ job.application_status }}</span>
+            {% elif "applied" in s or "sent" in s %}<span class="badge b-applied">{{ job.application_status }}</span>
+            {% elif "pending" in s or "waiting" in s %}<span class="badge b-pending">{{ job.application_status }}</span>
+            {% elif "rejected" in s or "declined" in s %}<span class="badge b-rejected">{{ job.application_status }}</span>
+            {% elif "offer" in s or "accepted" in s %}<span class="badge b-offer">{{ job.application_status }}</span>
+            {% else %}<span class="badge b-default">{{ job.application_status }}</span>{% endif %}
+            {% endwith %}
+          </td>
+          {% if not all_dates_empty %}
+          <td>
+            {% if job.interview_date %}
+            <span style="font-size:.75rem;color:var(--g)"><i class="fas fa-calendar-alt" style="font-size:.65rem;margin-right:.25rem"></i>{{ job.interview_date }}</span>
+            {% else %}<span style="color:var(--t3)">—</span>{% endif %}
+          </td>
+          {% endif %}
+          <td>
+            <div class="action-btns">
+              <a href="{% url 'job_create_or_update' job_id=job.id %}" class="btn-icon" title="Edit">
+                <i class="fas fa-pencil-alt"></i>
+              </a>
+              <a href="{% url 'job_delete_confirmation' job.id %}" class="btn-icon danger" title="Delete">
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ── MOBILE CARDS ── -->
+<div class="cards-wrap" id="jobCards">
+  {% for job in jobs %}
+  <div class="job-card-ct">
+    <div class="job-card-header">
+      <div>
+        <div class="job-card-company">{{ job.company_name }}</div>
+        <div class="job-card-role">{{ job.job_category }} · {{ job.job_level }}</div>
+      </div>
+      {% with s=job.application_status|lower %}
+      {% if "interview" in s %}<span class="badge b-interview">{{ job.application_status }}</span>
+      {% elif "applied" in s or "sent" in s %}<span class="badge b-applied">{{ job.application_status }}</span>
+      {% elif "pending" in s or "waiting" in s %}<span class="badge b-pending">{{ job.application_status }}</span>
+      {% elif "rejected" in s or "declined" in s %}<span class="badge b-rejected">{{ job.application_status }}</span>
+      {% elif "offer" in s or "accepted" in s %}<span class="badge b-offer">{{ job.application_status }}</span>
+      {% else %}<span class="badge b-default">{{ job.application_status }}</span>{% endif %}
+      {% endwith %}
+    </div>
+
+    <div class="job-card-grid">
+      <div class="job-field">
+        <label>Type</label>
+        <span>{{ job.employment_type }}</span>
+      </div>
+      {% if not all_emails_empty and job.company_email %}
+      <div class="job-field">
+        <label>Company Email</label>
+        <span>{{ job.company_email }}</span>
+      </div>
+      {% endif %}
+      {% if job.interview_date %}
+      <div class="job-field">
+        <label>Interview Date</label>
+        <span style="color:var(--g)"><i class="fas fa-calendar-alt" style="font-size:.6rem;margin-right:.2rem"></i>{{ job.interview_date|date:"Y-m-d" }}</span>
+      </div>
+      {% endif %}
+      {% if job.reference_link %}
+      <div class="job-field">
+        <label>Reference</label>
+        <a href="{{ job.reference_link }}" class="ref-link" target="_blank" rel="noopener" style="max-width:100%">
+          <i class="fas fa-external-link-alt" style="font-size:.6rem;margin-right:.2rem"></i>View Link
+        </a>
+      </div>
+      {% endif %}
+    </div>
+
+    <div class="job-card-footer">
+      <div style="font-size:.7rem;color:var(--t3)">
+        <i class="fas fa-layer-group" style="font-size:.6rem;margin-right:.2rem"></i>{{ job.job_level }}
+      </div>
+      <div class="card-actions">
+        <a href="{% url 'job_create_or_update' job.id %}" class="card-btn">
+          <i class="fas fa-pencil-alt" style="font-size:.65rem"></i> Edit
+        </a>
+        <a href="{% url 'job_delete_confirmation' job.id %}" class="card-btn danger">
+          <i class="fas fa-trash" style="font-size:.65rem"></i> Delete
+        </a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% endif %}
+
+{% endblock %}

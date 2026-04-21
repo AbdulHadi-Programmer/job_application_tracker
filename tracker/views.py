@@ -39,7 +39,7 @@ def home_page(request):
     return render(request, 'home_page.html')    # Unauthenticated users see the homepage
 
 
-@login_required
+# @login_required
 def job_list(request):
     # Filter jobs by the logged-in user
     jobs = Add_Job.objects.filter(user=request.user).order_by("-interview_date")
