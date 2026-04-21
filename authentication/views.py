@@ -179,7 +179,7 @@ def logout_view(request):
 
 
 # =========================
-# HOME
+#           HOME
 # =========================
 def home_page(request):
     if request.user.is_authenticated:
@@ -420,179 +420,171 @@ def custom_404(request, exception):
 
 
 # # Forget Password View
-# def forget_password_view(request):
-#     if request.method == 'POST':
-#         email = request.POST['email']
+def forget_password_view(request):
+    if request.method == 'POST':
+        email = request.POST['email']
         
-#         # Check if the email exists
-#         try:
-#             user = User.objects.get(email=email)
-#         except User.DoesNotExist:
-#             return render(request, 'forget_password.html', {'error': 'Email not found'})
+        # Check if the email exists
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return render(request, 'forget_password.html', {'error': 'Email not found'})
         
-#         # Generate OTP and save it
-#         otp_code = generate_otp()
-#         otp_timestamp = datetime.now().isoformat()  # Save timestamp in ISO format
+        # Generate OTP and save it
+        otp_code = generate_otp()
+        otp_timestamp = datetime.now().isoformat()  # Save timestamp in ISO format
 
-#         OTP.objects.update_or_create(
-#             user=user,
-#             defaults={'otp_code': otp_code, 'created_at': otp_timestamp}  # Save timestamp
-#         )
+        OTP.objects.update_or_create(
+            user=user,
+            defaults={'otp_code': otp_code, 'created_at': otp_timestamp}  # Save timestamp
+        )
         
-#         # Send OTP to user's email
-#         title = 'Password Reset OTP for Career_Traces.com'
+        # Send OTP to user's email
+        title = 'Password Reset OTP for Career_Traces.com'
         
-#         message = f"""
-# Dear {user.username},
+        message = f"""
+Dear {user.username},
 
-# We received a request to reset the password for your account at Career_Traces.com.
+We received a request to reset the password for your account at Career_Traces.com.
 
-# To proceed with the reset, please enter the OTP below:
+To proceed with the reset, please enter the OTP below:
 
-# OTP Code: {otp_code}
+OTP Code: {otp_code}
 
-# This OTP will expire in 2 minutes. If you did not initiate this request, please ignore this email.
+This OTP will expire in 2 minutes. If you did not initiate this request, please ignore this email.
 
-# Best regards,
-# Career_Traces.com Support Team
-# """
+Best regards,
+Career_Traces.com Support Team
+"""
 
-#         send_otp_to_users(title, message, email)  # Use the utility function
+        send_otp_to_users(title, message, email)  # Use the utility function
 
-#         # Store user ID and OTP timestamp in session and redirect to OTP verification page
-#         request.session['reset_user_data'] = {
-#             'user_id': user.id,
-#             'otp_timestamp': otp_timestamp
-#         }
-#         return redirect('verify_reset_otp')
-#     return render(request, 'forget_password.html')
+        # Store user ID and OTP timestamp in session and redirect to OTP verification page
+        request.session['reset_user_data'] = {
+            'user_id': user.id,
+            'otp_timestamp': otp_timestamp
+        }
+        return redirect('verify_reset_otp')
+    return render(request, 'forget_password.html')
 
 
 # # OTP Verification for Password Reset
-# def verify_reset_otp_view(request):
-#     # Retrieve user data from session
-#     reset_user_data = request.session.get('reset_user_data')
-#     if not reset_user_data:
-#         return redirect('forget_password')  # Redirect if session data is missing
+def verify_reset_otp_view(request):
+    # Retrieve user data from session
+    reset_user_data = request.session.get('reset_user_data')
+    if not reset_user_data:
+        return redirect('forget_password')  # Redirect if session data is missing
 
-#     user_id = reset_user_data['user_id']
-#     otp_timestamp = datetime.fromisoformat(reset_user_data['otp_timestamp'])
+    user_id = reset_user_data['user_id']
+    otp_timestamp = datetime.fromisoformat(reset_user_data['otp_timestamp'])
 
-#     # Ensure OTP timestamp is timezone-aware
-#     if is_naive(otp_timestamp):
-#         otp_timestamp = make_aware(otp_timestamp)
+    # Ensure OTP timestamp is timezone-aware
+    if is_naive(otp_timestamp):
+        otp_timestamp = make_aware(otp_timestamp)
 
-#     # Calculate remaining time
-#     remaining_time = max(0, (otp_timestamp + timedelta(minutes=2) - now()).total_seconds())
+    # Calculate remaining time
+    remaining_time = max(0, (otp_timestamp + timedelta(minutes=2) - now()).total_seconds())
 
-#     if request.method == 'POST':
-#         if 'resend_otp' in request.POST:
-#             # Generate and send a new OTP
-#             new_otp = generate_otp()
-#             reset_user_data['otp_timestamp'] = now().isoformat()
-#             request.session['reset_user_data'] = reset_user_data  # Update session data
+    if request.method == 'POST':
+        if 'resend_otp' in request.POST:
+            # Generate and send a new OTP
+            new_otp = generate_otp()
+            reset_user_data['otp_timestamp'] = now().isoformat()
+            request.session['reset_user_data'] = reset_user_data  # Update session data
 
-#             # Update OTP in database
-#             user = User.objects.get(id=user_id)
-#             OTP.objects.update_or_create(user=user, defaults={'otp_code': new_otp})
+            # Update OTP in database
+            user = User.objects.get(id=user_id)
+            OTP.objects.update_or_create(user=user, defaults={'otp_code': new_otp})
 
-#             # Send OTP via email
-#             title = 'Password Reset OTP for Career_Traces.com'
-#             # message = f"""
-#             #     Dear {user.username},
+            # Send OTP via email
+            title = 'Password Reset OTP for Career_Traces.com'
+            message = f"""
+                Dear {user.username},
 
-#             #     Your new OTP code is {new_otp}. It is valid for 2 minutes.
+                Your OTP for resetting your password is: {new_otp}. Please enter this code on the verification page.
 
-#             #     Best regards,
-#             #     Career_Traces.com Support Team
-#             # """
-#             message = f"""
-# Dear {user.username},
+                This OTP will expire in 2 minutes.
 
-# Your OTP for resetting your password is: {new_otp}. Please enter this code on the verification page.
+                Best regards,
+                Career_Traces.com Support Team
+                """
+            send_otp_to_users(title, message, user.email)
 
-# This OTP will expire in 2 minutes.
+            return render(request, 'verify_otp.html', {
+                'info': 'A new OTP has been sent to your email.',
+                'remaining_time': 120,  # Reset timer to 2 minutes
+                'show_resend': False
+            })
 
-# Best regards,
-# Career_Traces.com Support Team
-# """
-#             send_otp_to_users(title, message, user.email)
+        # Combine OTP inputs into a single string
+        otp_code = (
+            request.POST.get('otp1', '') +
+            request.POST.get('otp2', '') +
+            request.POST.get('otp3', '') +
+            request.POST.get('otp4', '') +
+            request.POST.get('otp5', '') +
+            request.POST.get('otp6', '')
+        )
 
-#             return render(request, 'verify_otp.html', {
-#                 'info': 'A new OTP has been sent to your email.',
-#                 'remaining_time': 120,  # Reset timer to 2 minutes
-#                 'show_resend': False
-#             })
+        # Handle OTP expiration
+        if remaining_time <= 0:
+            return render(request, 'verify_otp.html', {
+                'error': 'OTP expired. Please resend a new OTP.',
+                'remaining_time': 0,
+                'show_resend': True  # Show "Resend OTP" button
+            })
 
-#         # Combine OTP inputs into a single string
-#         otp_code = (
-#             request.POST.get('otp1', '') +
-#             request.POST.get('otp2', '') +
-#             request.POST.get('otp3', '') +
-#             request.POST.get('otp4', '') +
-#             request.POST.get('otp5', '') +
-#             request.POST.get('otp6', '')
-#         )
+        # Handle invalid OTP
+        try:
+            otp = OTP.objects.get(user_id=user_id, otp_code=otp_code)
+            otp.delete()  # OTP matched, delete it
+            request.session['reset_user_id'] = user_id  # Set reset_user_id in session
+            del request.session['reset_user_data']  # Clear other session data
+            return redirect('change_password')  # Redirect to password reset page
+        except OTP.DoesNotExist:
+            return render(request, 'verify_otp.html', {
+                'error': 'Invalid OTP. Please try again.',
+                'remaining_time': int(remaining_time),
+            })
 
-#         # Handle OTP expiration
-#         if remaining_time <= 0:
-#             return render(request, 'verify_otp.html', {
-#                 'error': 'OTP expired. Please resend a new OTP.',
-#                 'remaining_time': 0,
-#                 'show_resend': True  # Show "Resend OTP" button
-#             })
-
-#         # Handle invalid OTP
-#         try:
-#             otp = OTP.objects.get(user_id=user_id, otp_code=otp_code)
-#             otp.delete()  # OTP matched, delete it
-#             request.session['reset_user_id'] = user_id  # Set reset_user_id in session
-#             del request.session['reset_user_data']  # Clear other session data
-#             return redirect('change_password')  # Redirect to password reset page
-#         except OTP.DoesNotExist:
-#             return render(request, 'verify_otp.html', {
-#                 'error': 'Invalid OTP. Please try again.',
-#                 'remaining_time': int(remaining_time),
-#             })
-
-#     # Render the OTP verification page with timer
-#     return render(request, 'verify_otp.html', {
-#         'remaining_time': int(remaining_time),
-#         'show_resend': remaining_time == 0  # Show "Resend OTP" button if time is up
-#     })
+    # Render the OTP verification page with timer
+    return render(request, 'verify_otp.html', {
+        'remaining_time': int(remaining_time),
+        'show_resend': remaining_time == 0  # Show "Resend OTP" button if time is up
+    })
 
 
 # # Password Reset View
-# def change_password_view(request):
-#     error = ""
-#     success = ""
-#     user_id = request.session.get('reset_user_id')
-#     if not user_id:  # If reset_user_id is not in session
-#         return redirect('forget_password')  # Redirect to forget password page
+def change_password_view(request):
+    error = ""
+    success = ""
+    user_id = request.session.get('reset_user_id')
+    if not user_id:  # If reset_user_id is not in session
+        return redirect('forget_password')  # Redirect to forget password page
 
-#     if request.method == 'POST':
-#         new_password = request.POST['password']
-#         confirm_password = request.POST['confirmpassword']
+    if request.method == 'POST':
+        new_password = request.POST['password']
+        confirm_password = request.POST['confirmpassword']
         
-#         if new_password != confirm_password:
-#             # If passwords do not match, return an error message
-#             error = 'Passwords do not match.'
-#             return render(request, 'change_password.html', {'error': error})
-#         try:
-#             # Update user password
-#             user = User.objects.get(id=user_id)
-#             user.set_password(new_password)
-#             user.save()
+        if new_password != confirm_password:
+            # If passwords do not match, return an error message
+            error = 'Passwords do not match.'
+            return render(request, 'change_password.html', {'error': error})
+        try:
+            # Update user password
+            user = User.objects.get(id=user_id)
+            user.set_password(new_password)
+            user.save()
             
-#             # Clear session and redirect to login
-#             del request.session['reset_user_id']
+            # Clear session and redirect to login
+            del request.session['reset_user_id']
 
-#             # Show success message in the template
-#             success = "Password Reset Successfully!"
-#         except User.DoesNotExist:
-#             error = "User does not exist. Please try again."
+            # Show success message in the template
+            success = "Password Reset Successfully!"
+        except User.DoesNotExist:
+            error = "User does not exist. Please try again."
         
-#     return render(request, 'change_password.html', {'success': success, 'error': error})
+    return render(request, 'change_password.html', {'success': success, 'error': error})
 
 
 # def home_page(request):

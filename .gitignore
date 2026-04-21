@@ -7,3 +7,7 @@ venv/
 .gitignore
 __pycache__/
 *.pyc
+
+./venv/
+
+db.sqlite3 
