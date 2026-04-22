@@ -292,9 +292,43 @@ label[for="image-clear_id"],input[name="image-clear"],#text,label[type="file"],l
 .btn-submit-profile:hover { background: var(--g2); transform: translateY(-1px); }
 
 @media (max-width: 768px) {
-  .profile-edit-wrap { padding: 1rem 1rem 2.5rem; }
-  .form-card-body { padding: 1.25rem 1rem; }
+  .profile-edit-wrap { padding: 1rem .75rem 2.5rem; }
+  .form-card-body { padding: 1rem .85rem; }
   .fg-row { grid-template-columns: 1fr; }
+  .stepper { gap: 0; }
+  .step-label { display: none; } /* hide text labels on mobile, show only circles */
+  .step-connector { min-width: 16px; margin: 0 .3rem; }
+  .step-circle { width: 30px; height: 30px; font-size: .72rem; }
+  .btn-step { padding: .55rem 1rem; font-size: .8rem; }
+  .formset-item { padding: .85rem .85rem; }
+}
+
+@media (max-width: 480px) {
+  .profile-edit-wrap { padding: .75rem .5rem 2rem; }
+  .form-card-body { padding: .85rem .75rem; }
+  /* Django as_p inputs full width on tiny screens */
+  .step-panel p input,
+  .step-panel p select,
+  .step-panel p textarea,
+  .step-panel input,
+  .step-panel select,
+  .step-panel textarea {
+    font-size: .82rem !important;
+    padding: .55rem .7rem !important;
+  }
+  .step-nav { gap: .5rem; }
+  .btn-step { padding: .5rem .85rem; font-size: .78rem; }
+  .form-card-header { padding: .7rem .85rem; font-size: .78rem; }
+}
+
+/* 360px — the tightest common mobile width */
+@media (max-width: 380px) {
+  .profile-edit-wrap { padding: .5rem 1.5rem 1.5rem; }
+  .form-card-body { padding: .75rem .6rem; }
+  .step-circle { width: 26px; height: 26px; font-size: .65rem; }
+  .step-connector { min-width: 10px; margin: 0 .2rem; }
+  .btn-step { padding: .45rem .7rem; font-size: .75rem; }
+  .profile-edit-title { font-size: 1rem; }
 }
 </style>
 {% endblock %}

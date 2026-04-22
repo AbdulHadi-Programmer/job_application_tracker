@@ -1,77 +1,262 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Not Found</title>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>404 — Page Not Found · Career Traces</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JZ5EM6ZP04"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-JZ5EM6ZP04');</script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --g:#22c55e;--g2:#16a34a;
+  --dark:#080c09;--s1:#0e1410;--s2:#141a15;
+  --border:rgba(34,197,94,0.12);--border2:rgba(255,255,255,0.06);
+  --t:#f0f7f1;--t2:#a8bfab;--t3:#607064;
+  --f:'Plus Jakarta Sans',sans-serif;--f-serif:'Instrument Serif',serif;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--dark);color:var(--t);
+  font-family:var(--f);min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:2rem 1.5rem;overflow:hidden;
+}
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #e3fced; /* Light green background */
-            color: #4e9b5f; /* Green text */
-            padding: 50px;
-            margin: 0;
-        }
-        h1 {
-            font-size: 72px;
-            color: #4e9b5f; /* Green for header */
-        }
-        p {
-            font-size: 18px;
-            color: #000000; /* Black for text */
-        }
-        a {
-            color: #ffcc00; /* Yellow for links */
-            text-decoration: none;
-            font-weight: bold;
-        }
-        a:hover {
-            color: #4e9b5f; /* Green on hover */
-        }
-        .error-box {
-            background-color: #ffffff; /* White box for contrast */
-            border: 2px solid #4e9b5f; /* Green border */
-            padding: 30px;
-            border-radius: 8px;
-            display: inline-block;
-            margin-top: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .error-button {
-            background-color: #4e9b5f; /* Green button */
-            color: #ffffff; /* White text */
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            font-size: 16px;
-            display: inline-block;
-            margin-top: 20px;
-            transition: background-color 0.3s;
-        }
-        .error-button:hover {
-            background-color: #ffcc00; /* Yellow on hover */
-            color: #000000; /* Black text */
-        }
-    </style>
-        <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-JZ5EM6ZP04"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          
-          gtag('config', 'G-JZ5EM6ZP04');
-          </script>
+/* CANVAS */
+#particles{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.35}
+
+/* GRID BG */
+.bg-grid{
+  position:fixed;inset:0;z-index:0;
+  background-image:
+    linear-gradient(rgba(34,197,94,0.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(34,197,94,0.04) 1px,transparent 1px);
+  background-size:55px 55px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black,transparent);
+}
+.bg-glow{
+  position:fixed;top:30%;left:50%;transform:translateX(-50%);
+  width:600px;height:400px;
+  background:radial-gradient(ellipse,rgba(34,197,94,0.07),transparent 70%);
+  pointer-events:none;z-index:0;
+}
+
+/* CARD */
+.error-card{
+  position:relative;z-index:1;
+  width:100%;max-width:480px;
+  background:var(--s1);
+  border:1px solid var(--border);
+  border-radius:24px;
+  overflow:hidden;
+  box-shadow:0 0 0 1px rgba(34,197,94,0.06),0 32px 80px rgba(0,0,0,0.5);
+  text-align:center;
+  animation:slideUp .6s ease both;
+}
+@keyframes slideUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+
+/* TOP GLOW STRIPE */
+.card-stripe{
+  height:3px;
+  background:linear-gradient(90deg,transparent,var(--g),transparent);
+}
+
+.card-body{padding:2.5rem 2rem 2rem}
+
+/* BIG 404 */
+.num-404{
+  font-family:var(--f-serif);
+  font-style:italic;
+  font-size:clamp(5rem,18vw,7rem);
+  font-weight:400;
+  color:var(--g);
+  line-height:1;
+  margin-bottom:.15rem;
+  letter-spacing:-4px;
+  /* subtle text glow */
+  text-shadow:0 0 60px rgba(34,197,94,0.3);
+  animation:pulse404 3s ease-in-out infinite;
+}
+@keyframes pulse404{
+  0%,100%{text-shadow:0 0 60px rgba(34,197,94,0.3)}
+  50%{text-shadow:0 0 90px rgba(34,197,94,0.5)}
+}
+
+/* ICON BADGE */
+.icon-badge{
+  width:52px;height:52px;
+  background:rgba(34,197,94,0.08);
+  border:1px solid rgba(34,197,94,0.2);
+  border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;color:var(--g);
+  margin:0 auto 1.25rem;
+}
+
+.error-title{
+  font-size:1.25rem;
+  font-weight:800;
+  letter-spacing:-0.5px;
+  color:var(--t);
+  margin-bottom:.6rem;
+}
+.error-sub{
+  font-size:.85rem;
+  color:var(--t2);
+  line-height:1.7;
+  max-width:320px;
+  margin:0 auto 1.75rem;
+}
+
+/* ACTIONS */
+.card-actions{
+  display:flex;
+  gap:.75rem;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-bottom:1.75rem;
+}
+.btn-home{
+  background:var(--g);color:#000;
+  padding:.7rem 1.6rem;border-radius:10px;
+  font-weight:700;font-size:.88rem;
+  text-decoration:none;transition:all .25s;
+  display:inline-flex;align-items:center;gap:.45rem;
+  box-shadow:0 4px 16px rgba(34,197,94,0.3);
+  font-family:var(--f);
+}
+.btn-home:hover{background:var(--g2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(34,197,94,0.4);color:#000}
+.btn-back{
+  background:transparent;color:var(--t2);
+  padding:.7rem 1.4rem;border-radius:10px;
+  font-weight:500;font-size:.88rem;
+  text-decoration:none;transition:all .25s;
+  display:inline-flex;align-items:center;gap:.45rem;
+  border:1px solid var(--border2);
+  font-family:var(--f);
+}
+.btn-back:hover{border-color:rgba(34,197,94,0.3);color:var(--g)}
+
+/* DIVIDER */
+.card-divider{height:1px;background:var(--border2);margin:0 0 1.25rem}
+
+/* QUICK LINKS */
+.quick-label{
+  font-size:.68rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:1.5px;
+  color:var(--t3);margin-bottom:.85rem;
+}
+.quick-links{
+  display:flex;gap:.6rem;
+  justify-content:center;flex-wrap:wrap;
+}
+.quick-link{
+  display:inline-flex;align-items:center;gap:.35rem;
+  padding:.35rem .85rem;border-radius:999px;
+  font-size:.75rem;font-weight:600;
+  background:var(--s2);border:1px solid var(--border2);
+  color:var(--t2);text-decoration:none;
+  transition:all .2s;
+}
+.quick-link:hover{border-color:rgba(34,197,94,0.3);color:var(--g)}
+.quick-link i{font-size:.65rem}
+
+/* BRAND FOOTER */
+.card-brand{
+  margin-top:1.5rem;
+  font-size:.7rem;color:var(--t3);
+  display:flex;align-items:center;justify-content:center;gap:.4rem;
+}
+.brand-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--g);
+  animation:blink 2.5s ease-in-out infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+@media(max-width:480px){
+  .card-body{padding:2rem 1.25rem 1.5rem}
+  .num-404{font-size:5rem}
+  .error-title{font-size:1.1rem}
+}
+</style>
 </head>
 <body>
-    <div class="error-box">
-        <h1>404</h1>
-        <p>Oops! The page you're looking for can't be found.</p>
-        <a href="/" class="error-button">Return Home</a>
+<canvas id="particles"></canvas>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+
+<div class="error-card">
+  <div class="card-stripe"></div>
+  <div class="card-body">
+
+    <div class="icon-badge"><i class="fas fa-compass"></i></div>
+    <div class="num-404">404</div>
+    <h1 class="error-title">Page not found</h1>
+    <p class="error-sub">
+      Looks like this page went job hunting and never came back. The link might be broken or the page no longer exists.
+    </p>
+
+    <div class="card-actions">
+      <a href="/" class="btn-home">
+        <i class="fas fa-home" style="font-size:.75rem"></i> Go Home
+      </a>
+      <a href="javascript:history.back()" class="btn-back">
+        <i class="fas fa-arrow-left" style="font-size:.72rem"></i> Go Back
+      </a>
     </div>
 
+    <div class="card-divider"></div>
+
+    <div class="quick-label">Or head somewhere useful</div>
+    <div class="quick-links">
+      <a href="/jobs/" class="quick-link">
+        <i class="fas fa-clipboard-list"></i> Job Tracker
+      </a>
+      <a href="/jobs/add/" class="quick-link">
+        <i class="fas fa-plus"></i> Add Application
+      </a>
+      <a href="/analytics/" class="quick-link">
+        <i class="fas fa-chart-bar"></i> Analytics
+      </a>
+      <a href="/login/" class="quick-link">
+        <i class="fas fa-sign-in-alt"></i> Login
+      </a>
+    </div>
+
+  </div>
+
+  <div class="card-brand">
+    <span class="brand-dot"></span> Career Traces
+  </div>
+</div>
+
+<script>
+const canvas=document.getElementById('particles'),ctx=canvas.getContext('2d');
+let pts=[];
+function resize(){canvas.width=innerWidth;canvas.height=innerHeight}
+resize();window.addEventListener('resize',resize);
+for(let i=0;i<50;i++)pts.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:Math.random()*1.3+.4,o:Math.random()*.35+.05});
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  pts.forEach(p=>{
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0)p.x=canvas.width;if(p.x>canvas.width)p.x=0;
+    if(p.y<0)p.y=canvas.height;if(p.y>canvas.height)p.y=0;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(34,197,94,${p.o})`;ctx.fill();
+  });
+  pts.forEach((a,i)=>pts.forEach((b,j)=>{
+    if(i>=j)return;
+    const d=Math.hypot(a.x-b.x,a.y-b.y);
+    if(d<110){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle=`rgba(34,197,94,${.05*(1-d/110)})`;ctx.stroke()}
+  }));
+  requestAnimationFrame(draw);
+}draw();
+</script>
 </body>
 </html>
